@@ -42,7 +42,7 @@ jobs:
         name: build
         path: build/
     - name: Publish Pages Artifact
-      uses: upload-pages-artifact@v1
+      uses: actions/upload-pages-artifact@v1
       with:
         path: build/web/
         
