@@ -28,18 +28,14 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
     - name: Check
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: build
+      run: ./gradlew build
     - name: Analyze
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: startFuseki owlQuery stopFuseki -x owlReason
+      run: ./gradlew startFuseki owlQuery stopFuseki -x owlReason
     - name: Report
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: generateWebsite -x owlQuery
+      run: ./gradlew generateWebsite -x owlQuery
     - name: Upload build
       uses: actions/upload-artifact@v3
       with:
