@@ -29,14 +29,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Check
-      uses: gradle/gradle-build-action@2.4.0
+      uses: gradle/gradle-build-action@v2
       with:
         arguments: build
     - name: Analyze
-      uses: gradle/gradle-build-action@2.4.0
+      uses: gradle/gradle-build-action@v2
       with:
         arguments: startFuseki owlQuery stopFuseki -x owlReason
     - name: Report
-      uses: gradle/gradle-build-action@2.4.0
+      uses: gradle/gradle-build-action@v2
       with:
         arguments: generateWebsite -x owlQuery
