@@ -15,7 +15,7 @@ description <http://example.com/kepler16b/objectives#> as objectives {
 	]
 
 	ci characterize-liquid-ocean : mission:Objective [
-		base:hasIdentifier "O.02"
+		base:hasIdentifier "O.01"
 		base:hasCanonicalName "Characterize the liquid ocean of Kepler 16b"
 	]
 
