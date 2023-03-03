@@ -40,3 +40,8 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: generateWebsite -x owlQuery
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: build/
