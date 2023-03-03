@@ -153,14 +153,16 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
  */
 import org.apache.tools.ant.filters.*
 task generateWebsite(group:"oml", dependsOn: owlQuery) {
-	copy {
-	    from 'src/web'
-	    into 'build/web'
-	}
-	copy {
-	    from 'build/results'
-	    into 'build/web/data'
-	    filter { line -> line.replaceAll('\\{ "head": \\{', 'var data = \\{ "head": \\{') }
+	doFirst {
+		copy {
+		    from 'src/web'
+		    into 'build/web'
+		}
+		copy {
+		    from 'build/results'
+		    into 'build/web/data'
+		    filter { line -> line.replaceAll('\\{ "head": \\{', 'var data = \\{ "head": \\{') }
+		}
 	}
 }
 
@@ -174,7 +176,9 @@ task build(group: "oml") {
 /*
  * A task to delete the build artifacts
  */
-task clean(type: Delete, group: "oml")
+task clean(type: Delete, group: "oml") {
+	delete 'build'
+}
 
 /*
  * Publish artifact to maven
