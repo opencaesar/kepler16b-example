@@ -38,6 +38,7 @@ jobs:
     - name: Report
       run: ./gradlew generateWebsite -x owlQuery
     - name: Upload build
+      if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
         name: build
