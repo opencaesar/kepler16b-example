@@ -1,0 +1,9 @@
+PREFIX base:        <http://example.com/vocabulary/base#>
+PREFIX mission:     <http://example.com/vocabulary/mission#>
+
+SELECT DISTINCT ?c ?i
+
+WHERE {
+	?c mission:presents ?i
+}
+ORDER BY ?c ?i

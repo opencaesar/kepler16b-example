@@ -1,0 +1,9 @@
+# Gradle files
+.gradle
+build
+
+# MacOS files
+.DS_Store
+
+# Fuseki output directory
+.fuseki

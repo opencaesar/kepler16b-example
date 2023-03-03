@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Aggregates Pattern</title>
+<style>
+.node {}
+.link { stroke: #999; stroke-opacity: .6; stroke-width: 1px; }
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.text {
+  text-anchor: middle;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  fill: #666;
+  font-size: 16px;
+}
+
+#table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid;
+  padding: 50px;
+  box-shadow: 5px 10px 18px #888888;
+}
+
+#table td, #table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#table tr:nth-child(even){background-color: #f2f2f2;}
+
+#table tr:hover {background-color: #ddd;}
+
+#table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  padding: 8px;
+  background-color: #04AA6D;
+  color: white;
+}
+
+</style>
+</head>
+<body>
+<!-- load d3  -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<!-- load the data -->
+<script type="text/javascript" src="data/aggregates.json"></script>
+<!-- load the code -->
+<script src="js/visualizations/D3Table.js"></script>
+<script src="js/visualizations/D3TreeTable.js"></script>
+<script src="js/visualizations/D3Graph.js"></script>
+<div id='description'>
+<h1>Description of Aggregates pattern:</h1>
+<p>This is some text explaining it.</p>
+<p></p>
+<h2>Showing it as table </h2>
+<p>small description of the table</p>
+<div id='tableViz'></div>
+<p></p>
+<h2>Showing it as a Tree</h2>
+<p>small description of the tree</p> 
+<div id='treeTableViz'></div>
+<h2>Showing it as a Graph</h2>
+<p>small description of the graph</p> 
+<div id='graphViz'></div>
+<script src="js/controllers/aggregates.js"></script>
+</div>
+</body>
+</html>

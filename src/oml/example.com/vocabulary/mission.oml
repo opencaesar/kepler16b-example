@@ -1,0 +1,169 @@
+@dc:title "Mission Vocabulary"
+vocabulary<http://example.com/vocabulary/mission#> as mission {
+
+	extends<http://example.com/vocabulary/base#> as base
+
+	extends <http://purl.org/dc/elements/1.1/> as dc
+
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+
+	@rdfs:label "Objective"
+	@dc:^description """An [=Objective=] represents a specific interest 
+  that one or more stakeholders have in the successful execution of a mission."""
+	concept Objective :> base:IdentifiedThing, base:AggregatedElement [
+		restricts all relation base:aggregates to Objective
+		restricts all relation base:isAggregatedIn to Objective
+	]
+
+	@rdfs:label "Mission"
+	@dc:^description """A [=Mission=] [=pursue=]s [=Objective=]s."""
+	concept Mission :> base:IdentifiedThing
+
+	@rdfs:label "Pursues"
+	@dc:^description """A [=Mission=] [=pursues=] zero or more [=Objective=]s."""
+	relation entity Pursues [
+		from Mission
+		to Objective
+		@rdfs:label "pursues"
+		forward pursues
+		@rdfs:label "is pursued by"
+		reverse isPursuedBy
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Component"
+	@dc:^description """A [=Component=] is a designed entity that exists to 
+		presents one or more [=Interface=](s) in the context of a [=Mission=].
+    (The concept of interface will be introduced in pattern 5).
+    Example [=Component=]s include launch vehicle, spacecraft, telecommunication subsystem, 
+    flight software, attitude control software, and mission operations team.
+	
+	  [=Component=]s can be organized hierarchically by containment of other [=Component=]s. """
+	concept Component :> base:ContainedElement, base:IdentifiedThing [
+		restricts all relation base:contains to Component
+		restricts all relation base:isContainedIn to Component
+	]
+
+	@rdfs:label "Deploys"
+	@dc:^description """A [=Mission=] [=deploys=] zero or more [=Component=]s."""
+	relation entity Deploys [
+		from Mission
+		to Component
+		@rdfs:label "deploys"
+		forward deploys
+		@rdfs:label "is deployed by"
+		reverse isDeployedBy
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Interface"
+	@dc:^description """An [=Interface=] represents a set of mechanical, electrical, signal, 
+	or other features that describe some aspect	of a [=Component=]'s connection to
+	or interaction with another [=Component=]."""
+	concept Interface :> base:IdentifiedThing
+
+	@rdfs:label "Specifies"
+	@dc:^description """A [=Requirement=] [=specifies=] zero or more
+	[=SpecifiedThing=]s."""
+	relation entity Specifies [
+		from Requirement
+		to SpecifiedThing
+		@rdfs:label "specifies"
+		forward specifies
+		@rdfs:label "is specified by"
+		reverse isSpecifiedBy
+		functional
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Presents"
+	@dc:^description "A [=Component=] [=presents=] zero or more [=Interface=]s."
+	relation entity Presents :> SpecifiedThing [
+		from Component
+		to Interface
+		@rdfs:label "presents"
+		forward presents
+		@rdfs:label "is presented by"
+		reverse isPresentedBy
+		inverse functional
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Junction"
+	@dc:^description """An [=Junction=] represents a set of mechanical, electrical, signal, 
+	or other properties that are common to a set of mutually connected [=Interface=]s."""
+	concept Junction :> base:IdentifiedThing
+
+	@rdfs:label "Joins"
+	@dc:^description """A [=Junction=] [=joins=] zero or more [=Interface=]s."""
+	relation entity Joins [
+		from Junction
+		to Interface
+		@rdfs:label "joins"
+		forward joins
+		@rdfs:label "is joined in"
+		reverse isJoinedIn
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Joins1"
+	@dc:^description """[=joins1=] and [=joins2=] are distinguishable specializations of [=joins=].
+	These specializations are employed to indicate distinct ends of a	[=Junction=].
+	For example, [=joins1=] could indicate the source interface of a directed [=Junction=]."""
+	relation entity Joins1 :> Joins [
+		from Junction
+		to Interface
+		@rdfs:label "joins1"
+		forward joins1
+		@rdfs:label "is joined in1"
+		reverse isJoinedIn1
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Joins2"
+	@dc:^description """[=joins1=] and [=joins2=] are distinguishable specializations of [=joins=].
+	These specializations are employed to indicate distinct ends of a [=Junction=].
+	For example, [=joins2=] could indicate the target interface of a directed [=Junction=]."""
+	relation entity Joins2 :> Joins [
+		from Junction
+		to Interface
+		@rdfs:label "joins2"
+		forward joins2
+		@rdfs:label "is joined in2"
+		reverse isJoinedIn2
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:label "Specified Thing"
+	@dc:^description """[=SpecifiedThing=] is the range of [=specifies=].
+	Any concept or reified relation that [=isSpecifiedBy=] a [=Requirement=] should 
+	specialize [=SpecifiedThing=]."""
+	aspect SpecifiedThing
+
+	@rdfs:label "Requirement"
+	@dc:^description """A [=Requirement=] specifies an assertion about a [=Junction=] 
+	that must be true for every acceptable realization of that thing."""
+	concept Requirement :> base:IdentifiedThing
+
+	@rdfs:label "Refines"
+	@dc:^description """A [=Requirement=] [=refines=] zero or more [=Requirement=]s."""
+	relation entity Refines [
+		from Requirement
+		to Requirement
+		@rdfs:label "refines"
+		forward refines
+		@rdfs:label "is refined by"
+		reverse isRefinedBy
+		asymmetric
+		irreflexive
+	]
+
+
+}
