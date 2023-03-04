@@ -6,7 +6,7 @@ Level: none
 Status: iso/TR
 Metadata Include: * off
 URL: https://github.com/melaasar/kepler
-Canonical URL: https://github.com/melaasar/kepler
+Canonical URL: https://github.com/melaasar/kepler16b
 Editor: [Maged Elaasar](https://www.opencaesar.io/contributors/Maged%20Elaasar.html)
 Boilerplate: references no, conformance no, spec-metadata yes, copyright yes, issues no
 Local Boilerplate: copyright yes, logo yes
