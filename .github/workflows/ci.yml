@@ -33,15 +33,20 @@ jobs:
       run: ./gradlew build
     - name: Analyze
       run: ./gradlew startFuseki query stopFuseki -x reason
-    - name: Report
-      run: ./gradlew bikeshed -x query
-    - name: Upload build
+    - name: Render
+      run: ./gradlew render -x query
+    - name: Bikeshed
+      uses: netwerk-digitaal-erfgoed/bikeshed-action@v1
+      with:
+        source: src/bs/index.bs
+        destination: build/web/index.html
+    - name: Upload
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
         name: build
         path: build/
-    - name: Publish Pages Artifact
+    - name: Publish
       uses: actions/upload-pages-artifact@v1
       with:
         path: build/web/
@@ -56,6 +61,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v1
