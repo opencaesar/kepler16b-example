@@ -71,9 +71,9 @@ dependencies {
 }
 
 /*
- * A task to extract and merge the OML dependencies
+ * A task to download, extract and merge the OML dependencies
  */
-task omlDependencies(type:io.opencaesar.oml.merge.OmlMergeTask, group:"oml") {
+task downloadDependencies(type:io.opencaesar.oml.merge.OmlMergeTask, group:"oml") {
     inputZipPaths = configurations.oml.files
     outputCatalogFolder = file('build/oml')
 }
@@ -81,7 +81,7 @@ task omlDependencies(type:io.opencaesar.oml.merge.OmlMergeTask, group:"oml") {
 /*
  * A task to convert the OML catalog to OWL catalog
  */
-task omlToOwl(type:io.opencaesar.oml2owl.Oml2OwlTask, group:"oml", dependsOn: omlDependencies) {
+task omlToOwl(type:io.opencaesar.oml2owl.Oml2OwlTask, group:"oml", dependsOn: downloadDependencies) {
     // OML catalog
     inputCatalogPath = file('catalog.xml')
     // OWL catalog
@@ -91,7 +91,7 @@ task omlToOwl(type:io.opencaesar.oml2owl.Oml2OwlTask, group:"oml", dependsOn: om
 /*
  * A task to run the Openllet reasoner on the OWL catalog
  */
-task owlReason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", dependsOn: omlToOwl) {
+task reason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", dependsOn: omlToOwl) {
     // OWL catalog
     catalogPath = file('build/owl/catalog.xml')
     // Input ontology IRI to reason on
@@ -114,12 +114,11 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
     outputFolderPath = file('.fuseki')
 }
 
-
 /*
  * A task to load an OWL catalog to a Fuseki dataset endpoint
  */
-task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: owlReason) {
-	mustRunAfter startFuseki
+task load(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: reason) {
+    inputs.files(startFuseki.outputFolderPath) // rerun when Fuseki (with memory dataset) restarts
     catalogPath = file('build/owl/catalog.xml')
     endpointURL = "http://localhost:3030/$dataset.name".toString()
     fileExtensions = ['owl', 'ttl']
@@ -133,10 +132,11 @@ task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: ow
 /*
  * A task to run a set of SPARQL queries on a Fuseki dataset endpoint
  */
-task owlQuery(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: owlLoad) {
+task query(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: load) {
+    inputs.files(load.inputs.files) // rerun when the dataset changes
     endpointURL = "http://localhost:3030/$dataset.name".toString()
     queryPath = file('src/sparql')
-    resultPath = file('build/results')
+    resultPath = file('build/json')
     format = 'json'
 }
 
@@ -144,7 +144,7 @@ task owlQuery(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn:
  * Stop the headless Fuseki server
  */
 task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
-	mustRunAfter owlQuery, owlLoad
+	mustRunAfter query, load
     outputFolderPath = file('.fuseki')
 }
 
@@ -152,15 +152,21 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
  * Generate the website with reports
  */
 import org.apache.tools.ant.filters.*
-task generateWebsite(group:"oml", dependsOn: owlQuery) {
+task render(group:"oml", dependsOn: query) {
+	inputs.files(fileTree("src/bs"))
+	outputs.files(fileTree("build/web"))
 	doFirst {
 		copy {
-		    from 'src/web'
+		    from 'src/bs/style.css'
 		    into 'build/web'
 		}
 		copy {
-		    from 'build/results'
-		    into 'build/web/data'
+		    from 'src/bs/js'
+		    into 'build/web/js'
+		}
+		copy {
+		    from 'build/json'
+		    into 'build/web/json'
 		    filter { line -> line.replaceAll('\\{ "head": \\{', 'var data = \\{ "head": \\{') }
 		}
 	}
@@ -169,8 +175,20 @@ task generateWebsite(group:"oml", dependsOn: owlQuery) {
 /*
  * A task to build the project, which executes several tasks together
  */
+task bikeshed(group:"oml", dependsOn: render) {
+	inputs.files(fileTree("src/bs"))
+	outputs.files(file("build/web/index.html"))
+    doFirst { 
+        file("build/web")
+	    exec { commandLine "bikeshed", "--die-on=link-error", "spec", "src/bs/index.bs", "build/web/index.html" }
+    }
+}
+
+/*
+ * A task to build the project, which executes several tasks together
+ */
 task build(group: "oml") {
-    dependsOn owlReason
+    dependsOn reason
 }
 
 /*
@@ -255,5 +273,5 @@ tasks.named('wrapper') {
 apply plugin: 'eclipse'
 
 eclipse {
-    synchronizationTasks omlDependencies
+    synchronizationTasks downloadDependencies
 }

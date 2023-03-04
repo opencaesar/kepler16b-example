@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Missions Pattern</title>
+</head>
+<body>
+    <!-- load the model -->
+    <script type="text/javascript" src="json/missions.json"></script>
+    <!-- create the view -->
+    <div id='tableViz2'></div>
+    <p><p>
+    <div id='treeTableViz2'></div>
+    <!-- run the controller -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="js/D3Table.js"></script>
+    <script src="js/D3Tree.js"></script>
+    <script>
+        tabulate(data,'#tableViz2')
+        drawTree(data,'#treeTableViz2')
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Objectives Pattern</title>
+</head>
+<body>
+    <!-- load the model -->
+    <script type="text/javascript" src="json/objectives.json"></script>
+    <!-- create the view -->
+    <div id='tableViz1'></div>
+    <!-- run the controller -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="js/D3Table.js"></script>
+    <script>
+        tabulate(data,'#tableViz1')
+    </script>
+</body>
+</html>

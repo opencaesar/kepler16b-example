@@ -1,0 +1,20 @@
+<!-- Metadata -->
+<pre class='metadata'>
+Title: Kebler16b
+Shortname: kepler16b
+Level: none
+Status: iso/TR
+Metadata Include: * off
+URL: https://github.com/melaasar/kepler
+Editor: [Maged Elaasar](https://www.opencaesar.io/contributors/Maged%20Elaasar.html)
+Boilerplate: references no, conformance no, spec-metadata no, copyright yes
+Local Boilerplate: copyright yes, logo yes
+Markup Shorthands: markdown yes
+Abstract: This document describes the kepler16b project.
+</pre>
+
+<!-- Instruct bikeshed to export all 'dfn', even if they are not referenced, without warnings. -->
+<div export=true>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <pre class=include>path: index.md</pre>
+div>
