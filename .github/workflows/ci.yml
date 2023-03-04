@@ -32,9 +32,9 @@ jobs:
     - name: Check
       run: ./gradlew build
     - name: Analyze
-      run: ./gradlew startFuseki owlQuery stopFuseki -x owlReason
+      run: ./gradlew startFuseki query stopFuseki -x reason
     - name: Report
-      run: ./gradlew generateWebsite -x owlQuery
+      run: ./gradlew bikeshed -x query
     - name: Upload build
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
