@@ -9,7 +9,7 @@ This is an example Oml project for a hypothetical mission called Kepler 16b.
 
 Clone this repo to your machine
    ```
-     git clone https://gitlab.com/melaasar/kepler16b.git
+     git clone git@github.com:melaasar/kepler16b.git
    ```
 ## Build
    
