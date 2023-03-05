@@ -9,7 +9,7 @@ vocabulary<http://example.com/vocabulary/mission#> as mission {
 
 	@rdfs:label "Objective"
 	@dc:^description """An [=Objective=] represents a specific interest 
-  that one or more stakeholders have in the successful execution of a mission."""
+	that one or more stakeholders have in the successful execution of a mission."""
 	concept Objective :> base:IdentifiedThing, base:AggregatedElement [
 		restricts all relation base:aggregates to Objective
 		restricts all relation base:isAggregatedIn to Objective
@@ -34,12 +34,11 @@ vocabulary<http://example.com/vocabulary/mission#> as mission {
 
 	@rdfs:label "Component"
 	@dc:^description """A [=Component=] is a designed entity that exists to 
-		presents one or more [=Interface=](s) in the context of a [=Mission=].
-    (The concept of interface will be introduced in pattern 5).
-    Example [=Component=]s include launch vehicle, spacecraft, telecommunication subsystem, 
-    flight software, attitude control software, and mission operations team.
-	
-	  [=Component=]s can be organized hierarchically by containment of other [=Component=]s. """
+	presents one or more [=Interface=](s) in the context of a [=Mission=].
+	(The concept of interface will be introduced in pattern 5).
+	Example [=Component=]s include launch vehicle, spacecraft, telecommunication subsystem, 
+	flight software, attitude control software, and mission operations team.
+	[=Component=]s can be organized hierarchically by containment of other [=Component=]s. """
 	concept Component :> base:ContainedElement, base:IdentifiedThing [
 		restricts all relation base:contains to Component
 		restricts all relation base:isContainedIn to Component
