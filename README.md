@@ -29,7 +29,7 @@ Start Fuseki Server
    
 Run the provided sparql queries
    ```
-   ./gradlew owlQuery
+   ./gradlew query
    ```
    
 Stop Fuseki Server
@@ -37,8 +37,12 @@ Stop Fuseki Server
    ./gradlew stopFuseki
    ```
 
-Generate the website with reports
+Generate the web views
    ```
-   ./gradlew generateWebsite
+   ./gradlew render
    ```
-
+   
+Render the document
+   ```
+   ./gradlew bikeshed
+   ```
