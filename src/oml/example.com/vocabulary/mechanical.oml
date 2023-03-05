@@ -13,8 +13,8 @@ vocabulary <http://example.com/vocabulary/mechanical#> as mechanical {
 
 	concept MassMagnitude :> vim4:InherentUnitaryQuantityValue [
 		restricts all relation vim4:characterizes to MechanicalComponent
-    	restricts relation vim4:instantiates to iso-80000-4.1:mass
-    	restricts relation vim4:unit to iso-80000-4.1:kilogram
+		restricts relation vim4:instantiates to iso-80000-4.1:mass
+		restricts relation vim4:unit to iso-80000-4.1:kilogram
 	]
 
 }
