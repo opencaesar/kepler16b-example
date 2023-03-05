@@ -39,13 +39,13 @@ vocabulary<http://example.com/vocabulary/base#> as base {
 	@rdfs:label "Aggregates"
 	@dc:^description """[=aggregates=] is a many-to-many relation used
 	to represent homeomeric relations that form directed acyclic graphs."""
-    relation entity Aggregates [
+	relation entity Aggregates [
 		from AggregatedElement
-    	to AggregatedElement
-    	forward aggregates
-    	reverse isAggregatedIn
-    	asymmetric
-    	irreflexive
+    		to AggregatedElement
+    		forward aggregates
+    		reverse isAggregatedIn
+    		asymmetric
+    		irreflexive
 	]
 
  	@rdfs:label "ContainedElement"
@@ -57,7 +57,7 @@ vocabulary<http://example.com/vocabulary/base#> as base {
 	to represent homeomeric relations that form directed rooted trees."""
 	relation entity Contains [
 		from ContainedElement
-    	to ContainedElement
+		to ContainedElement
 		forward contains
 		@rdfs:label "is contained in"
 		reverse isContainedIn
