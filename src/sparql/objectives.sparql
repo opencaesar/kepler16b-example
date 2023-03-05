@@ -4,9 +4,8 @@ PREFIX mission:     <http://example.com/vocabulary/mission#>
 SELECT DISTINCT ?o_id ?o_name
 
 WHERE {
-	?obj 
-      a mission:Objective ;
-      base:hasIdentifier ?o_id ;
-      base:hasCanonicalName ?o_name .
+	?obj a mission:Objective ;
+	     base:hasIdentifier ?o_id ;
+	     base:hasCanonicalName ?o_name .
 }
 ORDER BY ?o_id
