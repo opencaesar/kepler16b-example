@@ -2,10 +2,10 @@
 The following are the objectives of the Kepler13b project:
 <pre class=include>path: html/objectives.html</pre>
 
-## First Point
+## First Point ## {#First-Point}
 This is the first point
 
-## Second Point
+## Second Point ## {#Second-Point}
 This is the second point
 
 # Missions # {#Missions}
