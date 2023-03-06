@@ -2,30 +2,30 @@ body {
     padding: 0;
     margin: 0;
     max-width: unset;
-  }
-  table.def th {
-      white-space: nowrap;
-  }
-  table.def ul {
-      padding-left: 1em;
-  }
-  table.def dfn code {
-      font-family: sans-serif;
-      color: #005A9C;
-  }
-  dd > p:first-child, li > p:first-child {
-      margin-top: 16px;
-  }
-  code {
-    color:red; 
+}
+table.def th {
+    white-space: nowrap;
+}
+table.def ul {
+    padding-left: 1em;
+}
+table.def dfn code {
+    font-family: sans-serif;
+    color: #005A9C;
+}
+dd > p:first-child, li > p:first-child {
+    margin-top: 16px;
+}
+code {
+color:red; 
+font-weight: bold;
+}
+@media (prefers-color-scheme: dark) {
+    code {
+    color:yellow; 
     font-weight: bold;
-  }
-  @media (prefers-color-scheme: dark) {
-      code {
-        color:yellow; 
-        font-weight: bold;
-      }
-  }
+    }
+}
 .link { 
     stroke: #999; 
     stroke-opacity: .6; 
