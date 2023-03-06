@@ -1,6 +1,6 @@
 # Kepler 16b
 
-![CI](https://github.com/melaasar/kepler16b/actions/workflows/ci.yml/badge.svg)(https://github.com/melaasar/kepler16b/actions/workflows/ci.yml)
+[![CI](https://github.com/melaasar/kepler16b/actions/workflows/ci.yml/badge.svg)](https://github.com/melaasar/kepler16b/actions/workflows/ci.yml)
 [![Pages](https://img.shields.io/badge/Pages-HTML-blue)](http://melaasar.github.io/kepler16b/) 
 
 This is an example Oml project for a hypothetical mission called Kepler 16b.
