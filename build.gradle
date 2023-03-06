@@ -110,6 +110,7 @@ task reason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", dependsOn:
 task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
 	configurationPath = file('.fuseki.ttl')
 	outputFolderPath = file('.fuseki')
+	//webUI = true
 }
 
 /*
@@ -147,11 +148,13 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
 }
 
 /*
- * Generate the website with reports
+ * Render the model data using web views
  */
 import org.apache.tools.ant.filters.*
 task render(group:"oml", dependsOn: query) {
-	inputs.files(fileTree("src/bs"))
+	inputs.files(file("src/bs/style.css"))
+	inputs.files(fileTree("src/bs/js"))
+	inputs.files(fileTree("build/json"))
 	outputs.files(fileTree("build/web"))
 	doFirst {
 		copy {
@@ -171,13 +174,15 @@ task render(group:"oml", dependsOn: query) {
 }
 
 /*
- * A task to build the project, which executes several tasks together
+ * Generate a bikeshed document with mixed narrative and model data
  */
 task bikeshed(group:"oml", dependsOn: render) {
 	inputs.files(fileTree("src/bs"))
 	outputs.files(file("build/web/index.html"))
 	doFirst { 
-		exec { commandLine "bikeshed", "--die-on=link-error", "spec", "src/bs/index.bs", "build/web/index.html" }
+		exec {
+			commandLine "bikeshed", "--die-on=link-error", "spec", "src/bs/index.bs", "build/web/index.html" 
+		}
 	}
 }
 

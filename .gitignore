@@ -7,3 +7,6 @@ build
 
 # Fuseki output directory
 .fuseki
+
+#Jupyter
+.jpnyb_checkpoints
