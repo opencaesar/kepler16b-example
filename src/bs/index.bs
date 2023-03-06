@@ -1,6 +1,6 @@
 <!-- Metadata -->
 <pre class='metadata'>
-Title: Kebler16b
+Title: Kepler16b
 Shortname: kepler16b
 Level: none
 Status: iso/TR
