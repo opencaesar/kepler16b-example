@@ -8,6 +8,9 @@ This is the first point
 ## Second Point ## {#Second-Point}
 This is the second point
 
+## Third Point ## {#Third-Point}
+This is the third point
+
 # Missions # {#Missions}
 The following are the missions of the Kepler13b project:
 <pre class=include>path: html/missions.html</pre>
