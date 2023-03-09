@@ -10,7 +10,7 @@ description <http://example.com/kepler16b/objectives#> as objectives {
 
 	ci characterize-atmosphere : mission:Objective [
 		base:hasIdentifier "O.01"
-		base:hasCanonicalName "Characterize the atmosphere of Kepler 16b TTTTT"
+		base:hasCanonicalName "Characterize the atmosphere of Kepler 16b"
 		base:aggregates characterize-liquid-ocean
 	]
 
