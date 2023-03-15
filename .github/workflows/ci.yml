@@ -50,6 +50,21 @@ jobs:
       uses: actions/upload-pages-artifact@v1
       with:
         path: build/web/
+
+  jupyter:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with: 
+          python-version: 3.11
+      - name: Install Dependencies
+        run: pip install -r src/jpynb/requirements.txt
+      - name: Convert notebook to html
+        run: python -m nbconvert --output-dir='./build/web/jpynb' --execute --to html src/jpynb/kepler16b_reduction.ipynb --no-input
+      - name: Add Link to Bikeshed HTML and vice versa
+        run: python src/jpynb/scripts/add_connect_bs_jpynb.py
         
   deploy:
     needs: build
