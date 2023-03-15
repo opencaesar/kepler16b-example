@@ -61,7 +61,7 @@ jobs:
     - name: Convert notebook to html
       run: python -m nbconvert --output-dir='./build/web/jpynb' --execute --to html src/jpynb/kepler16b_reduction.ipynb --no-input
     - name: Add Link to Bikeshed HTML and vice versa
-      run: python src/jpynb/scripts/add_connect_bs_jpynb.py
+      run: sudo python src/jpynb/scripts/add_connect_bs_jpynb.py
         
   deploy:
     needs: build
