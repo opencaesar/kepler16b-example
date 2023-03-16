@@ -40,16 +40,6 @@ jobs:
       with:
         source: src/bs/index.bs
         destination: build/web/index.html
-    - name: Upload
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: build/
-    - name: Publish
-      uses: actions/upload-pages-artifact@v1
-      with:
-        path: build/web/
 
   # jupyter:
     - name: Set up Python 3.10
@@ -62,6 +52,18 @@ jobs:
       run: python -m nbconvert --output-dir='./build/web/jpynb' --execute --to html src/jpynb/kepler16b_reduction.ipynb --no-input
     - name: Add Link to Bikeshed HTML and vice versa
       run: sudo python src/jpynb/scripts/add_connect_bs_jpynb.py
+
+  # Upload Build Folder
+    - name: Upload
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: build/
+    - name: Publish
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: build/web/
         
   deploy:
     needs: build
