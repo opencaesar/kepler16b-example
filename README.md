@@ -1,7 +1,7 @@
 # Kepler 16b
 
-[![CI](https://github.com/opencaesar/kepler16b/actions/workflows/ci.yml/badge.svg)](https://github.com/opencaesar/kepler16b/actions/workflows/ci.yml)
-[![Pages](https://img.shields.io/badge/Pages-HTML-blue)](http://opencaesar.github.io/kepler16b/) 
+[![CI](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml/badge.svg)](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml)
+[![Pages](https://img.shields.io/badge/Pages-HTML-blue)](http://opencaesar.github.io/kepler16b-example/) 
 
 This is an example Oml project for a hypothetical mission called Kepler 16b.
 
@@ -9,7 +9,7 @@ This is an example Oml project for a hypothetical mission called Kepler 16b.
 
 Clone this repo to your machine
    ```
-     git clone git@github.com:opencaesar/kepler16b.git
+     git clone git@github.com:opencaesar/kepler16b-example.git
    ```
 ## Build
    
