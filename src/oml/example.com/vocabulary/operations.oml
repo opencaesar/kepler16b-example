@@ -5,25 +5,25 @@ vocabulary <http://example.com/vocabulary/operations#> as operations {
 
 	extends <http://example.com/vocabulary/mission#> as mission
 
-	concept CommandInterface :> mission:Interface
+	concept CommandInterface < mission:Interface
 
-	concept CommandOutInterface :> CommandInterface
+	concept CommandOutInterface < CommandInterface
 
-	concept CommandInInterface :> CommandInterface
+	concept CommandInInterface < CommandInterface
 
-	concept TelemetryInterface :> mission:Interface
+	concept TelemetryInterface < mission:Interface
 
-	concept TelemetryOutInterface :> TelemetryInterface
+	concept TelemetryOutInterface < TelemetryInterface
 
-	concept TelemetryInInterface :> TelemetryInterface
+	concept TelemetryInInterface < TelemetryInterface
 
-	concept CommandUplink :> mission:Junction [
+	concept CommandUplink < mission:Junction [
 		restricts all relation mission:joins to CommandInterface
 		restricts all relation mission:joins1 to CommandOutInterface
 		restricts all relation mission:joins2 to CommandInInterface
 	]
 
-	concept TelemetryDownlink :> mission:Junction [
+	concept TelemetryDownlink < mission:Junction [
 		restricts all relation mission:joins to TelemetryInterface
 		restricts all relation mission:joins1 to TelemetryOutInterface
 		restricts all relation mission:joins2 to TelemetryInInterface
