@@ -11,11 +11,19 @@ Editor: [Maged Elaasar](https://www.opencaesar.io/contributors/Maged%20Elaasar.h
 Boilerplate: references no, conformance no, spec-metadata yes, copyright yes, issues no
 Local Boilerplate: copyright yes, logo yes
 Markup Shorthands: markdown yes
-Abstract: This document describes the kepler16b project.
+Abstract: This document describes the Kepler16b project which carries a fanciful space mission to an exoplanet orbiting a binary star system.
 </pre>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="js/D3Table.js"></script>
+<script src="js/D3Tree.js"></script>
+<script src="js/D3Graph.js"></script>
+<script src="js/D3TreeTable.js"></script>
+<script src="js/D3TreeMap.js"></script>
+<script src="js/Rollup.js"></script>
 
 <!-- Instruct bikeshed to export all 'dfn', even if they are not referenced, without warnings. -->
 <div export=true>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <pre class=include>path: index.md</pre>
-div>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <pre class=include>path: kepler16b.md</pre>
+</div>

@@ -1,0 +1,16 @@
+PREFIX base:        <http://example.com/vocabulary/base#>
+PREFIX mission:     <http://example.com/vocabulary/mission#>
+
+SELECT DISTINCT ?m_id  (CONCAT(?m_id, " ", ?m_name) AS ?m_fullname) ?c_id (CONCAT(?c_id, " ", ?c_name) AS ?c_fullname)
+
+WHERE {
+	?m a mission:Mission ;
+	   base:hasIdentifier ?m_id ;
+	   base:hasCanonicalName ?m_name ;
+	   mission:deploys [
+		a mission:Component ;
+		base:hasIdentifier ?c_id ;
+		base:hasCanonicalName ?c_name
+	   ]
+}
+ORDER BY ?m_id ?c_id

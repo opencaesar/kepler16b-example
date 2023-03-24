@@ -1,0 +1,13 @@
+PREFIX base:        <http://example.com/vocabulary/base#>
+PREFIX mission:     <http://example.com/vocabulary/mission#>
+PREFIX dc:        <http://purl.org/dc/elements/1.1/>
+PREFIX oml:        <http://opencaesar.io/oml#>
+
+SELECT DISTINCT ?id ?requirement
+
+WHERE {
+	?req a mission:Requirement ;
+		base:hasIdentifier ?id ;
+		dc:description ?requirement .
+}
+ORDER BY ?id

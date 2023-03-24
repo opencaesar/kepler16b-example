@@ -1,19 +1,24 @@
 PREFIX vim4:	    <http://bipm.org/jcgm/vim4#>
 PREFIX base:        <http://example.com/vocabulary/base#>
 PREFIX mission:     <http://example.com/vocabulary/mission#>
+PREFIX mechanical:  <http://example.com/vocabulary/mechanical#>
 
-SELECT DISTINCT ?c1 ?c1_id ?c1_mass ?c2 ?c2_id
+SELECT DISTINCT ?c1_id (CONCAT(?c1_id, " ", ?c1_name) AS ?c1_fullname) ?c2_id  (CONCAT(?c2_id, " ", ?c2_name) AS ?c2_fullname) ?c1_mass
 
 WHERE {
 	?c1 a mission:Component ;
-    	base:hasIdentifier ?c1_id .
+    	base:hasIdentifier ?c1_id ;
+    	base:hasCanonicalName ?c1_name .
 	OPTIONAL {
-		?c1 base:isContainedIn ?c2 .
-		?c2 base:hasIdentifier ?c2_id .
+		?c1 base:contains [
+			a mission:Component ;
+			base:hasIdentifier ?c2_id ;
+			base:hasCanonicalName ?c2_name
+		]
 	}
-	OPTIONAL {
+    OPTIONAL {
 	   	?c1_mass_mag vim4:characterizes ?c1 ;
-	  		     vim4:hasDoubleNumber ?c1_mass .
+	   		         vim4:hasDoubleNumber ?c1_mass .
 	}
 }
 ORDER BY ?c1_id ?c2_id

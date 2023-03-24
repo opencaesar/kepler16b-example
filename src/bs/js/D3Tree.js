@@ -1,6 +1,6 @@
 
 
-function drawTree(data, containerID,nameSeperators = [],transformData = true, _width=960, _height=500) {
+function drawTree(data, containerID, root_name, unique=true, _width=960, _height=500, depthMultiplier=180) {
 
 	function getOrCreateNode(id, name, dict){
 		var node = dict[id];
@@ -29,20 +29,18 @@ function drawTree(data, containerID,nameSeperators = [],transformData = true, _w
 	
 	function transform(data){
 		var idToNode = [];
-		var root = getOrCreateNode("-1","Missions",idToNode);
+		var root = getOrCreateNode("-1",root_name,idToNode);
 		root.parent = "null";
 		var columns = data.head.vars;
 		data.results.bindings.forEach(item => {
-			var missionID = item[columns[0]].value;
-			var missionsName = item[columns[1]].value;
-			var childID = item[columns[2]].value;
-			var _childID = missionID+"."+childID;
-			var grandChildID = item[columns[3]].value;
-			var _grandChildID = _childID + "." + grandChildID;
-			addNode("-1",missionID,missionsName,idToNode);
-			addNode(missionID,_childID,childID,idToNode);
-			addNode(_childID,_grandChildID,grandChildID,idToNode);
-			
+			var parent_id = "-1";
+			for (let i = 0; i < columns.length/2; i++) {
+				if (item[columns[2*i]]) {
+					var childId = (!unique ? parent_id+"." : "") +item[columns[2*i]].value;
+					addNode(parent_id, childId, item[columns[2*i+1]].value, idToNode);
+					parent_id = childId;
+				}
+			}
 		});	
 		return root;
 	}
@@ -52,7 +50,7 @@ function drawTree(data, containerID,nameSeperators = [],transformData = true, _w
 	}
 
 	
-	var treeData = transformData ? transform(data, nameSeperators):data;
+	var treeData = transform(data);
 
 	// ************** Generate the tree diagram	 *****************
 	var margin = {top: 20, right: 120, bottom: 20, left: 120},
@@ -103,7 +101,7 @@ function drawTree(data, containerID,nameSeperators = [],transformData = true, _w
 	    });
 
 		// Normalize for fixed-depth.
-	    nodes.forEach(function(d) { d.y = d.depth * 180; });
+	    nodes.forEach(function(d) { d.y = d.depth * depthMultiplier; });
 
 	
 	    const height = right.x - left.x + margin.top + margin.bottom;
@@ -132,10 +130,7 @@ function drawTree(data, containerID,nameSeperators = [],transformData = true, _w
 	        .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
 	        .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
 	        .text(function(d){
-				if (transformData || !d.parent){
-					return d.data.name;
-				} 
-				return d.data.name + "(" + getVal(d) + ")";
+				return d.data.name;
 			});
 	
 	    // Transition nodes to their new position.

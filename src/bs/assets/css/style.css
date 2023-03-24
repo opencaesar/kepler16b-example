@@ -32,10 +32,10 @@ font-weight: bold;
     stroke-width: 1px; 
 }
 .collapsible {
-    background-color: #777;
-    color: white;
+    background-color: white;
+    color: black;
     cursor: pointer;
-    padding: 18px;
+    padding: 5px;
     width: 100%;
     border: none;
     text-align: left;
@@ -43,7 +43,7 @@ font-weight: bold;
     font-size: 15px;
 }
 .active, .collapsible:hover {
-    background-color: #555;
+    background-color: white;
 }
 #table {
     font-family: Arial, Helvetica, sans-serif;
@@ -69,4 +69,25 @@ font-weight: bold;
     padding: 8px;
     background-color: #04AA6D;
     color: white;
+}
+figcaption {
+    /* in case figure is overlarge, limit caption to 50em */
+    margin-left: unset;
+    margin-top: 1rem;
+}
+.node {
+    cursor: pointer;
+}
+.node circle {
+fill: #fff;
+stroke: steelblue;
+stroke-width: 3px;
+}
+.node text {
+font: 12px sans-serif;
+}
+.link {
+fill: none;
+stroke: #ccc;
+stroke-width: 1px;
 }

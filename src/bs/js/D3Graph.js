@@ -21,11 +21,9 @@ function toGraphData(data){
 	var columns = data.head.vars;
 	data.results.bindings.forEach(item => {
 		var srcID = item[columns[0]].value;
-		var srcName = item[columns[1]].value;
-		var trgtID = item[columns[2]].value;
-		var trgtName = item[columns[3]].value;
-		var src = getOrCreateNode(srcID,srcName,nodes,idToNode);
-		var trgt = getOrCreateNode(trgtID,trgtName,nodes,idToNode);
+		var trgtID = item[columns[1]].value;
+		var src = getOrCreateNode(srcID,srcID,nodes,idToNode);
+		var trgt = getOrCreateNode(trgtID,trgtID,nodes,idToNode);
 		var link = {};
 		link.source = src.id;
 		link.target = trgt.id;
@@ -35,9 +33,8 @@ function toGraphData(data){
 }
 
 
-function drawGraph(data,containerID,transform = true,width=960,height=600){
-	var graph = data;
-	if (transform) graph = toGraphData(data)
+function drawGraph(data,containerID,width=500,height=300){
+	var graph = toGraphData(data)
 	var container = d3.select(containerID);
 	var svg = container.append('svg').attr("width",width).attr("height",height);
     // arrow def

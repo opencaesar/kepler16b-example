@@ -1,11 +1,13 @@
 PREFIX base:        <http://example.com/vocabulary/base#>
 PREFIX mission:     <http://example.com/vocabulary/mission#>
 
-SELECT DISTINCT ?o_id ?o_name
+SELECT DISTINCT ?obj1_id ?obj2_id
 
 WHERE {
 	?obj a mission:Objective ;
-	     base:hasIdentifier ?o_id ;
-	     base:hasCanonicalName ?o_name .
+		base:hasIdentifier ?obj1_id ;
+		base:aggregates [
+			base:hasIdentifier ?obj2_id ;
+		]
 }
-ORDER BY ?o_id
+ORDER BY ?obj1_id

@@ -15,12 +15,13 @@ function tabulate(data, containerID) {
 	  .selectAll('th')
 	  .data(columns).enter()
 	  .append('th')
-	    .text(function (column) { return column; });
+	  .text(function (column) { 
+		return column.replace(/\b\w/g, (match) => match.toUpperCase()).replace(/([A-Z])/g, " $1"); 
+	});
 
 	// create a row for each object in the data
 	var rows = tbody.selectAll('tr')
-	  .data(data.results.bindings)
-	  .enter()
+	  .data(data.results.bindings).enter()
 	  .append('tr');
 
 	// create a cell in each row for each column
@@ -32,7 +33,7 @@ function tabulate(data, containerID) {
 	  })
 	  .enter()
 	  .append('td')
-	    .text(function (d) { return d.value; });
+	  .text(function (d) { return d.value; });
 
   return table;
 }

@@ -1,19 +1,17 @@
 PREFIX base:        <http://example.com/vocabulary/base#>
 PREFIX mission:     <http://example.com/vocabulary/mission#>
 
-SELECT DISTINCT ?m_id ?m_name ?o1_id ?o2_id
+SELECT DISTINCT ?m_id  (CONCAT(?m_id, " ", ?m_name) AS ?m_fullname) ?o_id (CONCAT(?o_id, " ", ?o_name) AS ?o_fullname)
 
 WHERE {
 	?m a mission:Mission ;
 	   base:hasIdentifier ?m_id ;
-	   base:hasCanonicalName ?m_name;
+	   base:hasCanonicalName ?m_name ;
 	   mission:pursues [
 		a mission:Objective ;
-		base:hasIdentifier ?o1_id ;
-		base:aggregates [
-			base:hasIdentifier ?o2_id ;
-		]
+		base:hasIdentifier ?o_id ;
+		base:hasCanonicalName ?o_name
 	   ]
 }
-ORDER BY ?m_id ?o1_id ?o2_id
+ORDER BY ?m_id ?o_id
 
