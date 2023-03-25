@@ -40,7 +40,7 @@ Those components have the following physical decomposition.
 
 # Masses # {#Masses}
 
-The Kepler16b componetns have the following masses characterizations in (kg) rolled up for each composite component.
+The Kepler16b componetns have the following mass characterizations in (kg) rolled up for each composite component.
 
 <div id='figure6'></div>
 <script type="text/javascript" src="json/masses.json"></script>
