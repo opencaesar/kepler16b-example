@@ -71,13 +71,13 @@ The Kepler16b project specifies the following requirements.
 <script type="text/javascript" src="json/requirements1.json"></script>
 <script>tabulate(data, '#figure9')</script>
 
-Some of these requirements formally specify that some components shall present some interfaces as follows.
+Some of the requirements specify that some components shall present interfaces as follows.
 
 <div id='figure10'></div>
 <script type="text/javascript" src="json/requirements2.json"></script>
 <script>tabulate(data, '#figure10')</script>
 
-Some of these requirements refine other others as follows.
+Some of these requirements refine others as follows.
 
 <div id='figure11'></div>
 <script type="text/javascript" src="json/requirements3.json"></script>
