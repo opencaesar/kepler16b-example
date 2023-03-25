@@ -14,6 +14,15 @@ Markup Shorthands: markdown yes
 Abstract: This document describes the Kepler16b project which carries a fanciful space mission to an exoplanet orbiting a binary star system.
 </pre>
 
+<head>
+    <meta property=’og:title’ content='Kepler16b'/>
+    <meta property=’og:image’ content='assets/img/kepler16b.png'/>
+    <meta property=’og:description’ content='The kepler16b Project'/>
+    <meta property=’og:url’ content='http://www.opencaesar.io/kepler16b-example/'/>
+    <meta property='og:image:width' content='1200' />
+    <meta property='og:image:height' content='627' />
+</head>
+
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="js/D3Table.js"></script>
 <script src="js/D3Tree.js"></script>
