@@ -70,6 +70,7 @@ dependencies {
 
 /*
  * A task to download, extract and merge the OML dependencies
+ * @seeAlso https://github.com/opencaesar/oml-tools/blob/master/oml-merge
  */
 task downloadDependencies(type:io.opencaesar.oml.merge.OmlMergeTask, group:"oml") {
 	inputZipPaths = configurations.oml.files
@@ -78,6 +79,7 @@ task downloadDependencies(type:io.opencaesar.oml.merge.OmlMergeTask, group:"oml"
 
 /*
  * A task to convert the OML catalog to OWL catalog
+ * @seeAlso https://github.com/opencaesar/owl-adapter/blob/master/oml2owl
  */
 task omlToOwl(type:io.opencaesar.oml2owl.Oml2OwlTask, group:"oml", dependsOn: downloadDependencies) {
 	// OML catalog
@@ -88,6 +90,7 @@ task omlToOwl(type:io.opencaesar.oml2owl.Oml2OwlTask, group:"oml", dependsOn: do
 
 /*
  * A task to run the Openllet reasoner on the OWL catalog
+ * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-reason
  */
 task reason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", dependsOn: omlToOwl) {
 	// OWL catalog
@@ -106,6 +109,7 @@ task reason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", dependsOn:
 
 /*
  * Start the headless Fuseki server
+ * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-fuseki
  */
 task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
 	configurationPath = file('.fuseki.ttl')
@@ -115,6 +119,7 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
 
 /*
  * A task to load an OWL catalog to a Fuseki dataset endpoint
+ * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load
  */
 task load(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: reason) {
 	inputs.files(startFuseki.outputFolderPath) // rerun when Fuseki (with memory dataset) restarts
@@ -130,6 +135,7 @@ task load(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: reaso
 
 /*
  * A task to run a set of SPARQL queries on a Fuseki dataset endpoint
+ * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-query
  */
 task query(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: load) {
 	inputs.files(load.inputs.files) // rerun when the dataset changes
@@ -141,6 +147,7 @@ task query(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: lo
 
 /*
  * Stop the headless Fuseki server
+ * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-fuseki
  */
 task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
 	mustRunAfter query, load
