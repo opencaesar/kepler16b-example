@@ -15,10 +15,10 @@ Abstract: This document describes the Kepler16b project which carries a fanciful
 </pre>
 
 <head>
-    <meta property=’og:title’ content="Kepler16b"/>
-    <meta property=’og:image’ content="assets/img/kepler16b.png"/>
-    <meta property=’og:description’ content="The kepler16b Project"/>
-    <meta property=’og:url’ content="http://www.opencaesar.io/kepler16b-example/"/>
+    <meta property="og:title" content="Kepler16b"/>
+    <meta property="og:image" content="assets/img/kepler16b.png"/>
+    <meta property="og:description" content="The kepler16b Project"/>
+    <meta property="og:url" content="http://www.opencaesar.io/kepler16b-example/"/>
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="627" />
 </head>
