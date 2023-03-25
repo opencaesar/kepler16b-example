@@ -11,13 +11,13 @@ Editor: [Maged Elaasar](https://www.opencaesar.io/contributors/Maged%20Elaasar.h
 Boilerplate: references no, conformance no, spec-metadata yes, copyright yes, issues no
 Local Boilerplate: copyright yes, logo yes
 Markup Shorthands: markdown yes
-Abstract: This document describes the Kepler16b project which carries a fanciful space mission to an exoplanet orbiting a binary star system.
+Abstract: This document describes the system engineering information of the Kepler16b project which carries a fanciful space mission to an exoplanet orbiting a binary star system.
 </pre>
 
 <head>
     <meta property="og:title" content="Kepler16b"/>
-    <meta property="og:image" content="assets/img/kepler16b.png"/>
-    <meta property="og:description" content="The kepler16b Project"/>
+    <meta property="og:image" content="assets/img/kepler16b-sm.png"/>
+    <meta property="og:description" content="This document describes the system engineering information of the Kepler16b project which carries a fanciful space mission to an exoplanet orbiting a binary star system."/>
     <meta property="og:url" content="http://www.opencaesar.io/kepler16b-example/"/>
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="627" />
