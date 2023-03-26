@@ -7,28 +7,28 @@ vocabulary<http://example.com/vocabulary/base#> as base {
 
 	extends <http://www.w3.org/2001/XMLSchema#> as xsd
 
-	@rdfs:label "IdentifiedThing"
-	@dc:^description """An [=IdentifiedThing=] is a thing with identity and identifying properties."""
-	aspect IdentifiedThing [
+	@rdfs:label "IdentifiedElement"
+	@dc:^description """An [=IdentifiedElement=] is an element with identity and identifying properties."""
+	aspect IdentifiedElement [
 		key hasIdentifier
 	]
 
 	@rdfs:label "hasCanonicalName"
 	scalar property hasCanonicalName [
-		domain IdentifiedThing
+		domain IdentifiedElement
 		range xsd:string
 	]
 
 	@rdfs:label "hasIdentifier"
 	scalar property hasIdentifier [
-		domain IdentifiedThing
+		domain IdentifiedElement
 		range xsd:string
 		functional
 	]
 
 	@rdfs:label "hasDescription"
 	scalar property hasDescription [
-		domain IdentifiedThing
+		domain IdentifiedElement
 		range xsd:string
 	]
 
