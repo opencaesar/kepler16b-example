@@ -1,5 +1,5 @@
 @dc:title "Kepler 16b Example Mass Properties"
-description <http://example.com/kepler16b/mass-properties#> as mass-properties {
+description <http://example.com/kepler16b/masses#> as masses {
 
 	uses <http://purl.org/dc/elements/1.1/> as dc
 

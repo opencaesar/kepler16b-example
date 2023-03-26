@@ -17,5 +17,5 @@ description bundle <http://example.com/kepler16b/bundle#> as ^bundle {
 
 	includes <http://example.com/kepler16b/missions#>
 
-	includes <http://example.com/kepler16b/mass-properties#>
+	includes <http://example.com/kepler16b/masses#>
 }
