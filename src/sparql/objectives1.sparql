@@ -1,11 +1,11 @@
 PREFIX base:        <http://example.com/vocabulary/base#>
 PREFIX mission:     <http://example.com/vocabulary/mission#>
 
-SELECT DISTINCT ?id ?name
+SELECT DISTINCT ?id ?objective
 
 WHERE {
 	?obj a mission:Objective ;
 		base:hasIdentifier ?id ;
-		base:hasCanonicalName ?name .
+		base:hasCanonicalName ?objective .
 }
 ORDER BY ?id
