@@ -3,7 +3,7 @@
  */
 ext.title = 'Kepler16b'
 description = 'This is the kepler16b example'
-group = 'com.example'
+group = 'io.opencaesar.ontologies'
 version = '1.0.0'
 
 /* 
