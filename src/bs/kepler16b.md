@@ -1,6 +1,6 @@
 # Objectives # {#Objectives}
 
-The Kepler13b project is pursuing multiple objectives shown in the table below.
+The Kepler13b project is pursuing multiple objectives shown in the table below AAA.
 
 <div id='figure1'></div>
 <script type="text/javascript" src="json/objectives1.json"></script>
