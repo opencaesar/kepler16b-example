@@ -46,10 +46,3 @@ Render the document
    ```
    ./gradlew bikeshed
    ```
-
-# Jupyter Notebook
-For MacOS users:
-1. sudo mkdir /usr/local/share/jupyter
-2. sudo chown -R <macos_username> /usr/local/share/jupyter
-3. Run `./gradlew query` 
-4. Run the section of the notebook under `1. Objectives`
