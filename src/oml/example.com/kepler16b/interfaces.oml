@@ -11,82 +11,82 @@ description <http://example.com/kepler16b/interfaces#> as interfaces {
 
 	extends <http://example.com/kepler16b/components#> as components
 
-	ci orbiter-spacecraft.commandIn : operations:CommandInInterface [
+	instance orbiter-spacecraft.commandIn : operations:CommandInInterface [
 		base:hasIdentifier "I.01"
 		base:hasCanonicalName "Orbiter Spacecraft Command In"
 	]
 
-	ci orbiter-spacecraft.telemetryOut : operations:TelemetryOutInterface [
+	instance orbiter-spacecraft.telemetryOut : operations:TelemetryOutInterface [
 		base:hasIdentifier "I.02"
 		base:hasCanonicalName "Orbiter Spacecraft Telemetry Out"
 	]
 
-	ri orbiter-spacecraft.presents.commandIn : mission:Presents [
+	relation instance orbiter-spacecraft.presents.commandIn : mission:Presents [
 		from components:orbiter-spacecraft
 		to orbiter-spacecraft.commandIn
 	]
 
-	ri orbiter-spacecraft.presents.telemetryOut : mission:Presents [
+	relation instance orbiter-spacecraft.presents.telemetryOut : mission:Presents [
 		from components:orbiter-spacecraft
 		to orbiter-spacecraft.telemetryOut
 	]
 
-	ci orbiter-ground-data-system.commandOut : operations:CommandOutInterface [
+	instance orbiter-ground-data-system.commandOut : operations:CommandOutInterface [
 		base:hasIdentifier "I.03"
 		base:hasCanonicalName "Orbiter Ground Data System Command Out"
 	]
 
-	ci orbiter-ground-data-system.telemetryIn : operations:TelemetryInInterface [
+	instance orbiter-ground-data-system.telemetryIn : operations:TelemetryInInterface [
 		base:hasIdentifier "I.04"
 		base:hasCanonicalName "Orbiter Ground Data System Telemetry In"
 	]
 
-	ri orbiter-ground-data-system.presents.commandOut : mission:Presents [
+	relation instance orbiter-ground-data-system.presents.commandOut : mission:Presents [
 		from components:orbiter-ground-data-system
 		to orbiter-ground-data-system.commandOut
 	]
 
-	ri orbiter-ground-data-system.presents.telemetryIn : mission:Presents [
+	relation instance orbiter-ground-data-system.presents.telemetryIn : mission:Presents [
 		from components:orbiter-ground-data-system
 		to orbiter-ground-data-system.telemetryIn
 	]
 
-	ci lander-spacecraft.commandIn : operations:CommandInInterface [
+	instance lander-spacecraft.commandIn : operations:CommandInInterface [
 		base:hasIdentifier "I.05"
 		base:hasCanonicalName "Lander Spacecraft Command In"
 	]
 
-	ci lander-spacecraft.telemetryOut : operations:TelemetryOutInterface [
+	instance lander-spacecraft.telemetryOut : operations:TelemetryOutInterface [
 		base:hasIdentifier "I.06"
 		base:hasCanonicalName "Lander Spacecraft Telemetry Out"
 	]
 
-	ri lander-spacecraft.presents.commandIn : mission:Presents [
+	relation instance lander-spacecraft.presents.commandIn : mission:Presents [
 		from components:lander-spacecraft
 		to lander-spacecraft.commandIn
 	]
 
-	ri lander-spacecraft.presents.telemetryOut : mission:Presents [
+	relation instance lander-spacecraft.presents.telemetryOut : mission:Presents [
 		from components:lander-spacecraft
 		to lander-spacecraft.telemetryOut
 	]
 
-	ci lander-ground-data-system.commandOut : operations:CommandOutInterface [
+	instance lander-ground-data-system.commandOut : operations:CommandOutInterface [
 		base:hasIdentifier "I.07"
 		base:hasCanonicalName "Lander Ground Data System Command Out"
 	]
 
-	ci lander-ground-data-system.telemetryIn : operations:TelemetryInInterface [
+	instance lander-ground-data-system.telemetryIn : operations:TelemetryInInterface [
 		base:hasIdentifier "I.08"
 		base:hasCanonicalName "Lander Ground Data System Telemetry In"
 	]
 
-	ri lander-ground-data-system.presents.commandOut : mission:Presents [
+	relation instance lander-ground-data-system.presents.commandOut : mission:Presents [
 		from components:lander-ground-data-system
 		to lander-ground-data-system.commandOut
 	]
 
-	ri lander-ground-data-system.presents.telemetryIn : mission:Presents [
+	relation instance lander-ground-data-system.presents.telemetryIn : mission:Presents [
 		from components:lander-ground-data-system
 		to lander-ground-data-system.telemetryIn
 	]

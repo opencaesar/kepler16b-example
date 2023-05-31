@@ -10,90 +10,90 @@ description <http://example.com/kepler16b/requirements#> as requirements {
 	extends <http://example.com/kepler16b/interfaces#> as interfaces
 
 	@dc:^description """The components:orbiter-ground-data-system shall operate the components:orbiter-spacecraft via spacecraft commands and spacecraft telemetry."""
-	ci orbiter-ground-data-system-spacecraft-operations : mission:Requirement [
+	instance orbiter-ground-data-system-spacecraft-operations : mission:Requirement [
 		base:hasIdentifier "R.01"
 	]
 
 	@dc:^description """The components:orbiter-ground-data-system shall send commands to the components:orbiter-spacecraft."""
-	ci orbiter-ground-data-system-spacecraft-command-operations : mission:Requirement [
+	instance orbiter-ground-data-system-spacecraft-command-operations : mission:Requirement [
 		base:hasIdentifier "R.02"
 		mission:refines orbiter-ground-data-system-spacecraft-operations
 	]
 
 	@dc:^description """The components:orbiter-ground-data-system shall receive telemetry from the components:orbiter-spacecraft."""
-	ci orbiter-ground-data-system-spacecraft-telemetry-operations : mission:Requirement [
+	instance orbiter-ground-data-system-spacecraft-telemetry-operations : mission:Requirement [
 		base:hasIdentifier "R.03"
 		mission:refines orbiter-ground-data-system-spacecraft-operations
 	]
 
 	@dc:^description """The components:orbiter-ground-data-system shall send commands to the components:orbiter-spacecraft."""
-	ci orbiter-ground-data-system-command-to-spacecraft : mission:Requirement [
+	instance orbiter-ground-data-system-command-to-spacecraft : mission:Requirement [
 		base:hasIdentifier "R.04"
 		mission:specifies interfaces:orbiter-ground-data-system.presents.commandOut
 		mission:refines orbiter-ground-data-system-spacecraft-command-operations
 	]
 
 	@dc:^description """The components:orbiter-spacecraft shall receive commands from the components:orbiter-ground-data-system."""
-	ci orbiter-spacecraft-command-from-ground-data-system : mission:Requirement [
+	instance orbiter-spacecraft-command-from-ground-data-system : mission:Requirement [
 		base:hasIdentifier "R.05"
 		mission:specifies interfaces:orbiter-spacecraft.presents.commandIn
 		mission:refines orbiter-ground-data-system-spacecraft-command-operations
 	]
 
 	@dc:^description """The components:orbiter-ground-data-system shall receive telemetry from the components:orbiter-spacecraft."""
-	ci orbiter-ground-data-system-telemetry-from-spacecraft : mission:Requirement [
+	instance orbiter-ground-data-system-telemetry-from-spacecraft : mission:Requirement [
 		base:hasIdentifier "R.06"
 		mission:specifies interfaces:orbiter-ground-data-system.presents.telemetryIn
 		mission:refines orbiter-ground-data-system-spacecraft-telemetry-operations
 	]
 
 	@dc:^description """The components:orbiter-spacecraft shall send telemetry to the components:orbiter-ground-data-system."""
-	ci orbiter-spacecraft-telemetry-to-ground-data-system : mission:Requirement [
+	instance orbiter-spacecraft-telemetry-to-ground-data-system : mission:Requirement [
 		base:hasIdentifier "R.07"
 		mission:specifies interfaces:orbiter-spacecraft.presents.telemetryOut
 		mission:refines orbiter-ground-data-system-spacecraft-telemetry-operations
 	]
 
 	@dc:^description """The components:lander-ground-data-system shall operate the components:lander-spacecraft via spacecraft commands and spacecraft telemetry."""
-	ci lander-ground-data-system-spacecraft-operations : mission:Requirement [
+	instance lander-ground-data-system-spacecraft-operations : mission:Requirement [
 		base:hasIdentifier "R.08"
 	]
 
 	@dc:^description """The components:lander-ground-data-system shall send commands to the components:lander-spacecraft."""
-	ci lander-ground-data-system-spacecraft-command-operations : mission:Requirement [
+	instance lander-ground-data-system-spacecraft-command-operations : mission:Requirement [
 		base:hasIdentifier "R.09"
 		mission:refines lander-ground-data-system-spacecraft-operations
 	]
 
 	@dc:^description """The components:lander-ground-data-system shall receive telemetry from the components:lander-spacecraft."""
-	ci lander-ground-data-system-spacecraft-telemetry-operations : mission:Requirement [
+	instance lander-ground-data-system-spacecraft-telemetry-operations : mission:Requirement [
 		base:hasIdentifier "R.10"
 		mission:refines lander-ground-data-system-spacecraft-operations
 	]
 
 	@dc:^description """The components:lander-ground-data-system shall send commands to the components:lander-spacecraft."""
-	ci lander-ground-data-system-command-to-spacecraft : mission:Requirement [
+	instance lander-ground-data-system-command-to-spacecraft : mission:Requirement [
 		base:hasIdentifier "R.11"
 		mission:specifies interfaces:lander-ground-data-system.presents.commandOut
 		mission:refines lander-ground-data-system-spacecraft-command-operations
 	]
 
 	@dc:^description """The components:lander-spacecraft shall receive commands from the components:lander-ground-data-system."""
-	ci lander-spacecraft-command-from-ground-data-system : mission:Requirement [
+	instance lander-spacecraft-command-from-ground-data-system : mission:Requirement [
 		base:hasIdentifier "R.12"
 		mission:specifies interfaces:lander-spacecraft.presents.commandIn
 		mission:refines lander-ground-data-system-spacecraft-command-operations
 	]
 
 	@dc:^description """The components:lander-ground-data-system shall receive telemetry from the components:lander-spacecraft."""
-	ci lander-ground-data-system-telemetry-from-spacecraft : mission:Requirement [
+	instance lander-ground-data-system-telemetry-from-spacecraft : mission:Requirement [
 		base:hasIdentifier "R.13"
 		mission:specifies interfaces:lander-ground-data-system.presents.telemetryIn
 		mission:refines lander-ground-data-system-spacecraft-telemetry-operations
 	]
 
 	@dc:^description """The components:lander-spacecraft shall send telemetry to the components:lander-ground-data-system."""
-	ci lander-spacecraft-telemetry-to-ground-data-system : mission:Requirement [
+	instance lander-spacecraft-telemetry-to-ground-data-system : mission:Requirement [
 		base:hasIdentifier "R.14"
 		mission:specifies interfaces:lander-spacecraft.presents.telemetryOut
 		mission:refines lander-ground-data-system-spacecraft-telemetry-operations

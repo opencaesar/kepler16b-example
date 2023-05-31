@@ -1,4 +1,4 @@
-@dc:title "Operations Vocabulary"
+@dc:title "Mechanical Vocabulary"
 vocabulary <http://example.com/vocabulary/mechanical#> as mechanical {
 
 	extends <http://purl.org/dc/elements/1.1/> as dc
@@ -9,9 +9,9 @@ vocabulary <http://example.com/vocabulary/mechanical#> as mechanical {
 
 	uses <http://iso.org/iso-80000-4.1#> as iso-80000-4.1
 
-	concept MechanicalComponent :> mission:Component, vim4:Object
+	concept MechanicalComponent < mission:Component, vim4:Object
 
-	concept MassMagnitude :> vim4:InherentUnitaryQuantityValue [
+	concept MassMagnitude < vim4:InherentUnitaryQuantityValue [
 		restricts all relation vim4:characterizes to MechanicalComponent
 		restricts relation vim4:instantiates to iso-80000-4.1:mass
 		restricts relation vim4:unit to iso-80000-4.1:kilogram

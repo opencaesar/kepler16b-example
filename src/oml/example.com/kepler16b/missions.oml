@@ -11,7 +11,7 @@ description <http://example.com/kepler16b/missions#> as missions {
 
 	extends <http://example.com/kepler16b/components#> as components
 
-	ci orbiter : mission:Mission [
+	instance orbiter : mission:Mission [
 		base:hasIdentifier "M.01"
 		base:hasCanonicalName "Orbiter Mission"
 		mission:pursues objectives:characterize-atmosphere
@@ -23,7 +23,7 @@ description <http://example.com/kepler16b/missions#> as missions {
 		mission:deploys components:mission-operations-system
 	]
 
-	ci lander : mission:Mission [
+	instance lander : mission:Mission [
 		base:hasIdentifier "M.02"
 		base:hasCanonicalName "Lander Mission"
 		mission:pursues objectives:characterize-atmosphere
