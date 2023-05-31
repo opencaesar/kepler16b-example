@@ -1,4 +1,4 @@
-@dc:title "Operations Vocabulary"
+@dc:title "Mechanical Vocabulary"
 vocabulary <http://example.com/vocabulary/mechanical#> as mechanical {
 
 	extends <http://purl.org/dc/elements/1.1/> as dc
