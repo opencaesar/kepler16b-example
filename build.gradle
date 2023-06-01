@@ -145,14 +145,14 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
  */
 import org.apache.tools.ant.filters.*
 task render(group:"oml", dependsOn: query) {
-	inputs.files(file("src/bs/style.css"))
+	inputs.files(fileTree("src/bs/assets"))
 	inputs.files(fileTree("src/bs/js"))
 	inputs.files(fileTree("build/json"))
 	outputs.files(fileTree("build/web"))
 	doFirst {
 		copy {
-			from 'src/bs/style.css'
-			into 'build/web'
+			from 'src/bs/assets'
+			into 'build/web/assets'
 		}
 		copy {
 			from 'src/bs/js'
