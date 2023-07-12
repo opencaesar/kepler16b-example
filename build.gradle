@@ -20,6 +20,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
+        classpath 'io.opencaesar.owl:owl-doc-gradle:2.+'
 		classpath 'io.opencaesar.owl:owl-fuseki-gradle:2.+'
 		classpath 'io.opencaesar.owl:owl-query-gradle:2.+'
 		classpath 'io.opencaesar.owl:owl-load-gradle:2.+'
@@ -30,14 +31,10 @@ buildscript {
 }
 
 /*
- * Dataset-specific variables
+ * Properties
  */
-ext.dataset = [
-	// Name of dataset (matches one used in .fuseki.ttl file)
-	name: 'kepler16b',
-	// Root ontology IRI of the dataset
-	rootOntologyIri: 'http://example.com/kepler16b/bundle',
-]
+ext.dataset = 'kepler16b'
+ext.rootIri = 'http://example.com/kepler16b/bundle'
 
 /*
  * The repositories to look up OML dependencies in
@@ -86,15 +83,33 @@ task reason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", dependsOn:
 	// OWL catalog
 	catalogPath = file('build/owl/catalog.xml')
 	// Input ontology IRI to reason on
-	inputOntologyIri = "$dataset.rootOntologyIri".toString()
+	inputOntologyIri = "$rootIri".toString()
 	// Entailment statements to generate and the ontologies to persist them in
 	specs = [
-		"$dataset.rootOntologyIri/classes = ALL_SUBCLASS".toString(),
-		"$dataset.rootOntologyIri/properties = INVERSE_PROPERTY | ALL_SUBPROPERTY".toString(),
-		"$dataset.rootOntologyIri/individuals = ALL_INSTANCE | DATA_PROPERTY_VALUE | OBJECT_PROPERTY_VALUE | SAME_AS".toString()
+		"$rootIri/classes = ALL_SUBCLASS".toString(),
+		"$rootIri/properties = INVERSE_PROPERTY | ALL_SUBPROPERTY".toString(),
+		"$rootIri/individuals = ALL_INSTANCE | DATA_PROPERTY_VALUE | OBJECT_PROPERTY_VALUE | SAME_AS".toString()
 	]
 	// Junit error report
 	reportPath = file('build/log/reasoning.xml')
+}
+
+/*
+ * A task to generate documentation for the OWL catalog
+ */
+task generateDocs (type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: reason) {
+    // OWL catalog
+    inputCatalogPath = file('build/owl/catalog.xml')
+    // OWL catalog title
+    inputCatalogTitle = project.title
+    // OWL catalog version
+    inputCatalogVersion = project.version
+    // OWL Ontology Iris
+    inputOntologyIris = [ "$rootIri/classes", "$rootIri/properties",  "$rootIri/individuals" ]
+    // Output folder
+    outputFolderPath = file('build/doc')
+    // Output case sensitivie path
+    outputCaseSensitive = org.gradle.internal.os.OperatingSystem.current().isLinux()
 }
 
 /*
@@ -112,12 +127,12 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
 task load(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: reason) {
 	inputs.files(startFuseki.outputFolderPath) // rerun when Fuseki (with memory dataset) restarts
 	catalogPath = file('build/owl/catalog.xml')
-	endpointURL = "http://localhost:3030/$dataset.name".toString()
+	endpointURL = "http://localhost:3030/$dataset".toString()
 	fileExtensions = ['owl', 'ttl']
 	iris = [
-		"$dataset.rootOntologyIri/classes".toString(),
-		"$dataset.rootOntologyIri/properties".toString(),
-		"$dataset.rootOntologyIri/individuals".toString()
+		"$rootIri/classes".toString(),
+		"$rootIri/properties".toString(),
+		"$rootIri/individuals".toString()
 	]
 }
 
@@ -126,7 +141,7 @@ task load(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: reaso
  */
 task query(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: load) {
 	inputs.files(load.inputs.files) // rerun when the dataset changes
-	endpointURL = "http://localhost:3030/$dataset.name".toString()
+	endpointURL = "http://localhost:3030/$dataset".toString()
 	queryPath = file('src/sparql')
 	resultPath = file('build/json')
 	format = 'json'
