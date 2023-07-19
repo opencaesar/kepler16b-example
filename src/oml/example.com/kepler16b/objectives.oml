@@ -48,10 +48,4 @@ description <http://example.com/kepler16b/objectives#> as objectives {
 		base:hasCanonicalName "Characterize the energetic particule environment of the Kepler 16b binary star system"
 		base:aggregates characterize-liquid-ocean
 	]
-
-	instance dummy-objective : mission:Objective [
-		base:hasIdentifier "O.08"
-		base:hasCanonicalName "Dummy Objective"
-		base:aggregates characterize-rocky-core-shape
-	]
 }
