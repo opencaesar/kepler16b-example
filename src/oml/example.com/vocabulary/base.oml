@@ -40,7 +40,7 @@ vocabulary<http://example.com/vocabulary/base#> as base {
 	@dc:^description """[=aggregates=] is a many-to-many relation used
 	to represent homeomeric relations that form directed acyclic graphs."""
 	relation entity Aggregates [
-		from AggregatedElement
+			from AggregatedElement
     		to AggregatedElement
     		forward aggregates
     		reverse isAggregatedIn
