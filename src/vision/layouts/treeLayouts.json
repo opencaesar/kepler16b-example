@@ -1,17 +1,24 @@
 {
-  "physical-composition-tree": {
-    "name": "Physical Composition Tree",
+  "missions": {
+    "name": "Missions",
     "diagrams": {
-      "assembly": "assembly-diagram"
+      "all-rows": "missions-diagram"
     },
     "queries": {
-      "assembly": "assemblies-physical-comp.sparql"
+      "missions": "missions1.sparql",
+      "objectives": "missions2.sparql"
     },
     "rowMapping": {
-      "id": "assembly",
-      "name": "Reference Designators",
-      "labelFormat": "{refDes} — {displayName}",
-      "isRecursive": true
+      "id": "missions",
+      "name": "Missions",
+      "labelFormat": "{id} {name}",
+      "subRowMappings": [
+        {
+          "id": "objectives",
+          "name": "Objectives",
+          "labelFormat": "{o_fullname}"
+        }
+      ]
     }
   }
 }

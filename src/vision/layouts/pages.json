@@ -12,9 +12,9 @@
       },
       {
         "title": "Missions",
-        "treeIcon": "graph-scatter",
-        "path": "reference-designators-diagram",
-        "isDiagram": true
+        "treeIcon": "list-tree",
+        "path": "missions",
+        "isTree": true
       },
       {
         "title": "Components",
