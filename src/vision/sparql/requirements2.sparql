@@ -1,0 +1,23 @@
+PREFIX base:        <http://example.com/vocabulary/base#>
+PREFIX mission:     <http://example.com/vocabulary/mission#>
+PREFIX dc:        <http://purl.org/dc/elements/1.1/>
+PREFIX oml:        <http://opencaesar.io/oml#>
+
+SELECT DISTINCT ?requirement (?s_id+" "+?s_name AS ?component) (?t_id+" "+?t_name AS ?interface)
+
+WHERE {
+	?req a mission:Requirement ;
+		base:hasIdentifier ?requirement ;
+		mission:specifies [
+			a mission:Presents ;
+				oml:hasSource [
+					base:hasIdentifier ?s_id ;
+					base:hasCanonicalName ?s_name
+				] ;
+				oml:hasTarget [
+					base:hasIdentifier ?t_id ;
+					base:hasCanonicalName ?t_name
+				]
+		]
+}
+ORDER BY ?component

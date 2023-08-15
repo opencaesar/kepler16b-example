@@ -118,7 +118,7 @@ task generateDocs (type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: reason) {
 task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
 	configurationPath = file('.fuseki.ttl')
 	outputFolderPath = file('.fuseki')
-	//webUI = true
+	webUI = true
 }
 
 /*

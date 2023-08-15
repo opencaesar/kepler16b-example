@@ -1,0 +1,128 @@
+{
+  "assembly-diagram": {
+    "name": "Assembly Diagram",
+    "queries": {
+      "assembly": "assemblies-physical-comp.sparql",
+      "fcr": "fcr.sparql",
+      "edge": "function-edges.sparql"
+    },
+    "rowMapping": {
+      "id": "assembly",
+      "name": "Reference Designators",
+      "labelFormat": "{refDes} — {displayName}",
+      "colorKey": "refDes",
+      "edgeMatchKey": "refDes",
+      "isRecursive": true
+    },
+    "overlays": [
+      {
+        "id": "fcr",
+        "attachesTo": "assembly",
+        "name": "Fault Containment Regions",
+        "labelFormat": "{hasFcrName}"
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge",
+        "name": "Function",
+        "labelFormat": "{functionNumber}",
+        "colorKey": "subsystemPair",
+        "sourceKey": "refDes1",
+        "targetKey": "refDes2"
+      }
+    ]
+  },
+  "reference-designators-diagram": {
+    "name": "Reference Designators Diagram",
+    "queries": {
+      "subsystem": "subsystems.sparql",
+      "assembly": "assemblies.sparql",
+      "endCircuit": "end-circuits.sparql",
+      "bank": "banks.sparql",
+      "edge": "function-edges.sparql"
+    },
+    "rowMapping": {
+      "id": "subsystem",
+      "name": "Subsystem",
+      "colorKey": "subsystem",
+      "labelFormat": "Subsystem {subsystem} ({acronym})",
+      "subRowMappings": [
+        {
+          "id": "assembly",
+          "name": "Assembly",
+          "colorKey": "refDes",
+          "edgeMatchKey": "refDes",
+          "labelFormat": "{refDes}",
+          "subRowMappings": [
+            {
+              "id": "endCircuit",
+              "name": "End Circuit",
+              "colorKey": "name",
+              "labelFormat": "{name}"
+            },
+            {
+              "id": "bank",
+              "name": "Bank",
+              "labelFormat": "{name}",
+              "colorKey": "name",
+              "subRowMappings": [
+                {
+                  "id": "endCircuit",
+                  "name": "End Circuit",
+                  "colorKey": "name",
+                  "labelFormat": "{name}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "edges": [
+      {
+        "id": "edge",
+        "name": "Function",
+        "labelFormat": "{functionNumber}",
+        "colorKey": "subsystemPair",
+        "sourceKey": "refDes1",
+        "targetKey": "refDes2"
+      }
+    ]
+  },
+  "fcr-diagram": {
+    "name": "FCR Diagram",
+    "queries": {
+      "assembly": "fcr-assemblies.sparql",
+      "fcr": "fcr.sparql",
+      "edge": "function-edges.sparql"
+    },
+    "rowMapping": {
+      "id": "fcr",
+      "name": "Fault Containment Regions",
+      "labelFormat": "{hasFcrName}",
+      "colorKey": "fcr",
+      "nodeType": "overlay",
+      "subRowMappings": [
+        {
+          "id": "assembly",
+          "name": "Reference Designators",
+          "labelFormat": "{refDes} — {displayName}",
+          "colorKey": "refDes",
+          "edgeMatchKey": "refDes",
+          "isRecursive": true
+        }
+      ]
+    },
+    "edges": [
+      {
+        "id": "edge",
+        "name": "Function",
+        "labelFormat": "{functionNumber}",
+        "colorKey": "subsystemPair",
+        "sourceKey": "refDes1",
+        "targetKey": "refDes2"
+      }
+    ]
+  }
+}

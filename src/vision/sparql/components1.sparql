@@ -1,0 +1,19 @@
+PREFIX base:        <http://example.com/vocabulary/base#>
+PREFIX mission:     <http://example.com/vocabulary/mission#>
+PREFIX dc:        <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?id1 (CONCAT(?id1, " ", ?name1) AS ?full_name1)?id2 (CONCAT(?id2, " ", ?name2) AS ?full_name2)
+
+WHERE {
+	?com a mission:Component ;
+		base:hasIdentifier ?id1 ;
+		base:hasCanonicalName ?name1 ;
+	OPTIONAL {
+		?com base:contains [
+			a mission:Component ;
+			base:hasIdentifier ?id2 ;
+			base:hasCanonicalName ?name2
+		]
+	}
+}
+ORDER BY ?id1 ?id2

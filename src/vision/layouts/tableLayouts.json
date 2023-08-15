@@ -1,0 +1,136 @@
+{
+  "objectives": {
+    "name": "Objectives",
+    "diagrams": {
+      "all-rows": "objectives-diagram"
+    },
+    "columnNames": {
+      "id": "Identification",
+      "objective": "Objective"
+    },
+    "queries": {
+      "objectives": "objectives1.sparql"
+    },
+    "rowMapping": {
+      "id": "objectives",
+      "name": "Objectives",
+      "labelFormat": "Objectives {id}"
+    }
+  },
+  "fault-containment-regions": {
+    "name": "Fault Containment Regions",
+    "diagrams": {
+      "all-rows": "fcr-diagram"
+    },
+    "columnNames": {
+      "hasFcrDescription": "Description",
+      "hasFcrRationale": "Rationale",
+      "type": "Specializes"
+    },
+    "queries": {
+      "assembly": "fcr-assemblies.sparql",
+      "fcr": "fcr.sparql"
+    },
+    "rowMapping": {
+      "id": "fcr",
+      "name": "Fault Containment Regions",
+      "labelFormat": "{hasFcrName}",
+      "subRowMappings": [
+        {
+          "id": "assembly",
+          "name": "Reference Designators",
+          "labelFormat": "{refDes}",
+          "isRecursive": true
+        }
+      ]
+    }
+  },
+  "function-list": {
+    "name": "Function List",
+    "columnNames": {
+      "functionNumber": "Function Number",
+      "functionName": "Function Name",
+      "subsystem1": "Subsystem 1",
+      "assembly1": "Assembly 1",
+      "flow": "Flow",
+      "subsystem2": "Subsystem 2",
+      "assembly2": "Assembly 2",
+      "type": "Type"
+    },
+    "queries": {
+      "subsystemPair": "subsystem-pairs.sparql",
+      "function": "functions.sparql"
+    },
+    "rowMapping": {
+      "id": "subsystemPair",
+      "name": "Subsystem Pair",
+      "labelFormat": "Subsystem Pair {subsystem1}-{subsystem2}",
+      "canDeleteElements": false,
+      "subRowMappings": [
+        {
+          "id": "function",
+          "name": "Function",
+          "labelFormat": "Function {functionNumber}"
+        }
+      ]
+    }
+  },
+  "function-group-list": {
+    "name": "Function Group List",
+    "columnNames": {
+      "functionNumber": "Function Number",
+      "functionName": "Function Name",
+      "subsystem1": "Subsystem 1",
+      "assembly1": "Assembly 1",
+      "flow": "Flow",
+      "subsystem2": "Subsystem 2",
+      "assembly2": "Assembly 2",
+      "type": "Type"
+    },
+    "queries": {
+      "subsystemPair": "subsystem-pairs.sparql",
+      "function": "functions-for-groups.sparql",
+      "functionGroup": "function-groups.sparql"
+    },
+    "rowMapping": {
+      "id": "subsystemPair",
+      "name": "Subsystem Pair",
+      "labelFormat": "Subsystem Pair {subsystem1}-{subsystem2}",
+      "canDeleteElements": false,
+      "subRowMappings": [
+        {
+          "id": "function",
+          "name": "Function",
+          "labelFormat": "Function {functionNumber}"
+        },
+        {
+          "id": "functionGroup",
+          "name": "Function Group",
+          "labelFormat": "Function Group {functionNumber}",
+          "subRowMappings": [
+            {
+              "id": "function",
+              "name": "Function",
+              "labelFormat": "Function {functionNumber}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "function-name-glossary": {
+    "name": "Function Name Glossary",
+    "columnNames": {
+      "termName": "Term Name",
+      "definition": "Definition"
+    },
+    "queries": {
+      "functionName": "function-names.sparql"
+    },
+    "rowMapping": {
+      "id": "functionName",
+      "name": "Function Name",
+      "labelFormat": "Term {termName}"
+    }
+  }
+}

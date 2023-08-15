@@ -1,0 +1,17 @@
+{
+  "physical-composition-tree": {
+    "name": "Physical Composition Tree",
+    "diagrams": {
+      "assembly": "assembly-diagram"
+    },
+    "queries": {
+      "assembly": "assemblies-physical-comp.sparql"
+    },
+    "rowMapping": {
+      "id": "assembly",
+      "name": "Reference Designators",
+      "labelFormat": "{refDes} — {displayName}",
+      "isRecursive": true
+    }
+  }
+}

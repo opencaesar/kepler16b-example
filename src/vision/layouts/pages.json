@@ -1,0 +1,50 @@
+[
+  { "title": "Home", "path": "/", "treeIcon": "home" },
+  {
+    "title": "Kepler16b",
+    "treeIcon": "server",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/satellite.svg",
+    "children": [
+      { 
+        "title": "Objectives",
+        "treeIcon": "window",
+        "path": "objectives" 
+      },
+      {
+        "title": "Missions",
+        "treeIcon": "graph-scatter",
+        "path": "reference-designators-diagram",
+        "isDiagram": true
+      },
+      {
+        "title": "Components",
+        "treeIcon": "list-tree",
+        "path": "physical-composition-tree",
+        "isTree": true
+      },
+      {
+        "title": "Masses",
+        "treeIcon": "graph-scatter",
+        "path": "assembly-diagram",
+        "isDiagram": true
+      },
+      {
+        "title": "Interfaces",
+        "treeIcon": "window",
+        "path": "fault-containment-regions"
+      },
+      {
+        "title": "Junctions",
+        "treeIcon": "graph-scatter",
+        "path": "fcr-diagram",
+        "isDiagram": true
+      },
+      {
+        "title": "Requirements",
+        "treeIcon": "graph-scatter",
+        "path": "fcr-diagram",
+        "isDiagram": true
+      }
+    ]
+  }
+]
