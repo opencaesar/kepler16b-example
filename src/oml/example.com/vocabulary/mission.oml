@@ -11,8 +11,8 @@ vocabulary<http://example.com/vocabulary/mission#> as mission {
 	@dc:^description """An [=Objective=] represents a specific interest 
 	that one or more stakeholders have in the successful execution of a mission."""
 	concept Objective < base:IdentifiedThing, base:AggregatedElement [
-		restricts all relation base:aggregates to Objective
-		restricts all relation base:isAggregatedIn to Objective
+		restricts all base:aggregates to Objective
+		restricts all base:isAggregatedIn to Objective
 	]
 
 	@rdfs:label "Mission"
@@ -40,8 +40,8 @@ vocabulary<http://example.com/vocabulary/mission#> as mission {
 	flight software, attitude control software, and mission operations team.
 	[=Component=]s can be organized hierarchically by containment of other [=Component=]s. """
 	concept Component < base:ContainedElement, base:IdentifiedThing [
-		restricts all relation base:contains to Component
-		restricts all relation base:isContainedIn to Component
+		restricts all base:contains to Component
+		restricts all base:isContainedIn to Component
 	]
 
 	@rdfs:label "Deploys"

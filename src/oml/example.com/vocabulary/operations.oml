@@ -18,14 +18,14 @@ vocabulary <http://example.com/vocabulary/operations#> as operations {
 	concept TelemetryInInterface < TelemetryInterface
 
 	concept CommandUplink < mission:Junction [
-		restricts all relation mission:joins to CommandInterface
-		restricts all relation mission:joins1 to CommandOutInterface
-		restricts all relation mission:joins2 to CommandInInterface
+		restricts all mission:joins to CommandInterface
+		restricts all mission:joins1 to CommandOutInterface
+		restricts all mission:joins2 to CommandInInterface
 	]
 
 	concept TelemetryDownlink < mission:Junction [
-		restricts all relation mission:joins to TelemetryInterface
-		restricts all relation mission:joins1 to TelemetryOutInterface
-		restricts all relation mission:joins2 to TelemetryInInterface
+		restricts all mission:joins to TelemetryInterface
+		restricts all mission:joins1 to TelemetryOutInterface
+		restricts all mission:joins2 to TelemetryInInterface
 	]
 }

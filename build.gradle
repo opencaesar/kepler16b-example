@@ -4,7 +4,7 @@
 ext.title = 'Kepler16b'
 description = 'This is the kepler16b example'
 group = 'com.example'
-version = '2.0.0'
+version = '3.0.0'
 
 /* 
  * The Gradle plugins 
@@ -55,7 +55,7 @@ configurations {
  * The OML dependencies
  */
 dependencies {
-	oml "io.opencaesar.ontologies:metrology-vocabularies:6.+"
+	oml "io.opencaesar.ontologies:metrology-vocabularies:7.+"
 }
 
 /*
