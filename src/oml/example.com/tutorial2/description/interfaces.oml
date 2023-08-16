@@ -1,0 +1,40 @@
+description <http://example.com/tutorial2/description/interfaces#> as interfaces {
+
+	uses <http://example.com/tutorial2/vocabulary/base#> as base
+	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+	extends <http://example.com/tutorial2/description/components#> as components
+
+	instance orbiter-ground-data-system.telemetryIn : mission:Interface [
+		base:hasIdentifier "I.04"
+		base:hasCanonicalName "Telemetry In"
+	]
+	relation instance orbiter-ground-data-system.presents.telemetryIn : mission:Presents [
+		from components:orbiter-ground-data-system
+		to orbiter-ground-data-system.telemetryIn
+	]
+	instance orbiter-ground-data-system.commandOut : mission:Interface [
+		base:hasIdentifier "I.03"
+		base:hasCanonicalName "Command Out"
+	]
+	relation instance orbiter-ground-data-system.presents.commandOut : mission:Presents [
+		from components:orbiter-ground-data-system
+		to orbiter-ground-data-system.commandOut
+	]
+
+	instance orbiter-spacecraft.commandIn : mission:Interface [
+		base:hasIdentifier "I.01"
+		base:hasCanonicalName "Command In"
+	]
+	relation instance orbiter-spacecraft.presents.commandIn : mission:Presents [
+		from components:orbiter-spacecraft
+		to orbiter-spacecraft.commandIn
+	]
+	instance orbiter-spacecraft.telemetryOut : mission:Interface [
+		base:hasIdentifier "I.02"
+		base:hasCanonicalName "Telemetry Out"
+	]
+	relation instance orbiter-spacecraft.presents.telemetryOut : mission:Presents [
+		from components:orbiter-spacecraft
+		to orbiter-spacecraft.telemetryOut
+	]
+}

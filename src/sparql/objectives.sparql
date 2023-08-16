@@ -1,0 +1,14 @@
+PREFIX base:        <http://example.com/tutorial2/vocabulary/base#>
+PREFIX mission:     <http://example.com/tutorial2/vocabulary/mission#>
+
+SELECT DISTINCT ?o1_id ?o1_name ?o2_id ?o2_name
+WHERE {
+    ?o1 a mission:Objective ;
+		base:hasIdentifier ?o1_id ;
+		base:hasCanonicalName ?o1_name ;
+		base:aggregates [
+        	base:hasIdentifier ?o2_id ;
+        	base:hasCanonicalName ?o2_name
+      	]
+}
+ORDER BY ?o1_id ?o2_id

@@ -32,26 +32,9 @@ jobs:
     - name: Check
       run: ./gradlew build
     - name: Analyze
-      run: ./gradlew startFuseki query stopFuseki -x reason
-    - name: Render
-      run: ./gradlew render -x query
-    - name: Bikeshed
-      uses: netwerk-digitaal-erfgoed/bikeshed-action@v1
-      with:
-        source: src/bs/index.bs
-        destination: build/web/index.html
-
-  # jupyter:
-  #  - name: Set up Python 3.10
-  #    uses: actions/setup-python@v4
-  #    with: 
-  #      python-version: '3.10'
-  #  - name: Install Dependencies
-  #    run: python -m pip install -r src/jpynb/requirements.txt
-  #  - name: Convert notebook to html
-  #    run: python -m nbconvert --output-dir='./build/web/jpynb' --execute --to html src/jpynb/kepler16b_reduction.ipynb --no-input
-  #  - name: Add Link to Bikeshed HTML and vice versa
-  #    run: sudo python src/jpynb/scripts/add_connect_bs_jpynb.py
+      run: ./gradlew startFuseki owlQuery stopFuseki
+    - name: Generate Documents
+      run: ./gradlew generateDocs
 
   # Upload Build Folder
     - name: Upload
@@ -63,7 +46,7 @@ jobs:
     - name: Publish
       uses: actions/upload-pages-artifact@v1
       with:
-        path: build/web/
+        path: build/doc/
         
   deploy:
     needs: build

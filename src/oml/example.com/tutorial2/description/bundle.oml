@@ -1,0 +1,11 @@
+description bundle <http://example.com/tutorial2/description/bundle#> as ^bundle {
+	
+	uses <http://example.com/tutorial2/vocabulary/bundle#>
+	includes <http://example.com/tutorial2/description/objectives#>
+	includes <http://example.com/tutorial2/description/missions#>
+	includes <http://example.com/tutorial2/description/components#>
+	includes <http://example.com/tutorial2/description/masses#>
+	includes <http://example.com/tutorial2/description/interfaces#>
+	includes <http://example.com/tutorial2/description/requirements#>
+	includes <http://example.com/tutorial2/description/junctions#>
+}
