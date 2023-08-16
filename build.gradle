@@ -21,6 +21,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
+        classpath 'io.opencaesar.owl:owl-doc-gradle:2.+'
         classpath 'io.opencaesar.owl:owl-fuseki-gradle:+'
         classpath 'io.opencaesar.owl:owl-query-gradle:+'
         classpath 'io.opencaesar.owl:owl-load-gradle:+'
@@ -92,6 +93,24 @@ task owlReason(type:io.opencaesar.owl.reason.OwlReasonTask, group:"oml", depends
     ]
     // Junit error report
     reportPath = file('build/reports/reasoning.xml')
+}
+
+/*
+ * A task to generate documentation for the OWL catalog
+ */
+task generateDocs(type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: owlReason) {
+    // OWL catalog
+    inputCatalogPath = file('build/owl/catalog.xml')
+    // OWL catalog title
+    inputCatalogTitle = project.title
+    // OWL catalog version
+    inputCatalogVersion = project.version
+    // OWL Ontology Iris
+    inputOntologyIris = [ "$rootIri/classes", "$rootIri/properties",  "$rootIri/individuals" ]
+    // Output folder
+    outputFolderPath = file('build/doc')
+    // Output case sensitivie path
+    outputCaseSensitive = org.gradle.internal.os.OperatingSystem.current().isLinux()
 }
 
 /*
