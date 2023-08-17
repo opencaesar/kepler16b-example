@@ -18,6 +18,7 @@ vocabulary <http://example.com/tutorial2/vocabulary/base#> as base {
 	scalar property hasIdentifier [
 		domain IdentifiedThing
 		range xsd:string
+		functional
 	]
 
 	@rdfs:comment "The has description property"
