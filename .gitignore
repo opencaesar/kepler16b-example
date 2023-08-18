@@ -8,5 +8,8 @@ build
 # Fuseki output directory
 .fuseki
 
-#Jupyter
+# Jupyter
 .jpnyb_checkpoints
+
+# Virtual Environment
+.venv
