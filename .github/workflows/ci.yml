@@ -22,9 +22,9 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-    - name: Check
+    - name: Build
       run: ./gradlew build
-    - name: Analyze
+    - name: Query
       run: ./gradlew startFuseki owlQuery stopFuseki
     - name: Generate Documents
       run: ./gradlew generateDocs
