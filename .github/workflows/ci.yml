@@ -26,23 +26,26 @@ jobs:
       run: ./gradlew build
     - name: Query
       run: ./gradlew startFuseki owlQuery stopFuseki
-    - name: Generate Documents
-      run: ./gradlew generateDocs
-
-  # Upload Build Folder
     - name: Upload
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
         name: build
         path: build/
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Generate Documents
+      run: ./gradlew generateDocs
     - name: Publish
       uses: actions/upload-pages-artifact@v1
       with:
         path: build/doc/
         
   deploy:
-    needs: build
+    needs: publish
     permissions:
       pages: write
       id-token: write
