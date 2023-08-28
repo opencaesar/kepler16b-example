@@ -17,6 +17,7 @@ description <http://example.com/tutorial2/description/missions#> as missions {
 		base:hasCanonicalName "Lander Mission"
 		mission:pursues objectives:characterize-atmosphere
 		mission:pursues objectives:characterize-environment
+		mission:pursues objectives:characterize-rocky-core-shape
 	]
 	ref instance orbiter [
 		mission:deploys components:orbiter-launch-system
