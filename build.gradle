@@ -104,7 +104,7 @@ task generateDocs(type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: owlReason) 
     // OWL catalog title
     inputCatalogTitle = 'Kepler16b'
     // OWL catalog version
-    inputCatalogVersion = 'project.version'
+    inputCatalogVersion = project.version
     // OWL Ontology Iris
     inputOntologyIris = [ "$rootIri/classes", "$rootIri/properties",  "$rootIri/individuals" ]
     // Output folder
