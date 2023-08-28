@@ -73,7 +73,7 @@ description <http://example.com/tutorial2/description/masses#> as masses {
 
 	ref instance components:orbiter-propulsion-subsystem : mechanical:MechanicalComponent
 	instance orbiter-propulsion-subsystem.mass.magnitude : mechanical:MassMagnitude [
-		vim4:hasDoubleNumber "6"^^xsd:double
+		vim4:hasDoubleNumber "106"^^xsd:double
 		vim4:characterizes components:orbiter-propulsion-subsystem
 	]
 }
