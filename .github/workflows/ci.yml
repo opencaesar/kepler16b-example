@@ -34,4 +34,31 @@ jobs:
         path: build/
     - name: Generate Docs
       run: ./gradlew generateDocs
-  
+    - name: Set up Python 3
+      uses: actions/setup-python@v4
+      with: 
+        python-version: '3.10'
+    - name: Install Requirements
+      run: pip install -r src/ipynb/requirements.txt
+    - name: Run Notebook
+      run: python -m nbconvert --execute --to notebook --no-input src/ipynb/index.ipynb --output-dir='build/web' 
+    - name: Convert Notebook to HTML
+      run: python -m nbconvert --to html --no-input build/web/index.ipynb
+    - name: Publish
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: build/web
+        
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v1
