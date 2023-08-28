@@ -39,7 +39,7 @@ jobs:
       with: 
         python-version: '3.10'
     - name: Install Requirements
-      run: pip install -r src/ipynb/requirements.txt
+      run: pip install -r src/ipynp/requirements.txt
     - name: Run Notebook
       run: python -m nbconvert --execute --to notebook --no-input src/ipynb/index.ipynb --output-dir='build/web' 
     - name: Convert Notebook to HTML
