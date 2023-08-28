@@ -26,11 +26,12 @@ jobs:
       run: ./gradlew build
     - name: Query
       run: ./gradlew owlQuery
-    - name: Generate Docs
-      run: ./gradlew generateDocs
     - name: Upload
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
         name: build
         path: build/
+    - name: Generate Docs
+      run: ./gradlew generateDocs
+  
