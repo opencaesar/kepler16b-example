@@ -1,4 +1,4 @@
-# Kepler16b
+# Kepler 16b
 
 [![CI](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml/badge.svg)](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml)
 [![Pages](https://img.shields.io/badge/Pages-HTML-blue)](http://opencaesar.github.io/kepler16b-example/) 
