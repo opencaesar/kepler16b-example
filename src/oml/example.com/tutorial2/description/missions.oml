@@ -1,0 +1,34 @@
+description <http://example.com/tutorial2/description/missions#> as missions {
+
+	uses <http://example.com/tutorial2/vocabulary/base#> as base
+	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+	extends <http://example.com/tutorial2/description/objectives#> as objectives
+	extends <http://example.com/tutorial2/description/components#> as components
+
+	instance orbiter : mission:Mission [
+		base:hasIdentifier "M.01"
+		base:hasCanonicalName "Orbiter Mission"
+		mission:pursues objectives:characterize-atmosphere
+		mission:pursues objectives:characterize-environment
+		mission:pursues objectives:characterize-gravitational-field
+	]
+	instance lander : mission:Mission [
+		base:hasIdentifier "M.02"
+		base:hasCanonicalName "Lander Mission"
+		mission:pursues objectives:characterize-atmosphere
+		mission:pursues objectives:characterize-environment
+		mission:pursues objectives:characterize-rocky-core-shape
+	]
+	ref instance orbiter [
+		mission:deploys components:orbiter-launch-system
+		mission:deploys components:orbiter-spacecraft
+		mission:deploys components:orbiter-ground-data-system
+		mission:deploys components:mission-operations-system
+	]
+	ref instance lander [
+		mission:deploys components:lander-launch-system
+		mission:deploys components:lander-spacecraft
+		mission:deploys components:lander-ground-data-system
+		mission:deploys components:mission-operations-system
+	]
+}

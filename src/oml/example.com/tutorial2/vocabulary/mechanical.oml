@@ -1,0 +1,18 @@
+vocabulary <http://example.com/tutorial2/vocabulary/mechanical#> as mechanical {
+
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+	extends <http://example.com/tutorial2/vocabulary/mission#> as mission
+	extends <http://bipm.org/jcgm/vim4#> as vim4
+	uses <http://iso.org/iso-80000-4.1#> as iso-80000-4.1
+
+	@rdfs:comment "The class of mechanical components as physical objects"
+	concept MechanicalComponent < mission:Component, vim4:Object
+
+	@rdfs:comment "The class of magnitudes in kilograms for mass quantities on mechanical components"
+	concept MassMagnitude < vim4:InherentUnitaryQuantityValue [
+		restricts all vim4:characterizes to MechanicalComponent
+    	restricts vim4:instantiates to iso-80000-4.1:mass
+    	restricts vim4:unit to iso-80000-4.1:kilogram
+	]
+}
+

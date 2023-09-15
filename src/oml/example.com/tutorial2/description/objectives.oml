@@ -1,0 +1,40 @@
+description <http://example.com/tutorial2/description/objectives#> as objectives {
+
+	uses <http://example.com/tutorial2/vocabulary/base#> as base
+	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+
+	instance characterize-atmosphere : mission:Objective [
+		base:hasIdentifier "O.01"
+		base:hasCanonicalName "Characterize the atmosphere of Kepler 16b"
+		base:aggregates characterize-liquid-ocean
+	]
+	instance characterize-liquid-ocean : mission:Objective [
+		base:hasIdentifier "O.02"
+		base:hasCanonicalName "Characterize the liquid ocean of Kepler 16b"
+	]
+	instance characterize-gravitational-field : mission:Objective [
+		base:hasIdentifier "O.03"
+		base:hasCanonicalName "Characterize the gravitational field of Kepler 16b"
+		base:aggregates characterize-liquid-ocean
+		base:aggregates characterize-rocky-core
+	]
+	instance characterize-rocky-core : mission:Objective [
+		base:hasIdentifier "O.04"
+		base:hasCanonicalName "Characterize the rocky core of Kepler 16b"
+		base:aggregates characterize-rocky-core-density
+		base:aggregates characterize-rocky-core-shape
+	]
+	instance characterize-rocky-core-density : mission:Objective [
+		base:hasIdentifier "O.05"
+		base:hasCanonicalName "Characterize the core density of Kepler 16b"
+	]
+	instance characterize-rocky-core-shape : mission:Objective [
+		base:hasIdentifier "O.06"
+		base:hasCanonicalName "Characterize the core shape of Kepler 16b"
+	]
+	instance characterize-environment : mission:Objective [
+		base:hasIdentifier "O.07"
+		base:hasCanonicalName "Characterize the energetic particule environment of the Kepler 16b binary star system"
+		base:aggregates characterize-liquid-ocean
+	]
+}

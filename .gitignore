@@ -9,4 +9,5 @@ build
 .fuseki
 
 #Jupyter
-.jpnyb_checkpoints
+__pycache__/
+*.py[cod]

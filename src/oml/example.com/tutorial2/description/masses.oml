@@ -1,0 +1,79 @@
+description <http://example.com/tutorial2/description/masses#> as masses {
+
+	uses <http://www.w3.org/2001/XMLSchema#> as xsd
+	uses <http://bipm.org/jcgm/vim4#> as vim4
+	uses <http://example.com/tutorial2/vocabulary/mechanical#> as mechanical
+	extends <http://example.com/tutorial2/description/components#> as components
+
+	ref instance components:orbiter-launch-system : mechanical:MechanicalComponent
+	instance orbiter-launch-system.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "2000"^^xsd:double
+		vim4:characterizes components:orbiter-launch-system
+	]
+
+	ref instance components:lander-launch-system : mechanical:MechanicalComponent
+	instance lander-launch-system.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "3500"^^xsd:double
+		vim4:characterizes components:lander-launch-system
+	]
+
+	ref instance components:lander-spacecraft : mechanical:MechanicalComponent
+	instance lander-spacecraft.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "1200"^^xsd:double
+		vim4:characterizes components:lander-spacecraft
+	]
+
+	ref instance components:orbiter-power-subsystem : mechanical:MechanicalComponent
+	instance orbiter-power-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "297"^^xsd:double
+		vim4:characterizes components:orbiter-power-subsystem
+	]
+
+	ref instance components:orbiter-harness : mechanical:MechanicalComponent
+	instance orbiter-harness.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "138"^^xsd:double
+		vim4:characterizes components:orbiter-harness
+	]
+
+	ref instance components:orbiter-thermal-subsystem : mechanical:MechanicalComponent
+	instance orbiter-thermal-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "307"^^xsd:double
+		vim4:characterizes components:orbiter-thermal-subsystem
+	]
+
+	ref instance components:orbiter-command-and-data-handling-subsystem : mechanical:MechanicalComponent
+	instance orbiter-command-and-data-handling-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "147"^^xsd:double
+		vim4:characterizes components:orbiter-command-and-data-handling-subsystem
+	]
+
+	ref instance components:orbiter-telecom-subsystem : mechanical:MechanicalComponent
+	instance orbiter-telecom-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "316"^^xsd:double
+		vim4:characterizes components:orbiter-telecom-subsystem
+	]
+
+	ref instance components:orbiter-guidance-navigation-control-subsystem : mechanical:MechanicalComponent
+	instance orbiter-guidance-navigation-control-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "156"^^xsd:double
+		vim4:characterizes components:orbiter-guidance-navigation-control-subsystem
+	]
+
+	ref instance components:orbiter-mechanical-subsystem : mechanical:MechanicalComponent
+	instance orbiter-mechanical-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "325"^^xsd:double
+		vim4:characterizes components:orbiter-mechanical-subsystem
+	]
+
+	ref instance components:orbiter-spacraft-flight-software : mechanical:MechanicalComponent
+	instance orbiter-spacraft-flight-software.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "165"^^xsd:double
+		vim4:characterizes components:orbiter-spacraft-flight-software
+	]
+
+	ref instance components:orbiter-propulsion-subsystem : mechanical:MechanicalComponent
+	instance orbiter-propulsion-subsystem.mass.magnitude : mechanical:MassMagnitude [
+		vim4:hasDoubleNumber "106"^^xsd:double
+		vim4:characterizes components:orbiter-propulsion-subsystem
+	]
+}

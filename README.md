@@ -3,46 +3,44 @@
 [![CI](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml/badge.svg)](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml)
 [![Pages](https://img.shields.io/badge/Pages-HTML-blue)](http://opencaesar.github.io/kepler16b-example/) 
 
-This is an example Oml project for a hypothetical mission called Kepler 16b.
+This is an example OML project for a hypothetical mission called Kepler 16b. For details, check this [tutorial](http://www.opencaesar.io/oml-tutorials/#tutorial2).
 
 ## Clone
+```
+  git clone https://github.com/opencaesar/kepler16b-example.git
+  cd kepler16b-example
+```
 
-Clone this repo to your machine
-   ```
-     git clone git@github.com:opencaesar/kepler16b-example.git
-   ```
+## Clean
+```
+./gradlew clean
+```
+
 ## Build
-   
-Build the repo by invoking the gradle build script
-   ```
-   cd kepler16b
-   ./gradlew build
-   ```
-   >NOTE: If you are on Windows, replace ./gradlew with gradlew.bat (also in the instructions below)
+```
+./gradlew build
+```
 
-## Analyze
+## Start Fuseki Server
+```
+./gradlew startFuseki
+```
 
-Start Fuseki Server
-   ```
-   ./gradlew startFuseki
-   ```
-   
-Run the provided sparql queries
-   ```
-   ./gradlew query
-   ```
-   
-Stop Fuseki Server
-   ```
-   ./gradlew stopFuseki
-   ```
+## Stop Fuseki Server
+```
+./gradlew stopFuseki
+```
 
-Generate the web views
-   ```
-   ./gradlew render
-   ```
-   
-Render the document
-   ```
-   ./gradlew bikeshed
-   ```
+## Load to Fuseki Dataset
+```
+./gradlew owlLoad
+```
+
+Pre-req: A Fuseki server with a firesat dataset must be running at http://localhost:3030/firesat (see Start Fuseki above)  
+
+## Run SPARQL Queries
+```
+./gradlew owlQuery
+```
+
+Pre-req: A Fuseki server with a firesat dataset must be running at http://localhost:3030/firesat (see Load to Fuseki Dataset)  

@@ -1,0 +1,6 @@
+ipykernel
+nbconvert
+pandas
+plantuml
+igraph
+cairocffi

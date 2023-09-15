@@ -1,0 +1,100 @@
+vocabulary <http://example.com/tutorial2/vocabulary/mission#> as mission {
+	
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+	extends <http://example.com/tutorial2/vocabulary/base#> as base
+
+	@rdfs:comment "An Objective=] represents a specific interest 
+	that one or more stakeholders have in the successful execution of a mission."
+	concept Objective < base:IdentifiedThing, base:AggregatedThing [
+		restricts all base:aggregates to Objective
+		restricts all base:isAggregatedIn to Objective
+	]
+
+	@rdfs:comment "A Mission pursues Objectives."
+	concept Mission < base:IdentifiedThing
+
+	@rdfs:comment "A Mission pursues zero or more Objectives."
+	relation entity Pursues [
+		from Mission
+		to Objective
+		forward pursues
+		reverse isPursuedBy
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:comment "A Component is something that can be deployed in a mission."
+	concept Component < base:IdentifiedThing
+
+	@rdfs:comment "A Mission deploys zero or more Components."
+	relation entity Deploys [
+		from Mission
+		to Component
+		forward deploys
+		reverse isDeployedBy
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:comment "A Component can be organized hierarchically by containing other Components. "
+	ref concept Component < base:ContainedElement [
+		restricts all base:contains to Component
+		restricts all base:isContainedIn to Component
+	]
+
+	@rdfs:comment "An Interface represents a set of features that describe some Component's interaction with another Component."
+	concept Interface < base:IdentifiedThing
+
+	@rdfs:comment "A Component presents zero or more Interfaces."
+	relation entity Presents [
+		from Component
+		to Interface
+		forward presents
+		reverse isPresentedBy
+		inverse functional
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:comment "SpecifiedThing is something that isSpecifiedBy a Requirement"
+	aspect SpecifiedThing
+
+	@rdfs:comment "Presents is a relation that can be specified by a requirement."
+	ref relation entity Presents < SpecifiedThing
+
+	@rdfs:comment "A Requirement specifies that something must be true about something."
+	concept Requirement < base:IdentifiedThing
+
+	@rdfs:comment "A Requirement specifies zero or more SpecifiedThings."
+	relation entity Specifies [
+		from Requirement
+		to SpecifiedThing
+		forward specifies
+		reverse isSpecifiedBy
+		functional
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:comment "A Junction joins two or more Interfaces."
+	relation entity Junction [
+		from Interface
+		to Interface
+		forward joins
+		symmetric
+		irreflexive
+	] < base:IdentifiedThing 
+
+	@rdfs:comment "A Component connects to zero or more components."
+	relation entity Connection [
+		from Component
+		to Component
+		forward connectsTo
+		symmetric
+	]
+
+	@rdfs:comment "When interfaces presented by components are joined, we infer that the components are connected."
+	rule Junction-infers-Connection [
+		presents(c1, i1) & joins(i1, i2) & isPresentedBy(i2, c2) -> connectsTo(c1, c2)
+	]
+}

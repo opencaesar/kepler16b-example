@@ -8,8 +8,8 @@
 [] rdf:type fuseki:Server .
 
 <#service> rdf:type fuseki:Service ;
-    rdfs:label          "Kepler16b" ;												# Human readable label for dataset
-    fuseki:name         "kepler16b" ;												# Name of the dataset in the endpoint url
+    rdfs:label          "Tutorial2" ;												# Human readable label for dataset
+    fuseki:name         "tutorial2" ;												# Name of the dataset in the endpoint url
     fuseki:serviceReadWriteGraphStore "data" ;											# SPARQL Graph store protocol (read and write)
     fuseki:endpoint   [ fuseki:operation fuseki:update ; fuseki:name "update" ] ; # SPARQL update service
     fuseki:endpoint 	[ fuseki:operation fuseki:query ;	fuseki:name "sparql"  ] ;	# SPARQL query service

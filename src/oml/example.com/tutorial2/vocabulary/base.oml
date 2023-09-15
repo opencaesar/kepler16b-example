@@ -1,0 +1,56 @@
+vocabulary <http://example.com/tutorial2/vocabulary/base#> as base {
+
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+	extends <http://www.w3.org/2001/XMLSchema#> as xsd
+
+	@rdfs:comment "The class of things having an id and a canonical name"
+	aspect IdentifiedThing [
+		key hasIdentifier
+	]
+
+	@rdfs:comment "The has canonical name property"
+	scalar property hasCanonicalName [
+		domain IdentifiedThing
+		range xsd:string
+	]
+
+	@rdfs:comment "The has identifier property"
+	scalar property hasIdentifier [
+		domain IdentifiedThing
+		range xsd:string
+		functional
+	]
+
+	@rdfs:comment "The has description property"
+	scalar property hasDescription [
+		domain IdentifiedThing
+		range xsd:string
+	]
+
+ 	@rdfs:comment "The class of things that can be aggregated"
+	aspect AggregatedThing
+
+	@rdfs:comment "The aggregates relation between aggregated things"
+	relation entity Aggregates [
+		from AggregatedThing
+		to AggregatedThing
+		forward aggregates
+		reverse isAggregatedIn
+		asymmetric
+		irreflexive
+	]
+
+	@rdfs:comment "A ContainedElement is a thing that can participate in homeomeric containment relationships."
+	aspect ContainedElement
+
+	@rdfs:comment "Contains is a many-to-many relation used to represent homeomeric relations that form directed rooted trees."
+	relation entity Contains [
+		from ContainedElement
+    	to ContainedElement
+		forward contains
+		reverse isContainedIn
+		inverse functional
+		asymmetric
+		irreflexive
+	]
+}

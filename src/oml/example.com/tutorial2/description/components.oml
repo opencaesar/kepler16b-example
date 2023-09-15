@@ -1,0 +1,81 @@
+description <http://example.com/tutorial2/description/components#> as components {
+
+	uses <http://example.com/tutorial2/vocabulary/base#> as base
+	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+
+	instance orbiter-launch-system : mission:Component [
+		base:hasIdentifier "C.01"
+		base:hasCanonicalName "Orbiter Launch System"
+	]
+	instance orbiter-spacecraft : mission:Component [
+		base:hasIdentifier "C.02"
+		base:hasCanonicalName "Orbiter Spacecraft"
+	]
+	instance orbiter-power-subsystem : mission:Component [
+		base:hasIdentifier "C.02.01"
+		base:hasCanonicalName "Orbiter Power Subsystem"
+	]
+	instance orbiter-harness : mission:Component [
+		base:hasIdentifier "C.02.02"
+		base:hasCanonicalName "Orbiter Harness"
+	]
+	instance orbiter-thermal-subsystem : mission:Component [
+		base:hasIdentifier "C.02.03"
+		base:hasCanonicalName "Orbiter Thermal Subsystem"
+	]
+	instance orbiter-command-and-data-handling-subsystem : mission:Component [
+		base:hasIdentifier "C.02.04"
+		base:hasCanonicalName "Orbiter C&DH Subsystem"
+	]
+	instance orbiter-telecom-subsystem : mission:Component [
+		base:hasIdentifier "C.02.05"
+		base:hasCanonicalName "Orbiter Telecom Subsystem"
+	]
+	instance orbiter-guidance-navigation-control-subsystem : mission:Component [
+		base:hasIdentifier "C.02.06"
+		base:hasCanonicalName "Orbiter GN&C Subsystem"
+	]
+	instance orbiter-mechanical-subsystem : mission:Component [
+		base:hasIdentifier "C.02.07"
+		base:hasCanonicalName "Orbiter Mechanical Subsystem"
+	]
+	instance orbiter-spacraft-flight-software : mission:Component [
+		base:hasIdentifier "C.02.08"
+		base:hasCanonicalName "Orbiter Flight Software"
+	]
+	instance orbiter-propulsion-subsystem : mission:Component [
+		base:hasIdentifier "C.02.09"
+		base:hasCanonicalName "Orbiter Propulsion Subsystem"
+	]
+	instance orbiter-ground-data-system : mission:Component [
+		base:hasIdentifier "C.03"
+		base:hasCanonicalName "Orbiter Ground Data System"
+	]
+	instance mission-operations-system : mission:Component [
+		base:hasIdentifier "C.04"
+		base:hasCanonicalName "Mission Operations System"
+	]
+	instance lander-launch-system : mission:Component [
+		base:hasIdentifier "C.05"
+		base:hasCanonicalName "Lander Launch System"
+	]
+	instance lander-spacecraft : mission:Component [
+		base:hasIdentifier "C.06"
+		base:hasCanonicalName "Lander Spacecraft"
+	]
+	instance lander-ground-data-system : mission:Component [
+		base:hasIdentifier "C.07"
+		base:hasCanonicalName "Lander Ground Data System"
+	]
+	ref instance orbiter-spacecraft [
+		base:contains orbiter-power-subsystem
+		base:contains orbiter-harness
+		base:contains orbiter-thermal-subsystem
+		base:contains orbiter-command-and-data-handling-subsystem
+		base:contains orbiter-telecom-subsystem
+		base:contains orbiter-guidance-navigation-control-subsystem
+		base:contains orbiter-mechanical-subsystem
+		base:contains orbiter-spacraft-flight-software
+		base:contains orbiter-propulsion-subsystem
+	]
+}
