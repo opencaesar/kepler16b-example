@@ -1,22 +1,49 @@
 {
-  "missions": {
-    "name": "Missions",
+  "requirements": {
+    "name": "Requirements Diagram",
     "diagrams": {
-      "all-rows": "missions-diagram"
+      "all-rows": "requirements-diagram"
     },
     "queries": {
-      "missions": "missions1.sparql",
-      "objectives": "missions2.sparql"
+      "requirements": "requirements.sparql",
+      "c_name": "requirements.sparql",
+      "i_name": "requirements.sparql"
     },
     "rowMapping": {
-      "id": "missions",
-      "name": "Missions",
-      "labelFormat": "{id} {name}",
+      "id": "requirements",
+      "name": "Requirements",
+      "labelFormat": "{r_id}",
       "subRowMappings": [
         {
-          "id": "objectives",
-          "name": "Objectives",
-          "labelFormat": "{o_fullname}"
+          "id": "c_name",
+          "name": "c_name",
+          "labelFormat": "C Name: {c_name}"
+        },
+        {
+          "id": "i_name",
+          "name": "i_name",
+          "labelFormat": "I Name: {i_name}"
+        }
+      ]
+    }
+  },
+  "components": {
+    "name": "Components",
+    "diagrams": {
+      "all-rows": "components-diagram"
+    },
+    "queries": {
+      "components": "components.sparql"
+    },
+    "rowMapping": {
+      "id": "components",
+      "name": "Components",
+      "labelFormat": "{c1_id} {c1_name}",
+      "subRowMappings": [
+        {
+          "id": "components",
+          "name": "Masses",
+          "labelFormat": "{c1_mass}"
         }
       ]
     }

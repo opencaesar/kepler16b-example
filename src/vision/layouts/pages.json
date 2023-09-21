@@ -12,38 +12,26 @@
       },
       {
         "title": "Missions",
-        "treeIcon": "list-tree",
+        "treeIcon": "graph-scatter",
         "path": "missions",
-        "isTree": true
+        "isDiagram": true
       },
       {
         "title": "Components",
         "treeIcon": "list-tree",
-        "path": "physical-composition-tree",
+        "path": "components",
         "isTree": true
       },
       {
-        "title": "Masses",
-        "treeIcon": "graph-scatter",
-        "path": "assembly-diagram",
-        "isDiagram": true
-      },
-      {
-        "title": "Interfaces",
+        "title": "Connections",
         "treeIcon": "window",
-        "path": "fault-containment-regions"
-      },
-      {
-        "title": "Junctions",
-        "treeIcon": "graph-scatter",
-        "path": "fcr-diagram",
-        "isDiagram": true
+        "path": "connections"
       },
       {
         "title": "Requirements",
-        "treeIcon": "graph-scatter",
-        "path": "fcr-diagram",
-        "isDiagram": true
+        "treeIcon": "list-tree",
+        "path": "requirements",
+        "isTree": true
       }
     ]
   }

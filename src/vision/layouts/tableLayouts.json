@@ -5,132 +5,40 @@
       "all-rows": "objectives-diagram"
     },
     "columnNames": {
-      "id": "Identification",
-      "objective": "Objective"
+      "o1_id": "Objective 1 ID",
+      "o1_name": "Objective 1 Name",
+      "o2_id": "Objective 2 ID",
+      "o2_name": "Objective 2 Name"
     },
     "queries": {
-      "objectives": "objectives1.sparql"
+      "o1_id": "objectives.sparql",
+      "o1_name": "objectives.sparql",
+      "o2_id": "objectives.sparql",
+      "o2_name": "objectives.sparql"
     },
     "rowMapping": {
-      "id": "objectives",
+      "id": "o1_id",
       "name": "Objectives",
-      "labelFormat": "Objectives {id}"
+      "labelFormat": "Objective"
     }
   },
-  "fault-containment-regions": {
-    "name": "Fault Containment Regions",
+  "connections": {
+    "name": "Connections",
     "diagrams": {
-      "all-rows": "fcr-diagram"
+      "all-rows": "connections-diagram"
     },
     "columnNames": {
-      "hasFcrDescription": "Description",
-      "hasFcrRationale": "Rationale",
-      "type": "Specializes"
+      "c1_name": "Connection 1 Name",
+      "c2_name": "Connection 2 Name"
     },
     "queries": {
-      "assembly": "fcr-assemblies.sparql",
-      "fcr": "fcr.sparql"
+      "c1_name": "connections.sparql",
+      "c2_name": "connections.sparql"
     },
     "rowMapping": {
-      "id": "fcr",
-      "name": "Fault Containment Regions",
-      "labelFormat": "{hasFcrName}",
-      "subRowMappings": [
-        {
-          "id": "assembly",
-          "name": "Reference Designators",
-          "labelFormat": "{refDes}",
-          "isRecursive": true
-        }
-      ]
-    }
-  },
-  "function-list": {
-    "name": "Function List",
-    "columnNames": {
-      "functionNumber": "Function Number",
-      "functionName": "Function Name",
-      "subsystem1": "Subsystem 1",
-      "assembly1": "Assembly 1",
-      "flow": "Flow",
-      "subsystem2": "Subsystem 2",
-      "assembly2": "Assembly 2",
-      "type": "Type"
-    },
-    "queries": {
-      "subsystemPair": "subsystem-pairs.sparql",
-      "function": "functions.sparql"
-    },
-    "rowMapping": {
-      "id": "subsystemPair",
-      "name": "Subsystem Pair",
-      "labelFormat": "Subsystem Pair {subsystem1}-{subsystem2}",
-      "canDeleteElements": false,
-      "subRowMappings": [
-        {
-          "id": "function",
-          "name": "Function",
-          "labelFormat": "Function {functionNumber}"
-        }
-      ]
-    }
-  },
-  "function-group-list": {
-    "name": "Function Group List",
-    "columnNames": {
-      "functionNumber": "Function Number",
-      "functionName": "Function Name",
-      "subsystem1": "Subsystem 1",
-      "assembly1": "Assembly 1",
-      "flow": "Flow",
-      "subsystem2": "Subsystem 2",
-      "assembly2": "Assembly 2",
-      "type": "Type"
-    },
-    "queries": {
-      "subsystemPair": "subsystem-pairs.sparql",
-      "function": "functions-for-groups.sparql",
-      "functionGroup": "function-groups.sparql"
-    },
-    "rowMapping": {
-      "id": "subsystemPair",
-      "name": "Subsystem Pair",
-      "labelFormat": "Subsystem Pair {subsystem1}-{subsystem2}",
-      "canDeleteElements": false,
-      "subRowMappings": [
-        {
-          "id": "function",
-          "name": "Function",
-          "labelFormat": "Function {functionNumber}"
-        },
-        {
-          "id": "functionGroup",
-          "name": "Function Group",
-          "labelFormat": "Function Group {functionNumber}",
-          "subRowMappings": [
-            {
-              "id": "function",
-              "name": "Function",
-              "labelFormat": "Function {functionNumber}"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "function-name-glossary": {
-    "name": "Function Name Glossary",
-    "columnNames": {
-      "termName": "Term Name",
-      "definition": "Definition"
-    },
-    "queries": {
-      "functionName": "function-names.sparql"
-    },
-    "rowMapping": {
-      "id": "functionName",
-      "name": "Function Name",
-      "labelFormat": "Term {termName}"
+      "id": "c1_name",
+      "name": "Connections",
+      "labelFormat": "Connection"
     }
   }
 }
