@@ -4,8 +4,15 @@
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
+# Docker image
 image:
   file: .gitpod.Dockerfile
   
+# Tasks to run 
 tasks:
   - init: ./gradlew owlLoad
+
+# VSCode attributes
+vscode:
+    extensions:
+        - vscjava.vscode-gradle
