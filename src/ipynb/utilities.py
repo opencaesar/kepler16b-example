@@ -10,7 +10,7 @@ def dataframe(fileName):
     columns = data["head"]["vars"]
     rows = data['results']['bindings']
     df = pd.DataFrame(rows)
-    df = df.applymap(lambda x: x["value"] if not pd.isna(x) else x)
+    df = df.map(lambda x: x["value"] if not pd.isna(x) else x)
     return df
 
 def todict(df, column1, column2):
