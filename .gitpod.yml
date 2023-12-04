@@ -15,4 +15,4 @@ tasks:
 # VSCode attributes
 vscode:
     extensions:
-        - vscjava.vscode-gradle
+        - https://github.com/microsoft/vscode-gradle/releases/download/3.12.7/vscjava.vscode-gradle-3.12.7.vsix
