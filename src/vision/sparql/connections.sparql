@@ -1,0 +1,12 @@
+PREFIX base:        <http://example.com/tutorial2/vocabulary/base#>
+PREFIX mission:     <http://example.com/tutorial2/vocabulary/mission#>
+
+SELECT DISTINCT ?c1_name ?c2_name
+WHERE {
+	?c1 a mission:Component ;
+		base:hasCanonicalName ?c1_name ;
+		mission:connectsTo [
+			base:hasCanonicalName ?c2_name
+		]
+}
+ORDER BY ?c1_name ?c2_name

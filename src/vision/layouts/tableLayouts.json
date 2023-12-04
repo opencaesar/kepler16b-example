@@ -1,0 +1,44 @@
+{
+  "objectives": {
+    "name": "Objectives",
+    "diagrams": {
+      "all-rows": "objectives-diagram"
+    },
+    "columnNames": {
+      "o1_id": "Objective 1 ID",
+      "o1_name": "Objective 1 Name",
+      "o2_id": "Objective 2 ID",
+      "o2_name": "Objective 2 Name"
+    },
+    "queries": {
+      "o1_id": "objectives.sparql",
+      "o1_name": "objectives.sparql",
+      "o2_id": "objectives.sparql",
+      "o2_name": "objectives.sparql"
+    },
+    "rowMapping": {
+      "id": "o1_id",
+      "name": "Objectives",
+      "labelFormat": "Objective"
+    }
+  },
+  "connections": {
+    "name": "Connections",
+    "diagrams": {
+      "all-rows": "connections-diagram"
+    },
+    "columnNames": {
+      "c1_name": "Connection 1 Name",
+      "c2_name": "Connection 2 Name"
+    },
+    "queries": {
+      "c1_name": "connections.sparql",
+      "c2_name": "connections.sparql"
+    },
+    "rowMapping": {
+      "id": "c1_name",
+      "name": "Connections",
+      "labelFormat": "Connection"
+    }
+  }
+}

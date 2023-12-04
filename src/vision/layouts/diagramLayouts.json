@@ -1,0 +1,26 @@
+{
+  "missions": {
+    "name": "Missions",
+    "queries": {
+      "missions": "missions-diagram.sparql",
+      "edge": "objectives-edge.sparql"
+    },
+    "rowMapping": {
+      "id": "missions",
+      "name": "Missions",
+      "labelFormat": "{m_id} {m_name}",
+      "colorKey": "m_id",
+      "edgeMatchKey": "m_id"
+    },
+    "edges": [
+      {
+        "id": "edge",
+        "name": "Objective",
+        "labelFormat": "{o_name}",
+        "colorKey": "o_id",
+        "sourceKey": "o_id",
+        "targetKey": "m_id"
+      }
+    ]
+  }
+}
