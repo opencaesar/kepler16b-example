@@ -16,3 +16,4 @@ tasks:
 vscode:
     extensions:
         - https://github.com/microsoft/vscode-gradle/releases/download/3.12.7/vscjava.vscode-gradle-3.12.7.vsix
+        - https://github.com/opencaesar/oml-vision/releases/download/0.1.0/oml-vision-0.1.0.vsix
