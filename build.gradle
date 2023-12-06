@@ -39,6 +39,8 @@ ext {
     dataset = 'tutorial2'
     // Root ontology IRI of the dataset
     rootIri = 'http://example.com/tutorial2/description/bundle'
+    // port for Fuseki server
+    port = 3030
 }
 
 /*
@@ -132,13 +134,33 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
 }
 
 /*
+ * A task to stop the Fuseki server and its corresponding process
+ */
+tasks.register('stopFusekiProcess') {
+	group 'vision'
+	doLast {
+        def os = System.getProperty('os.name').toLowerCase()
+		if (os.contains('win')) {
+            println "---------STOPPING FUSEKI PROCESS------------"
+			exec { commandLine 'cmd', '/c', 'FOR /F "tokens=5 delims= " %P IN (\'netstat -a -n -o ^| find "3030"\') DO Taskkill.exe /PID %P /F' }
+		} else if (os.contains('nix') || os.contains('nux') || os.contains('mac')) {
+            println "---------STOPPING FUSEKI PROCESS------------"
+            exec { commandLine 'bash', '-c', 'kill -3 $(lsof -t -i:3030)' }
+        } else {
+			throw new GradleException("Unsupported operating system: $os")
+		}
+	}
+}
+
+
+/*
  * A task to load an OWL catalog to a Fuseki dataset endpoint
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load/README.md
  */
 task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"vision", dependsOn: owlReason) {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset".toString()
+    endpointURL = "http://localhost:$port/$dataset".toString()
     fileExtensions = ['owl', 'ttl']
     iris = [
         "$rootIri/classes".toString(),
@@ -153,7 +175,7 @@ task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"vision", dependsOn:
  */
 task owlQuery(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: owlLoad) {
     inputs.files(owlLoad.inputs.files) // rerun when the dataset changes
-    endpointURL = "http://localhost:3030/$dataset".toString()
+    endpointURL = "http://localhost:$port/$dataset".toString()
     queryPath = file('src/sparql')
     resultPath = file('build/results')
     format = 'json'
