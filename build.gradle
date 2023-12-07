@@ -127,7 +127,7 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
  * Stop the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-fuseki/README.md
  */
-task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
+task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"vision") {
     outputFolderPath = file('.fuseki')
 }
 

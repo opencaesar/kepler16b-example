@@ -5,9 +5,7 @@
       "all-rows": "requirements-diagram"
     },
     "queries": {
-      "requirements": "requirements.sparql",
-      "c_name": "requirements.sparql",
-      "i_name": "requirements.sparql"
+      "requirements": "requirements.sparql"
     },
     "rowMapping": {
       "id": "requirements",
@@ -15,14 +13,9 @@
       "labelFormat": "{r_id}",
       "subRowMappings": [
         {
-          "id": "c_name",
-          "name": "c_name",
+          "id": "requirements",
+          "name": "Components",
           "labelFormat": "C Name: {c_name}"
-        },
-        {
-          "id": "i_name",
-          "name": "i_name",
-          "labelFormat": "I Name: {i_name}"
         }
       ]
     }
