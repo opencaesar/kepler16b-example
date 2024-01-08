@@ -5,15 +5,15 @@
       "all-rows": "requirements-diagram"
     },
     "queries": {
-      "requirements": "requirements.sparql"
+      "req-query": "requirements.sparql"
     },
     "rowMapping": {
-      "id": "requirements",
+      "id": "req-query",
       "name": "Requirements",
       "labelFormat": "{r_id}",
       "subRowMappings": [
         {
-          "id": "requirements",
+          "id": "req-query",
           "name": "Components",
           "labelFormat": "C Name: {c_name}"
         }
