@@ -47,10 +47,6 @@ description <http://example.com/tutorial2/description/components#> as components
 		base:hasIdentifier "C.02.09"
 		base:hasCanonicalName "Orbiter Propulsion Subsystem"
 	]
-	instance test : mission:Component [
-		base:hasIdentifier "testID"
-		base:hasCanonicalName "testName"
-	]
 	instance orbiter-ground-data-system : mission:Component [
 		base:hasIdentifier "C.03"
 		base:hasCanonicalName "Orbiter Ground Data System"
