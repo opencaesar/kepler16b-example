@@ -12,15 +12,15 @@
       },
       {
         "title": "Missions",
-        "treeIcon": "graph-scatter",
+        "treeIcon": "list-tree",
         "path": "missions",
-        "isDiagram": true
+        "isTree": true
       },
       {
         "title": "Components",
-        "treeIcon": "list-tree",
+        "treeIcon": "graph-scatter",
         "path": "components",
-        "isTree": true
+        "isDiagram": true
       },
       {
         "title": "Connections",

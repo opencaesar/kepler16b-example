@@ -20,23 +20,24 @@
       ]
     }
   },
-  "components": {
-    "name": "Components",
+  "missions": {
+    "name": "Missions",
     "diagrams": {
-      "all-rows": "components-diagram"
+      "all-rows": "missions-diagram"
     },
     "queries": {
-      "components": "components.sparql"
+      "missions": "missions.sparql",
+      "objectives": "missions.sparql"
     },
     "rowMapping": {
-      "id": "components",
-      "name": "Components",
-      "labelFormat": "{c1_id} {c1_name}",
+      "id": "missions",
+      "name": "Missions",
+      "labelFormat": "{m_id} {m_name}",
       "subRowMappings": [
         {
-          "id": "components",
-          "name": "Masses",
-          "labelFormat": "{c1_mass}"
+          "id": "objectives",
+          "name": "Objectives",
+          "labelFormat": "{o_name}"
         }
       ]
     }
