@@ -1,7 +1,9 @@
 description <http://example.com/tutorial2/description/interfaces#> as interfaces {
 
-	uses <http://example.com/tutorial2/vocabulary/base#> as base
-	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+	uses <http://imce.jpl.nasa.gov/foundation/base#> as base
+//	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+	uses <http://imce.jpl.nasa.gov/foundation/mission#> as mission
+	
 	extends <http://example.com/tutorial2/description/components#> as components
 
 	instance orbiter-ground-data-system.telemetryIn : mission:Interface [

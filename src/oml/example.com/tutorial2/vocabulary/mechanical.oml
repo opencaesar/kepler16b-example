@@ -1,7 +1,7 @@
 vocabulary <http://example.com/tutorial2/vocabulary/mechanical#> as mechanical {
 
 	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
-	extends <http://example.com/tutorial2/vocabulary/mission#> as mission
+	extends <http://imce.jpl.nasa.gov/foundation/mission#> as mission
 	extends <http://bipm.org/jcgm/vim4#> as vim4
 	uses <http://iso.org/iso-80000-4.1#> as iso-80000-4.1
 

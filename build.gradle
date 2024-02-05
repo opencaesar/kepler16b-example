@@ -53,7 +53,7 @@ repositories {
  * The OML dependencies
  */
 dependencies {
-    oml "io.opencaesar.ontologies:metrology-vocabularies:7.+"
+    oml "io.opencaesar.ontologies:imce-vocabularies:+"
 }
 
 /*

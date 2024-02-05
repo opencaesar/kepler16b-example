@@ -1,0 +1,28 @@
+vocabulary <http://example.com/tutorial2/vocabulary/kpinterface#> as kpinterface {
+	
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+	extends <http://imce.jpl.nasa.gov/foundation/base#> as base
+	extends <http://imce.jpl.nasa.gov/foundation/mission#> as mission
+
+	@rdfs:comment "A Junction joins two or more Interfaces."
+	relation entity Junction [
+		from mission:Interface
+		to mission:Interface
+		forward joins
+		symmetric
+		irreflexive
+	] < base:IdentifiedElement
+
+	@rdfs:comment "A Component connects to zero or more components."
+	relation entity Connection [
+		from mission:Component
+		to mission:Component
+		forward connectsTo
+		symmetric
+	]
+
+	@rdfs:comment "When interfaces presented by components are joined, we infer that the components are connected."
+	rule Junction-infers-Connection [
+		mission:presents(c1, i1) & joins(i1, i2) & mission:isPresentedBy(i2, c2) -> connectsTo(c1, c2)
+	]
+}

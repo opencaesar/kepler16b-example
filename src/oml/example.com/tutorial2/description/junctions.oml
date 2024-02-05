@@ -1,17 +1,17 @@
 description <http://example.com/tutorial2/description/junctions#> as junctions {
 
-	uses <http://example.com/tutorial2/vocabulary/base#> as base
-	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
+	uses <http://imce.jpl.nasa.gov/foundation/base#> as base
+	uses <http://example.com/tutorial2/vocabulary/kpinterface#> as kpinterface
 	extends <http://example.com/tutorial2/description/interfaces#> as interfaces
 
-	relation instance orbiter-ground-data-system.orbiter-spacecraft.command.uplink : mission:Junction [
+	relation instance orbiter-ground-data-system.orbiter-spacecraft.command.uplink : kpinterface:Junction [
 		from interfaces:orbiter-ground-data-system.commandOut
 		to interfaces:orbiter-spacecraft.commandIn
 		base:hasIdentifier "J.01"
 		base:hasCanonicalName "Orbiter Command Uplink"
 	]
 
-	relation instance orbiter-ground-data-system.orbiter-spacecraft.telemetry.downlink : mission:Junction [
+	relation instance orbiter-ground-data-system.orbiter-spacecraft.telemetry.downlink : kpinterface:Junction [
 		from interfaces:orbiter-spacecraft.telemetryOut
 		to interfaces:orbiter-ground-data-system.telemetryIn
 		base:hasIdentifier "J.02"
