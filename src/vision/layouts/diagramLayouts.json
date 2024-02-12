@@ -9,15 +9,18 @@
       "id": "connections",
       "name": "Components",
       "labelFormat": "{c1_id} {c1_name}",
-      "colorKey": "c1_name",
+      "nodeColor": "red",
+      "nodeTextColor": "white",
+      "nodeType": "default",
       "edgeMatchKey": "c1_id"
     },
     "edges": [
       {
         "id": "edge",
         "name": "Components",
+        "animated": true,
         "labelFormat": "contains",
-        "colorKey": "c1_name",
+        "legendItems": "{c1_name}",
         "sourceKey": "c2_id",
         "targetKey": "c1_id"
       }
