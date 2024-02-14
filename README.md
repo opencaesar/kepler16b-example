@@ -17,8 +17,12 @@ For details, check this [tutorial](http://www.opencaesar.io/oml-tutorials/#tutor
 
 ### IMCE Vocabularies as foundations and Discipline Vocabularies
 
-![alt text](img/image-3.png)
+[mechanical.oml](./src/oml/example.com/tutorial2/vocabulary/mechanical.oml) and [kpinterface.oml](./src/oml/example.com/tutorial2/vocabulary/kpinterface.oml) extend [IMCE mission.oml](https://github.com/opencaesar/imce-vocabularies/blob/master/src/oml/imce.jpl.nasa.gov/foundation/mission.oml).
+
+
+![alt text](img/image-5.png)
+
 
 ## Original Kepler-16b Vocabularies
 
-![alt text](img/image-1.png)
+![alt text](img/image-4.png)
