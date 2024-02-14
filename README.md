@@ -11,8 +11,13 @@ For details, check this [tutorial](http://www.opencaesar.io/oml-tutorials/#tutor
 
 ## Stand on the shoulders of giants
 
+### Modular Vocabulary stacks of Kepler-16b model
+
 ![alt text](img/image.png)
 
+### IMCE Vocabularies as foundations and Discipline Vocabularies
+
+![alt text](img/image-3.png)
 
 ## Original Kepler-16b Vocabularies
 
