@@ -22,6 +22,7 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.sirius.nature.modelingproject</nature>
 		<nature>io.opencaesar.rosetta.oml.ui.nature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>

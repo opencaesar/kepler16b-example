@@ -1,46 +1,19 @@
-# Kepler 16b
+# OML Kepler 16b example with IMCE Vocabularies
 
 [![CI](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml/badge.svg)](https://github.com/opencaesar/kepler16b-example/actions/workflows/ci.yml)
 [![Pages](https://img.shields.io/badge/Pages-HTML-blue)](http://opencaesar.github.io/kepler16b-example/) 
 
-This is an example OML project for a hypothetical mission called Kepler 16b. For details, check this [tutorial](http://www.opencaesar.io/oml-tutorials/#tutorial2).
+This is a reformulated OML model of [kepler16b-example](https://github.com/opencaesar/kepler16b-example) using the [IMCE Vocabularies](https://github.com/opencaesar/imce-vocabularies).
+This is a demonstration of the modular approach in OML Vocabulary usage.
 
-## Clone
-```
-  git clone https://github.com/opencaesar/kepler16b-example.git
-  cd kepler16b-example
-```
+For details, check this [tutorial](http://www.opencaesar.io/oml-tutorials/#tutorial2).
 
-## Clean
-```
-./gradlew clean
-```
 
-## Build
-```
-./gradlew build
-```
+## Stand on the shoulders of giants
 
-## Start Fuseki Server
-```
-./gradlew startFuseki
-```
+![alt text](img/image.png)
 
-## Stop Fuseki Server
-```
-./gradlew stopFuseki
-```
 
-## Load to Fuseki Dataset
-```
-./gradlew owlLoad
-```
+## Original Kepler-16b Vocabularies
 
-Pre-req: A Fuseki server with a firesat dataset must be running at http://localhost:3030/firesat (see Start Fuseki above)  
-
-## Run SPARQL Queries
-```
-./gradlew owlQuery
-```
-
-Pre-req: A Fuseki server with a firesat dataset must be running at http://localhost:3030/firesat (see Load to Fuseki Dataset)  
+![alt text](img/image-1.png)
