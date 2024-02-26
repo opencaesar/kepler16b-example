@@ -1,0 +1,45 @@
+{
+  "requirements": {
+    "name": "Requirements Diagram",
+    "diagrams": {
+      "all-rows": "requirements-diagram"
+    },
+    "queries": {
+      "req-query": "requirements.sparql"
+    },
+    "rowMapping": {
+      "id": "req-query",
+      "name": "Requirements",
+      "labelFormat": "{r_id}",
+      "subRowMappings": [
+        {
+          "id": "req-query",
+          "name": "Components",
+          "labelFormat": "C Name: {c_name}"
+        }
+      ]
+    }
+  },
+  "missions": {
+    "name": "Missions",
+    "diagrams": {
+      "all-rows": "missions-diagram"
+    },
+    "queries": {
+      "missions": "missions.sparql",
+      "objectives": "missions.sparql"
+    },
+    "rowMapping": {
+      "id": "missions",
+      "name": "Missions",
+      "labelFormat": "{m_id} {m_name}",
+      "subRowMappings": [
+        {
+          "id": "objectives",
+          "name": "Objectives",
+          "labelFormat": "{o_name}"
+        }
+      ]
+    }
+  }
+}

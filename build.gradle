@@ -154,7 +154,7 @@ task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: ow
     catalogPath = file('build/owl/catalog.xml')
     endpointURL = "http://localhost:3030/$dataset-inf".toString()
     fileExtensions = ['owl', 'ttl']
-    iris = ["$rootIri/classes".toString(), "$rootIri/properties".toString()]
+    iris = ["$rootIri".toString()]
     loadToDefaultGraph = true
 }
 

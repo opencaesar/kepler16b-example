@@ -1,0 +1,23 @@
+PREFIX base:        <http://example.com/tutorial2/vocabulary/base#>
+PREFIX mission:     <http://example.com/tutorial2/vocabulary/mission#>
+
+SELECT DISTINCT ?m_id ?m_name
+WHERE {
+	?m a mission:Mission ;
+		base:hasIdentifier ?m_id ;
+		base:hasCanonicalName ?m_name ;
+}
+ORDER BY ?m_id
+
+# PREFIX oml:			<http://opencaesar.io/oml#>
+# PREFIX dc: 			<http://purl.org/dc/elements/1.1#> 
+# PREFIX base:        <http://example.com/tutorial2/vocabulary/base#>
+# PREFIX mission:     <http://example.com/tutorial2/vocabulary/mission#>
+
+# CONSTRUCT {
+# 	?mission dc:type oml:Concept ;
+# 		mission:pursues ?objective .
+# }
+# WHERE {
+# 	?mission mission:pursues ?objective ;
+# }
