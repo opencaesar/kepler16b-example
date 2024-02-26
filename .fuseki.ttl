@@ -1,7 +1,7 @@
 PREFIX :        <#>
 PREFIX fuseki:  <http://jena.apache.org/fuseki#>
 PREFIX ja:      <http://jena.hpl.hp.com/2005/11/Assembler#>
-PREFIX tdb2:    <http://jena.apache.org/2016/tdb#>
+PREFIX tdb:     <http://jena.hpl.hp.com/2008/tdb#>
 
 # Service 1: Assertions endpoint
 :service1  a               		  		fuseki:Service ;
@@ -34,13 +34,13 @@ PREFIX tdb2:    <http://jena.apache.org/2016/tdb#>
 	] 
 	.
 
-:baseModel a tdb2:GraphTDB2 ;
-	tdb2:graphName <urn:x-arq:DefaultGraph> ;
-	tdb2:dataset :assertions ;
+:baseModel a tdb:GraphTDB ;
+	tdb:graphName <urn:x-arq:DefaultGraph> ;
+	tdb:dataset :assertions ;
 	.
 
-:assertions a tdb2:DatasetTDB2 ;
+:assertions a tdb:DatasetTDB ;
 	# location is relative to the .fuseki folder
-	tdb2:location  "assertions" ;
-	tdb2:context [ ja:cxtName "arq:queryTimeout" ; ja:cxtValue "1000" ] ;
+	tdb:location  "assertions" ;
+	tdb:context [ ja:cxtName "arq:queryTimeout" ; ja:cxtValue "1000" ] ;
 	.
