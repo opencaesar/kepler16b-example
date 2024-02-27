@@ -119,7 +119,7 @@ task generateDocs(type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: owlReason) 
  * Start the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-doc/README.md
  */
-task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml", dependsOn: omlToOwl) {
+task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"vision", dependsOn: owlReason) {
     configurationPath = file('.fuseki.ttl')
     outputFolderPath = file('.fuseki')
     webUI = true
@@ -129,7 +129,7 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml", de
  * Stop the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-fuseki/README.md
  */
-task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
+task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"vision") {
     outputFolderPath = file('.fuseki')
 }
 
@@ -149,12 +149,12 @@ task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn:
  * A task to load an OWL catalog to a Fuseki dataset endpoint
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load/README.md
  */
-task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: owlLoadTdb) {
+task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"vision", dependsOn: owlLoadTdb) {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
     endpointURL = "http://localhost:3030/$dataset-inf".toString()
     fileExtensions = ['owl', 'ttl']
-    iris = ["$rootIri".toString()]
+    iris = ["$rootIri/classes".toString(), "$rootIri/properties".toString()]
     loadToDefaultGraph = true
 }
 
