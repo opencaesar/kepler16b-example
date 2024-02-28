@@ -8,7 +8,8 @@
       { 
         "title": "Objectives",
         "treeIcon": "window",
-        "path": "objectives" 
+        "path": "objectives",
+        "isTable": true 
       },
       {
         "title": "Missions",
@@ -25,7 +26,8 @@
       {
         "title": "Connections",
         "treeIcon": "window",
-        "path": "connections"
+        "path": "connections",
+        "isTable": true
       },
       {
         "title": "Requirements",
