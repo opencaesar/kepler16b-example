@@ -5,7 +5,7 @@ PREFIX tdb:     <http://jena.hpl.hp.com/2008/tdb#>
 
 # Service 1: Assertions endpoint
 :service1  a               		  		fuseki:Service ;
-    fuseki:name                   		"tutorial2" ;
+    fuseki:name                   		"tutorial2-tdb" ;
     fuseki:dataset                		:assertions ;
     fuseki:serviceQuery           		"" , "query", "sparql" ;
     fuseki:serviceUpdate          		"" , "update" ;
@@ -14,7 +14,7 @@ PREFIX tdb:     <http://jena.hpl.hp.com/2008/tdb#>
 
 # Service 2: Inference endpoint
 :service2	  a               		  	fuseki:Service ;
-    fuseki:name                   		"tutorial2-inf" ;
+    fuseki:name                   		"tutorial2" ;
     fuseki:dataset                		:inferences ;
     fuseki:serviceQuery           		"" , "query", "sparql" ;
     fuseki:serviceUpdate          		"" , "update" ;

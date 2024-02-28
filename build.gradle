@@ -119,7 +119,7 @@ task generateDocs(type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: owlReason) 
  * Start the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-doc/README.md
  */
-task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml", dependsOn: omlToOwl) {
+task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml", dependsOn: owlReason) {
     configurationPath = file('.fuseki.ttl')
     outputFolderPath = file('.fuseki')
     webUI = true
@@ -140,7 +140,7 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
 task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: startFuseki) {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset".toString()
+    endpointURL = "http://localhost:3030/$dataset-tdb".toString()
     fileExtensions = ['owl', 'ttl']
     iris = ["$rootIri".toString()]
 }
@@ -152,7 +152,7 @@ task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn:
 task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: owlLoadTdb) {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset-inf".toString()
+    endpointURL = "http://localhost:3030/$dataset".toString()
     fileExtensions = ['owl', 'ttl']
     iris = ["$rootIri/classes".toString(), "$rootIri/properties".toString()]
     loadToDefaultGraph = true
@@ -164,7 +164,7 @@ task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: ow
  */
 task owlQuery(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: owlLoad) {
     inputs.files(owlLoad.inputs.files) // rerun when the dataset changes
-    endpointURL = "http://localhost:3030/$dataset-inf".toString()
+    endpointURL = "http://localhost:3030/$dataset".toString()
     queryPath = file('src/sparql')
     resultPath = file('build/results')
     format = 'json'
