@@ -149,7 +149,7 @@ task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn:
  * A task to load an OWL catalog to a Fuseki dataset endpoint
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load/README.md
  */
-task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"vision", dependsOn: owlLoadTdb) {
+task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: [owlReason, startFuseki]) {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
     endpointURL = "http://localhost:3030/$dataset-inf".toString()
