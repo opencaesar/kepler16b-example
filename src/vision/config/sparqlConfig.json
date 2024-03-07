@@ -1,4 +1,5 @@
 {
   "queryEndpoint": "http://localhost:3030/tutorial2-inf/sparql",
-  "updateEndpoint": "http://localhost:3030/tutorial2-inf/update"
+  "updateEndpoint": "http://localhost:3030/tutorial2-inf/update",
+  "pingEndpoint": "http://localhost:3030/$/ping"
 }
