@@ -11,20 +11,12 @@
       "o2_name": "Objective 2 Name"
     },
     "queries": {
-      "obj-query": "objectives.sparql",
-      "miss-query": "missions.sparql"
+      "obj-query": "objectives.sparql"
     },
     "rowMapping": {
       "id": "obj-query",
       "name": "Objectives",
-      "labelFormat": "Objective",
-      "subRowMappings": [
-        {
-          "id": "miss-query",
-          "name": "Missions",
-          "labelFormat": "{m_id}"
-        }
-      ]
+      "labelFormat": "Objective"
     }
   }
 }

@@ -24,7 +24,14 @@
         "title": "Connections",
         "type": "table",
         "path": "connections"
-      },
+      }
+    ]
+  },
+  {
+    "title": "Requirements",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
+    "children": [
       {
         "title": "Requirements",
         "type": "tree",

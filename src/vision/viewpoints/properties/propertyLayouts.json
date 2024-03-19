@@ -1,0 +1,84 @@
+{
+  "pages": [
+    {
+      "id": "general",
+      "label": "General",
+      "sparqlQuery": "general-properties.sparql",
+      "icon": "IconSettings",
+      "domainClass": "oml.iddInstance",
+      "preconditionExpression": "tablePath != \"PEL\" && tablePath != \"MEL\" && tablePath != \"wbs\"",
+      "groups": [
+        {
+          "id": "instance",
+          "label": "Instance",
+          "domainClass": "oml.ConceptInstance",
+          "controls": [
+            {
+              "type": "text",
+              "id": "id",
+              "label": "Label",
+              "helpExpression": "A label can provide a human-readable id for model objects that have assigned ids that might be less readable",
+              "isEnabledExpression": "aql:self.isEditable()",
+              "initialOperation": {
+                "firstModelOperations": {
+                  "type": "tool:ChangeContext",
+                  "browseExpression": "aql:self.oclAsType(oml::ConceptInstance).setPropertyValue('label'.rdfsIri(), newValue)"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "aIri",
+              "label": "IRI",
+              "readOnly": true,
+              "helpExpression": "This is the model-assigned element identifier. Every model element has this unique identifier"
+            },
+            {
+              "type": "text",
+              "id": "name",
+              "label": "Name",
+              "required": true,
+              "helpExpression": "Lists zero or more model types that this instance specializes. Such supertypes carry inherited properties or relations in the model."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "functionFilters",
+      "label": "Function Filters",
+      "sparqlQuery": "functionFiltersProperties",
+      "icon": "IconFilter",
+      "domainClass": "oml.Element",
+      "preconditionExpression": "tablePath == 'function-list'",
+      "groups": []
+    },
+    {
+      "id": "assemblyFilters",
+      "label": "Assembly Filters",
+      "sparqlQuery": "assemblyFiltersProperties",
+      "icon": "IconFilter",
+      "domainClass": "oml.Element",
+      "preconditionExpression": "tablePath == 'assemblies'",
+      "groups": []
+    },
+    {
+      "id": "main",
+      "label": "Main",
+      "sparqlQuery": "requirement-properties.sparql",
+      "icon": "IconChecklist",
+      "domainClass": "",
+      "preconditionExpression": "",
+      "groups": []
+    },
+    {
+      "id": "semantic",
+      "label": "Semantic",
+      "sparqlQuery": "semanticProperties",
+      "icon": "IconLink",
+      "domainClass": "",
+      "preconditionExpression": "",
+      "groups": []
+    }
+  ]
+}
