@@ -28,7 +28,7 @@
             },
             {
               "type": "text",
-              "id": "aIri",
+              "id": "anyIri",
               "label": "IRI",
               "readOnly": true,
               "helpExpression": "This is the model-assigned element identifier. Every model element has this unique identifier"
