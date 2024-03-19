@@ -1,46 +1,24 @@
-PREFIX :        <#>
-PREFIX fuseki:  <http://jena.apache.org/fuseki#>
-PREFIX ja:      <http://jena.hpl.hp.com/2005/11/Assembler#>
-PREFIX tdb:     <http://jena.hpl.hp.com/2008/tdb#>
+@prefix fuseki:  <http://jena.apache.org/fuseki#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix :        <#> .
 
-# Service 1: Assertions endpoint
-:service1  a               		  		fuseki:Service ;
-    fuseki:name                   		"tutorial2" ;
-    fuseki:dataset                		:assertions ;
-    fuseki:serviceQuery           		"" , "query", "sparql" ;
-    fuseki:serviceUpdate          		"" , "update" ;
-    fuseki:serviceReadWriteGraphStore 	"data" ;
-	.
+[] rdf:type fuseki:Server .
 
-# Service 2: Inference endpoint
-:service2	  a               		  	fuseki:Service ;
-    fuseki:name                   		"tutorial2-inf" ;
-    fuseki:dataset                		:inferences ;
-    fuseki:serviceQuery           		"" , "query", "sparql" ;
-    fuseki:serviceUpdate          		"" , "update" ;
-    fuseki:serviceReadWriteGraphStore 	"data" ;
-    fuseki:serviceReadGraphStore  		"get" ;
-	.
-   
-:inferences a ja:RDFDataset ;
-	ja:defaultGraph :inf_model ;
-	.
+<#service> rdf:type fuseki:Service ;
+    rdfs:label          "Tutorial2" ;												# Human readable label for dataset
+    fuseki:name         "tutorial2" ;												# Name of the dataset in the endpoint url
+    fuseki:serviceReadWriteGraphStore "data" ;											# SPARQL Graph store protocol (read and write)
+    fuseki:endpoint 	[ fuseki:operation fuseki:query ;	fuseki:name "sparql"  ] ;	# SPARQL query service
+    fuseki:endpoint 	[ fuseki:operation fuseki:shacl ;	fuseki:name "shacl" ] ;		# SHACL query service
+    fuseki:dataset      <#dataset> .
 
-:inf_model a ja:InfModel ;
-	ja:baseModel :baseModel ;
-	ja:reasoner [
-		ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ;
-		ja:rulesFrom <build/owl/example.com/tutorial2/vocabulary/bundle.rules> ;
-	] 
-	.
-
-:baseModel a tdb:GraphTDB ;
-	tdb:graphName <urn:x-arq:DefaultGraph> ;
-	tdb:dataset :assertions ;
-	.
-
-:assertions a tdb:DatasetTDB ;
-	# location is relative to the .fuseki folder
-	tdb:location  "assertions" ;
-	tdb:context [ ja:cxtName "arq:queryTimeout" ; ja:cxtValue "1000" ] ;
-	.
+## In memory TDB with union graph.
+<#dataset> rdf:type   tdb:DatasetTDB ;
+  tdb:location "--mem--" ;
+  # Query timeout on this dataset (1s, 1000 milliseconds)
+  ja:context [ ja:cxtName "arq:queryTimeout" ; ja:cxtValue "1000" ] ;
+  # Make the default graph be the union of all named graphs.
+  tdb:unionDefaultGraph true .

@@ -74,8 +74,6 @@ task omlToOwl(type:io.opencaesar.oml2owl.Oml2OwlTask, group:"oml", dependsOn: do
     inputCatalogPath = file('catalog.xml')
     // OWL catalog
     outputCatalogPath = file('build/owl/catalog.xml')
-    // Generate rules
-    generateRules = true
 }
 
 /*
@@ -119,7 +117,7 @@ task generateDocs(type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: owlReason) 
  * Start the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-doc/README.md
  */
-task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"vision", dependsOn: owlReason) {
+task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml") {
     configurationPath = file('.fuseki.ttl')
     outputFolderPath = file('.fuseki')
     webUI = true
@@ -129,20 +127,8 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"vision",
  * Stop the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-fuseki/README.md
  */
-task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"vision") {
+task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
     outputFolderPath = file('.fuseki')
-}
-
-/*
- * A task to load an OWL catalog to a TDB-persisted Fuseki dataset endpoint
- * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load/README.md
- */
-task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: startFuseki) {
-    inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
-    catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset".toString()
-    fileExtensions = ['owl', 'ttl']
-    iris = ["$rootIri".toString()]
 }
 
 /*
@@ -152,10 +138,13 @@ task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn:
 task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: [owlReason, startFuseki]) {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset-inf".toString()
+    endpointURL = "http://localhost:3030/$dataset".toString()
     fileExtensions = ['owl', 'ttl']
-    iris = ["$rootIri/classes".toString(), "$rootIri/properties".toString()]
-    loadToDefaultGraph = true
+    iris = [
+        "$rootIri/classes".toString(),
+        "$rootIri/properties".toString(),
+        "$rootIri/individuals".toString()
+    ]
 }
 
 /*
@@ -164,7 +153,7 @@ task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: [o
  */
 task owlQuery(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: owlLoad) {
     inputs.files(owlLoad.inputs.files) // rerun when the dataset changes
-    endpointURL = "http://localhost:3030/$dataset-inf".toString()
+    endpointURL = "http://localhost:3030/$dataset".toString()
     queryPath = file('src/sparql')
     resultPath = file('build/results')
     format = 'json'
