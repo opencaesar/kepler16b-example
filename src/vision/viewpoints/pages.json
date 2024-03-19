@@ -1,0 +1,42 @@
+[
+  { "title": "Home", "path": "/", "type": "home" },
+  {
+    "title": "Kepler16b",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/satellite.svg",
+    "children": [
+      { 
+        "title": "Objectives",
+        "type": "table",
+        "path": "objectives"
+      },
+      {
+        "title": "Missions",
+        "type": "tree",
+        "path": "missions"
+      },
+      {
+        "title": "Components",
+        "type": "diagram",
+        "path": "components"
+      },
+      {
+        "title": "Connections",
+        "type": "table",
+        "path": "connections"
+      }
+    ]
+  },
+  {
+    "title": "Requirements",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
+    "children": [
+      {
+        "title": "Requirements",
+        "type": "tree",
+        "path": "requirements"
+      }
+    ]
+  }
+]
