@@ -1,8 +1,11 @@
 description <http://example.com/tutorial2/description/missions#> as missions {
 
 	uses <http://imce.jpl.nasa.gov/foundation/base#> as base
+
 	uses <http://imce.jpl.nasa.gov/foundation/mission#> as mission
+
 	extends <http://example.com/tutorial2/description/objectives#> as objectives
+
 	extends <http://example.com/tutorial2/description/components#> as components
 
 	instance orbiter : mission:Mission [
@@ -12,6 +15,7 @@ description <http://example.com/tutorial2/description/missions#> as missions {
 		mission:pursues objectives:characterize-environment
 		mission:pursues objectives:characterize-gravitational-field
 	]
+
 	instance lander : mission:Mission [
 		base:hasIdentifier "M.02"
 		base:hasCanonicalName "Lander Mission"
@@ -19,12 +23,14 @@ description <http://example.com/tutorial2/description/missions#> as missions {
 		mission:pursues objectives:characterize-environment
 		mission:pursues objectives:characterize-rocky-core-shape
 	]
+
 	ref instance orbiter [
 		mission:deploys components:orbiter-launch-system
 		mission:deploys components:orbiter-spacecraft
 		mission:deploys components:orbiter-ground-data-system
 		mission:deploys components:mission-operations-system
 	]
+
 	ref instance lander [
 		mission:deploys components:lander-launch-system
 		mission:deploys components:lander-spacecraft

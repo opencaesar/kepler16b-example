@@ -1,7 +1,9 @@
 description <http://example.com/tutorial2/description/requirements#> as requirements {
 
 	uses <http://imce.jpl.nasa.gov/foundation/base#> as base
+
 	uses <http://imce.jpl.nasa.gov/foundation/mission#> as mission
+
 	extends <http://example.com/tutorial2/description/interfaces#> as interfaces
 
 	instance orbiter-ground-data-system-command-to-spacecraft : mission:Requirement [

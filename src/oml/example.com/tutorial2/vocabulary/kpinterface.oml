@@ -1,9 +1,12 @@
 vocabulary <http://example.com/tutorial2/vocabulary/kpinterface#> as kpinterface {
-	
+
 	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+
 	extends <http://imce.jpl.nasa.gov/foundation/base#> as base
+
 	extends <http://imce.jpl.nasa.gov/foundation/mission#> as mission
 
+	// kepler-16b model uses "Junction" as a relation entity. IMCE Vocabularies have a "Junction" as a Concept.
 	@rdfs:comment "A Junction joins two or more Interfaces."
 	relation entity Junction [
 		from mission:Interface
