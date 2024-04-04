@@ -180,6 +180,7 @@ task owlSave(type:io.opencaesar.owl.save.OwlSaveTask, group:"oml") {
     inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
     endpointURL = "http://localhost:3030/$dataset-tdb".toString()
     catalogPath = file('build/save/catalog.xml')
+    fileExtension = 'ttl'
 }
 
 /*
