@@ -25,9 +25,11 @@ buildscript {
         classpath 'io.opencaesar.owl:owl-fuseki-gradle:+'
         classpath 'io.opencaesar.owl:owl-query-gradle:+'
         classpath 'io.opencaesar.owl:owl-load-gradle:+'
+        classpath 'io.opencaesar.owl:owl-save-gradle:+'
         classpath 'io.opencaesar.owl:owl-reason-gradle:+'
         classpath 'io.opencaesar.oml:oml-merge-gradle:+'
         classpath 'io.opencaesar.adapters:oml2owl-gradle:+'
+        classpath 'io.opencaesar.adapters:owl2oml-gradle:+'
 	}
 }
 
@@ -119,7 +121,7 @@ task generateDocs(type: io.opencaesar.owl.doc.OwlDocTask, dependsOn: owlReason) 
  * Start the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-doc/README.md
  */
-task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"vision", dependsOn: owlReason) {
+task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"oml", dependsOn: owlReason) {
     configurationPath = file('.fuseki.ttl')
     outputFolderPath = file('.fuseki')
     webUI = true
@@ -129,7 +131,7 @@ task startFuseki(type: io.opencaesar.owl.fuseki.StartFusekiTask, group:"vision",
  * Stop the headless Fuseki server
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-fuseki/README.md
  */
-task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"vision") {
+task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"oml") {
     outputFolderPath = file('.fuseki')
 }
 
@@ -138,9 +140,9 @@ task stopFuseki(type: io.opencaesar.owl.fuseki.StopFusekiTask, group:"vision") {
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load/README.md
  */
 task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: startFuseki) {
-    inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
+    inputs.files(file('.fuseki/fuseki.pid')) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset".toString()
+    endpointURL = "http://localhost:3030/$dataset-tdb".toString()
     fileExtensions = ['owl', 'ttl']
     iris = ["$rootIri".toString()]
 }
@@ -149,10 +151,10 @@ task owlLoadTdb(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn:
  * A task to load an OWL catalog to a Fuseki dataset endpoint
  * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-load/README.md
  */
-task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: [owlReason, startFuseki]) {
-    inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
+task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: owlLoadTdb) {
+    inputs.files(file('.fuseki/fuseki.pid')) // rerun when fuseki restarts
     catalogPath = file('build/owl/catalog.xml')
-    endpointURL = "http://localhost:3030/$dataset-inf".toString()
+    endpointURL = "http://localhost:3030/$dataset".toString()
     fileExtensions = ['owl', 'ttl']
     iris = ["$rootIri/classes".toString(), "$rootIri/properties".toString()]
     loadToDefaultGraph = true
@@ -164,11 +166,49 @@ task owlLoad(type:io.opencaesar.owl.load.OwlLoadTask, group:"oml", dependsOn: [o
  */
 task owlQuery(type:io.opencaesar.owl.query.OwlQueryTask, group:"oml", dependsOn: owlLoad) {
     inputs.files(owlLoad.inputs.files) // rerun when the dataset changes
-    endpointURL = "http://localhost:3030/$dataset-inf".toString()
+    endpointURL = "http://localhost:3030/$dataset".toString()
     queryPath = file('src/sparql')
     resultPath = file('build/results')
     format = 'json'
 }
+
+/*
+ * A task to save a Fuseki dataset endpoint to an OWL catalog
+ * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-save/README.md
+ */
+task owlSave(type:io.opencaesar.owl.save.OwlSaveTask, group:"oml") {
+    inputs.files(startFuseki.outputFolderPath) // rerun when fuseki restarts
+    endpointURL = "http://localhost:3030/$dataset-tdb".toString()
+    catalogPath = file('build/save/catalog.xml')
+    fileExtension = 'ttl'
+}
+
+/*
+ * A task to convert the OWL catalog to OML catalog
+ * @seeAlso https://github.com/opencaesar/owl-adapter/blob/master/owl2oml/README.md
+ */
+task owlToOml(type:io.opencaesar.owl2oml.Owl2OmlTask, dependsOn: [downloadDependencies, owlSave]) {
+    inputCatalogPath = owlSave.catalogPath
+    outputCatalogPath = file('catalog.xml')
+    doNotUpdatePaths = [ file('build/oml'), file('src/oml/example.com/tutorial2/vocabulary')  ]
+    inputFileExtensions = ['ttl']
+    outputFileExtension = 'oml'
+}
+
+/*
+ * A task to load the OML dataset to Fuseki
+ */
+task load (dependsOn: owlLoad)
+
+/*
+ * A task to save the OML dataset from Fuseki
+ */
+task save (dependsOn: owlToOml)
+
+/*
+ * A task to query the OML dataset in Fuseki
+ */
+task query (dependsOn: owlQuery)
 
 /*
  * A task to check the project's build artifacts

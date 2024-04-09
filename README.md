@@ -31,16 +31,17 @@ This is an example OML project for a hypothetical mission called Kepler 16b. For
 ./gradlew stopFuseki
 ```
 
-## Load to Fuseki Dataset
+## Load Dataset to Fuseki
 ```
-./gradlew owlLoad
+./gradlew load
 ```
 
-Pre-req: A Fuseki server with a firesat dataset must be running at http://localhost:3030/firesat (see Start Fuseki above)  
+## Save Dataset from Fuseki
+```
+./gradlew save
+```
 
 ## Run SPARQL Queries
 ```
-./gradlew owlQuery
+./gradlew query
 ```
-
-Pre-req: A Fuseki server with a firesat dataset must be running at http://localhost:3030/firesat (see Load to Fuseki Dataset)  
