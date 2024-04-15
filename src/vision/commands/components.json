@@ -8,7 +8,7 @@
         }
     },
     {
-        "name": "Create Connection",
+        "name": "Create Component",
         "id": "create-component",
         "command": {
             "type": "create",
@@ -16,7 +16,7 @@
         }
     },
     {
-        "name": "Delete Connection",
+        "name": "Delete Component",
         "id": "delete-component",
         "command": {
             "type": "delete",
