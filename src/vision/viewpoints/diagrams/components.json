@@ -5,6 +5,9 @@
       "connections": "components.sparql",
       "edge": "components.sparql"
     },
+    "contextMenu": {
+      "commands": "components.json"
+    },
     "rowMapping": {
       "id": "connections",
       "name": "Components",

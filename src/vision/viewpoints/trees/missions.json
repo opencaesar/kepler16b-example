@@ -1,0 +1,19 @@
+{
+  "missions": {
+    "name": "Missions",
+    "diagrams": {
+      "all-rows": "missions-diagram"
+    },
+    "queries": {
+      "missions": "missions.sparql"
+    },
+    "contextMenu": {
+      "commands": "missions.json"
+    },
+    "rowMapping": {
+      "id": "missions",
+      "name": "Missions",
+      "labelFormat": "{m_id} {m_name}"
+    }
+  }
+}

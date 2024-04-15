@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Update Connection",
+        "id": "update-connection",
+        "command": {
+            "type": "update",
+            "query": "update-connection.sparql"
+        }
+    },
+    {
+        "name": "Create Connection",
+        "id": "create-connection",
+        "command": {
+            "type": "create",
+            "query": "create-connection.sparql"
+        }
+    },
+    {
+        "name": "Delete Connection",
+        "id": "delete-connection",
+        "command": {
+            "type": "delete",
+            "query": "delete-connection.sparql"
+        }
+    }
+]

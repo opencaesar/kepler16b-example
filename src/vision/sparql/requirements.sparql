@@ -3,9 +3,9 @@ PREFIX mission:     <http://example.com/tutorial2/vocabulary/mission#>
 PREFIX oml:     	<http://opencaesar.io/oml#>
 PREFIX rdfs:     	<http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?r_id ?c_name ?i_name
+SELECT DISTINCT ?iri ?r_id ?c_name ?i_name
 WHERE {
-	?r a mission:Requirement ;
+	?iri a mission:Requirement ;
 		base:hasIdentifier ?r_id ;
 		mission:specifies [
 			a mission:Presents ;

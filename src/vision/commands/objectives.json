@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Update Objective",
+        "id": "update-objective",
+        "command": {
+            "type": "update",
+            "query": "update-objective.sparql"
+        }
+    },
+    {
+        "name": "Create Objective",
+        "id": "create-objective",
+        "command": {
+            "type": "create",
+            "query": "create-objective.sparql"
+        }
+    },
+    {
+        "name": "Delete Objective",
+        "id": "delete-objective",
+        "command": {
+            "type": "delete",
+            "query": "delete-objective.sparql"
+        }
+    }
+]

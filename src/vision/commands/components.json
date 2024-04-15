@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Update Component",
+        "id": "update-component",
+        "command": {
+            "type": "update",
+            "query": "update-component.sparql"
+        }
+    },
+    {
+        "name": "Create Connection",
+        "id": "create-component",
+        "command": {
+            "type": "create",
+            "query": "create-component.sparql"
+        }
+    },
+    {
+        "name": "Delete Connection",
+        "id": "delete-component",
+        "command": {
+            "type": "delete",
+            "query": "delete-component.sparql"
+        }
+    }
+]

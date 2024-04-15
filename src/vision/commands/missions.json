@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Update Mission",
+        "id": "update-mission",
+        "command": {
+            "type": "update",
+            "query": "update-mission.sparql"
+        }
+    },
+    {
+        "name": "Create Mission",
+        "id": "create-mission",
+        "command": {
+            "type": "create",
+            "query": "create-mission.sparql"
+        }
+    },
+    {
+        "name": "Delete Mission",
+        "id": "delete-mission",
+        "command": {
+            "type": "delete",
+            "query": "delete-mission.sparql"
+        }
+    }
+]

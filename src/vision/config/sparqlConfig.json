@@ -1,4 +1,6 @@
 {
-  "queryEndpoint": "http://localhost:3030/tutorial2-inf/sparql",
-  "updateEndpoint": "http://localhost:3030/tutorial2-inf/update"
+  "queryEndpoint": "http://localhost:3030/tutorial2/sparql",
+  "updateAssertionEndpoint": "http://localhost:3030/tutorial2-tdb/update",
+  "updateInferenceEndpoint": "http://localhost:3030/tutorial2/update",
+  "pingEndpoint": "http://localhost:3030/$/ping"
 }
