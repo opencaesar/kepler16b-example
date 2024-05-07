@@ -1,0 +1,75 @@
+[
+    { "title": "Home", "path": "/", "type": "home" },
+    {
+      "title": "OSR",
+      "type": "group",
+      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/rover.svg",
+      "children": [
+        { 
+          "title": "SA Decomposition",
+          "type": "diagram",
+          "path": "decompositions"
+        },
+        { 
+          "title": "Decomposition w/o parts",
+          "type": "diagram",
+          "path": "decompositions-wo-parts"
+        },
+        {
+          "title": "decompositions-autogen",
+          "type": "diagram",
+          "path": "decompositions-autogen"
+        },
+        { 
+          "title": "IBD",
+          "type": "diagram",
+          "path": "ibd"
+        },
+        { 
+          "title": "IBD with Sys",
+          "type": "diagram",
+          "path": "ibd-sys"
+        },
+       {
+          "title": "Components Tree",
+          "type": "tree",
+          "path": "components-tree"
+        },
+        {
+          "title": "Components Mass Tree",
+          "type": "tree",
+          "path": "components-mass-tree"
+        },
+        {
+          "title": "Components Mass Tree 2",
+          "type": "tree",
+          "path": "components-mass-tree2"
+        },
+        {
+          "title": "Component Table",
+          "type": "table",
+          "path": "component-table"
+        },
+        {
+          "title": "Component Table with ID",
+          "type": "table",
+          "path": "component-table-id"
+        },      
+        {
+          "title": "MEL",
+          "type": "table",
+          "path": "MEL"
+        },      
+        { 
+          "title": "Behavior",
+          "type": "table",
+          "path": "movingscenario"
+        },
+        {
+          "title": "Timeline Table",
+          "type": "table",
+          "path": "timeline"        
+        }
+      ]
+    }
+  ]

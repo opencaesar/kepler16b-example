@@ -1,0 +1,28 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX vim4:        <http://bipm.org/jcgm/vim4#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+
+SELECT DISTINCT ?c1 ?c1_instancename ?c1_1d ?c1_name ?c2 ?c2_instancename ?c2_1d ?c2_name 
+WHERE {
+
+  VALUES ?componentType { mission:Component }
+
+  ?c1 a ?componentType ;
+    base:hasIdentifier ?c1_1d ;
+    base:hasCanonicalName ?c1_name ;
+
+  OPTIONAL{
+    ?c1 base:isContainedIn ?c2 ;
+    OPTIONAL{
+      ?c2 base:hasIdentifier ?c2_1d ;
+          base:hasCanonicalName ?c2_name .
+    }
+  }
+
+
+  BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
+ }
+ORDER BY ?c1_1d

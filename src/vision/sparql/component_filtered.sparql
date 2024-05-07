@@ -1,0 +1,39 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?c1_localname ?c1_id ?c1_name ?c1_type ?c2_localname ?c2_id ?c2_name
+WHERE {
+
+    VALUES ?componentType { structure:Assembly }
+
+	?c1 a ?componentType ;
+		base:hasIdentifier ?c1_id ;
+		base:hasCanonicalName ?c1_name ;
+
+    OPTIONAL{
+        ?c1 base:isContainedIn ?c2 ;
+        OPTIONAL{
+            ?c2 base:hasIdentifier ?c2_id ;
+                base:hasCanonicalName ?c2_name .
+        }
+    }
+	# Extract the local name
+    BIND(STRAFTER(STR(?c1), "#") AS ?c1_localname) .
+    BIND(STRAFTER(STR(?c2), "#") AS ?c2_localname) .
+
+	OPTIONAL {
+		?c1 a structure:System ;
+			BIND("System"  AS ?c1_type) .
+	}
+	OPTIONAL {
+		?c1 a structure:Subsystem ;
+			BIND("Subsystem"  AS ?c1_type) .
+	}
+	OPTIONAL {
+		?c1 a structure:Assembly ;
+			BIND("Assembly"  AS ?c1_type) .
+	}
+}
+ORDER BY ?c1_id

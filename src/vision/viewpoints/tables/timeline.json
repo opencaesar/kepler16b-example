@@ -1,0 +1,25 @@
+{
+    "timeline": {
+    "name": "Compoenents",
+    "diagrams": {
+      "all-rows": "timeline"
+    },
+    "columnNames": {
+      "manipulate": "Manipulate",
+      "f2_id": "Task id",
+      "f2_cname": "Task name",
+      "time": "time",
+      "statevariable": "State Variable",
+      "value": "State Value",
+      "f3_id": "Task invokes"
+    },
+    "queries": {
+      "manipulate": "query_scenario_move_v2.sparql"
+    },
+    "rowMapping": {
+      "id": "manipulate",
+      "name": "timeline",
+      "labelFormat": "timeline"
+    }
+  }  
+}

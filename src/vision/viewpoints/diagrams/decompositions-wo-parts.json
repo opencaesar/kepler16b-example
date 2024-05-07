@@ -1,0 +1,29 @@
+{
+    "decompositions-wo-parts": {
+        "name": "Decomposition w/o Parts",
+        "queries": {
+          "decompositions": "component_filtered_withmass.sparql",
+          "edge": "component_filtered_withmass.sparql"
+        },
+        "rowMapping": {
+          "id": "decompositions",
+          "name": "System",
+          "labelFormat": "{c1_localname}",
+          "nodeColor": "green",
+          "nodeTextColor": "black",
+          "nodeType": "{c1_type}",
+          "edgeMatchKey": "c1_localname"
+        },
+        "edges": [
+          {
+            "id": "edge",
+            "name": "Edge",
+            "animated": true,
+            "labelFormat": "hasSubsystem",
+            "legendItems": "{c2_localname}",
+            "sourceKey": "c1_localname",
+            "targetKey": "c2_localname"
+          }
+        ]
+      }
+}

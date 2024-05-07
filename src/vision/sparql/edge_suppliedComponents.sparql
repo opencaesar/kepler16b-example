@@ -1,0 +1,20 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX project:     <http://imce.jpl.nasa.gov/foundation/project#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vim4:		<http://bipm.org/jcgm/vim4#>
+
+SELECT DISTINCT ?parent ?child ?componentType ?iri
+WHERE {
+
+    VALUES ?componentType { project:WorkPackage }
+
+	?iri a ?componentType ;
+        project:supplies ?c ;
+
+    BIND(STRAFTER(STR(?iri), "#") AS ?parent) .
+    BIND(STRAFTER(STR(?c), "#") AS ?child) .
+
+}
+ORDER BY ?wp

@@ -1,0 +1,34 @@
+{
+    "MEL": {
+        "name": "MEL",
+        "diagrams": {
+          "all-rows": "system"
+        },
+        "columnNames": {
+          "c1_id": "Id",
+          "c1_name": "Canonical Name",
+          "m" : "Mass[kg]"
+        },
+        "queries": {
+          "system": "layered_system_with_mass.sparql",
+          "subsystem": "subsystem_with_mass.sparql",
+          "assembly": "assembly_with_mass.sparql"
+        },
+        "rowMapping": {
+          "id": "system",
+          "labelFormat": "{system}",
+          "subRowMappings":[
+            {
+              "id": "subsystem",
+              "labelFormat": "{subsystem}",
+              "subRowMappings":[
+                {
+                  "id": "assembly",
+                  "labelFormat": "{assembly}"
+                }
+              ]    
+            }
+          ]      
+        }
+      }
+}

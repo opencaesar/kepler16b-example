@@ -1,0 +1,24 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?j1_localname ?from ?to
+WHERE {
+
+	?j1 a mission:Junction ;
+      mission:joins1 ?if1 ;
+      mission:joins2 ?if2 .
+      OPTIONAL{
+        ?if1 mission:isPresentedBy ?c1.
+      }
+      OPTIONAL{
+        ?if2 mission:isPresentedBy ?c2.
+      }
+
+  BIND(STRAFTER(STR(?j1), "#") AS ?j1_localname) .
+  BIND(STRAFTER(STR(?c1), "#") AS ?from) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?to) .
+
+}
+ORDER BY ?j1

@@ -1,0 +1,21 @@
+{
+    "component-table": {
+        "name": "Compoenents",
+        "diagrams": {
+          "all-rows": "component"
+        },
+        "columnNames": {
+          "c1_localname": "Component",
+          "c2_localname": "IsContainedIn"
+        },
+        "queries": {
+          "c1_localname": "component.sparql",
+          "c2_localname": "component.sparql"
+        },
+        "rowMapping": {
+          "id": "c1_localname",
+          "name": "Compoenents",
+          "labelFormat": "component"
+        }
+      }
+}

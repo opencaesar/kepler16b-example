@@ -1,0 +1,24 @@
+{
+    "components-mass-tree": {
+        "name": "Components Mass Tree",
+        "diagrams": {
+          "all-rows": "decompositions"
+        },
+        "queries": {
+          "subsystem": "subsystem_with_mass.sparql",
+          "assembly": "assembly_with_mass.sparql"
+        },
+        "rowMapping": {
+          "id": "subsystem",
+          "name": "Subsystem",
+          "labelFormat": "{subsystem} ({m} kg)",
+          "subRowMappings": [
+            {
+              "id": "assembly",
+              "name": "Assembly",
+              "labelFormat": "{assembly} ({m} kg)"
+            }
+          ]  
+        }
+      }
+}
