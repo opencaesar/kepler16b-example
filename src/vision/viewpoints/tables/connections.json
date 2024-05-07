@@ -1,0 +1,21 @@
+{
+  "connections": {
+    "name": "Connections",
+    "diagrams": {
+      "all-rows": "connections-diagram"
+    },
+    "columnNames": {
+      "c1_name": "Connection 1 Name",
+      "c2_name": "Connection 2 Name"
+    },
+    "queries": {
+      "c1_name": "connections.sparql",
+      "c2_name": "connections.sparql"
+    },
+    "rowMapping": {
+      "id": "c1_name",
+      "name": "Connections",
+      "labelFormat": "Connection"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+
+SELECT DISTINCT ?iri ?m_id ?m_name
+WHERE {
+	?iri a mission:Mission ;
+		base:hasIdentifier ?m_id ;
+		base:hasCanonicalName ?m_name ;
+}
+ORDER BY ?m_id ?o_id

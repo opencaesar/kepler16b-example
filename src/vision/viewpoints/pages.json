@@ -1,20 +1,10 @@
 [
     { "title": "Home", "path": "/", "type": "home" },
     {
-      "title": "OSR",
+      "title": "Kepler16b",
       "type": "group",
-      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/rover.svg",
+      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/satellite.svg",
       "children": [
-        { 
-          "title": "SA Decomposition",
-          "type": "diagram",
-          "path": "decompositions"
-        },
-        { 
-          "title": "Decomposition w/o parts",
-          "type": "diagram",
-          "path": "decompositions-wo-parts"
-        },
         {
           "title": "decompositions-autogen",
           "type": "diagram",
@@ -39,37 +29,40 @@
           "title": "Components Mass Tree",
           "type": "tree",
           "path": "components-mass-tree"
-        },
-        {
-          "title": "Components Mass Tree 2",
-          "type": "tree",
-          "path": "components-mass-tree2"
-        },
-        {
-          "title": "Component Table",
-          "type": "table",
-          "path": "component-table"
-        },
-        {
-          "title": "Component Table with ID",
-          "type": "table",
-          "path": "component-table-id"
-        },      
-        {
-          "title": "MEL",
-          "type": "table",
-          "path": "MEL"
-        },      
-        { 
-          "title": "Behavior",
-          "type": "table",
-          "path": "movingscenario"
-        },
-        {
-          "title": "Timeline Table",
-          "type": "table",
-          "path": "timeline"        
         }
       ]
-    }
-  ]
+    },
+    {
+      "title": "Requirements",
+      "type": "group",
+      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
+      "children": [
+        {
+          "title": "Requirements",
+          "type": "tree",
+          "path": "requirements"
+        }
+      ]
+    },    
+    {
+      "title": "Tree",
+      "type": "group",
+      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
+      "children": [
+        { 
+          "title": "Objectives",
+          "type": "table",
+          "path": "objectives"
+        },
+        {
+          "title": "Missions",
+          "type": "tree",
+          "path": "missions"
+        },
+        {
+          "title": "Connections",
+          "type": "table",
+          "path": "connections"
+        }      ]
+    }    
+ ]
