@@ -1,0 +1,29 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX project:     <http://imce.jpl.nasa.gov/foundation/project#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vim4:		<http://bipm.org/jcgm/vim4#>
+
+SELECT DISTINCT ?parent ?id ?name ?m ?type ?owner ?iri
+WHERE {
+
+    VALUES ?componentType { structure:System structure:Assembly }
+
+	?iri a ?componentType ;
+		base:hasIdentifier ?id ;
+		base:hasCanonicalName ?name ;
+        project:isSuppliedBy ?wpiri;
+
+    BIND(STRAFTER(STR(?iri), "#") AS ?parent) .
+    BIND(STRAFTER(STR(?componentType), "#") AS ?type) .
+    BIND(STRAFTER(STR(?wpiri), "#") AS ?owner) .
+
+ 	OPTIONAL {
+		?c1_mass_mag vim4:characterizes ?iri ;
+			vim4:hasDoubleNumber ?c1_mass .
+	}
+    BIND((STR(?c1_mass)) AS ?m) .
+
+}
+ORDER BY ?id

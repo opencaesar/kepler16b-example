@@ -1,0 +1,38 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vim4:		<http://bipm.org/jcgm/vim4#>
+
+SELECT DISTINCT ?iri ?system ?c1_id ?c1_name ?c1_type ?mass ?m
+WHERE {
+
+    VALUES ?componentType { structure:System }
+
+	?iri a ?componentType ;
+		base:hasIdentifier ?c1_id ;
+		base:hasCanonicalName ?c1_name ;
+
+    OPTIONAL{
+		?c1_mass_mag vim4:characterizes ?iri ;
+			vim4:hasDoubleNumber ?mass .
+    }
+    BIND((STR(?mass)) AS ?m) .
+
+
+	OPTIONAL {
+		?iri a structure:System ;
+			BIND("System"  AS ?c1_type) .
+	}
+	OPTIONAL {
+		?iri a structure:Subsystem ;
+			BIND("Subsystem"  AS ?c1_type) .
+	}
+	OPTIONAL {
+		?iri a structure:Assembly ;
+			BIND("Assembly"  AS ?c1_type) .
+	}
+    BIND(STRAFTER(STR(?iri), "#") AS ?system) .
+
+}
+ORDER BY ?c1_id

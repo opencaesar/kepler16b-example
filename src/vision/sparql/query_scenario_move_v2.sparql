@@ -1,0 +1,30 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX scenario:   <http://opencaesar.io/open-source-rover/vocabulary/scenario#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX oml:           <http://opencaesar.io/oml#>
+
+SELECT DISTINCT ?manipulate ?f2_id ?f2_cname ?task ?time ?statevariable ?value ?f3_id
+WHERE {
+	?m a scenario:Manipulates;
+		oml:hasSource ?t ;
+		oml:hasTarget ?s ;
+		scenario:setStateValue ?value ;
+		OPTIONAL{
+			?t scenario:hasPlannedStartTime ?time .
+			?t base:hasIdentifier ?f2_id .
+			?t base:hasCanonicalName ?f2_cname .
+	        OPTIONAL{
+            ?t mission:invokes ?f3 .
+            ?f3 base:hasIdentifier ?f3_id .
+        }
+		
+		}
+
+	# Extract the local name
+    BIND(STRAFTER(STR(?m), "#") AS ?manipulate) .
+    BIND(STRAFTER(STR(?t), "#") AS ?task) .
+    BIND(STRAFTER(STR(?s), "#") AS ?statevariable) .
+} 
+ORDER BY ?m

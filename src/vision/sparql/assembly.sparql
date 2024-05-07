@@ -1,0 +1,18 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?iri ?assembly ?subsystem ?subsystemIri
+WHERE {
+
+
+	?subsystemIri structure:hasAssembly ?iri ;
+		base:hasIdentifier ?c1_id ;
+		base:hasCanonicalName ?c1_name ;
+
+    BIND(STRAFTER(STR(?subsystemIri), "#") AS ?subsystem) .
+    BIND(STRAFTER(STR(?iri), "#") AS ?assembly) .
+
+}
+ORDER BY ?c1_id

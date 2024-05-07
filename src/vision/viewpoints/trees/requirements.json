@@ -1,0 +1,23 @@
+{
+  "requirements": {
+    "name": "Requirements Diagram",
+    "diagrams": {
+      "all-rows": "requirements-diagram"
+    },
+    "queries": {
+      "req-query": "requirements.sparql"
+    },
+    "rowMapping": {
+      "id": "req-query",
+      "name": "Requirements",
+      "labelFormat": "{r_id}",
+      "subRowMappings": [
+        {
+          "id": "req-query",
+          "name": "Components",
+          "labelFormat": "C Name: {c_name}"
+        }
+      ]
+    }
+  }
+}

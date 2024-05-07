@@ -1,0 +1,29 @@
+{
+  "movingscenario": {
+    "name": "Scenario",
+    "queries": {
+      "movingscenario": "scenario_move.sparql",
+      "edge": "scenario_move.sparql"
+    },
+    "rowMapping": {
+      "id": "movingscenario",
+      "name": "Task",
+      "labelFormat": "{f2_id} \n {f2_cname}",
+      "nodeColor": "Aquamarine",
+      "nodeTextColor": "black",
+      "nodeType": "{f2_cname}",
+      "edgeMatchKey": "f2_id"
+    },
+    "edges": [
+      {
+        "animated": true,
+        "id": "edge",
+        "name": "Edge",
+        "labelFormat": "invokes",
+        "legendItems": "f2_id",
+        "sourceKey": "f2_id",
+        "targetKey": "f3_id"
+      }
+    ]
+  }
+}

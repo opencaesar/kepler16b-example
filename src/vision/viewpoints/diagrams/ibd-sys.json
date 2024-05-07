@@ -1,0 +1,51 @@
+{
+    "ibd-sys": {
+        "name": "IBD with Sys",
+        "queries": {
+          "system": "layered_system.sparql",
+          "subsystem": "layered_subsystem.sparql",
+          "assembly": "layered_assembly.sparql",
+          "edge": "junction.sparql"
+        },
+        "rowMapping": {
+          "id": "system",
+          "name": "System",
+          "labelFormat": "{system}",
+          "nodeColor": "Gunmetal",
+          "nodeTextColor": "white",
+          "nodeType": "Subsystem",
+          "subRowMappings": [
+            {
+              "id": "subsystem",
+              "name": "Subsystem",
+              "labelFormat": "{subsystem}",
+              "nodeColor": "Navy",
+              "nodeTextColor": "white",
+              "nodeType": "{c1_type}",
+              "subRowMappings": [
+                {
+                  "id": "assembly",
+                  "name": "Assembly",
+                  "labelFormat": "{assembly}",
+                  "nodeColor": "Navy",
+                  "nodeTextColor": "white",
+                  "nodeType": "Assembly",
+                  "edgeMatchKey": "assembly"
+                }
+              ]
+            }
+          ]
+        },
+        "edges": [
+          {
+            "id": "edge",
+            "name": "Edge",
+            "animated": true,
+            "labelFormat": "{j1_localname}",
+            "legendItems": "junctions",
+            "sourceKey": "from",
+            "targetKey": "to"
+          }
+        ]
+      }
+}

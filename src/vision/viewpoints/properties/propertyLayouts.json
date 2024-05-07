@@ -1,0 +1,88 @@
+
+{
+  "pages": [
+    {
+      "id": "mass",
+      "label": "Mass",
+      "sparqlQuery": "mass-properties.sparql",
+      "icon": "IconRoverArm",
+      "domainClass": "oml.iddInstance",
+      "preconditionExpression": "tablePath != \"PEL\" && tablePath != \"MEL\" && tablePath != \"wbs\"",
+      "groups": [
+        {
+          "id": "mass-rollup",
+          "label": "Mass Rollup",
+          "domainClass": "oml.ConceptInstance",
+          "controls": [
+            {
+              "type": "text",
+              "id": "id",
+              "label": "ID",
+              "helpExpression": "A label can provide a human-readable id for model objects that have assigned ids that might be less readable",
+              "isEnabledExpression": "aql:self.isEditable()",
+              "initialOperation": {
+                "firstModelOperations": {
+                  "type": "tool:ChangeContext",
+                  "browseExpression": "aql:self.oclAsType(oml::ConceptInstance).setPropertyValue('label'.rdfsIri(), newValue)"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "mIri",
+              "label": "IRI",
+              "readOnly": true,
+              "helpExpression": "This is the model-assigned element identifier. Every model element has this unique identifier"
+            },
+            {
+              "type": "number",
+              "id": "mass",
+              "label": "Mass",
+              "required": true,
+              "helpExpression": "Lists zero or more model types that this instance specializes. Such supertypes carry inherited properties or relations in the model."
+            },
+            {
+              "type": "text",
+              "id": "name",
+              "label": "Name",
+              "required": true,
+              "helpExpression": "Lists zero or more model types that this instance specializes. Such supertypes carry inherited properties or relations in the model."
+            }
+          ]
+        },
+        {
+          "id": "general",
+          "label": "General",
+          "domainClass": "oml.ConceptInstance",
+          "displayExpression": "tableRowTypes.includes('http://imce.jpl.nasa.gov/discipline/fsw/fsw#NamedElement')",
+          "controls": [
+            {
+              "type": "text",
+              "id": "base_hasDescription",
+              "label": "Has Description",
+              "helpExpression": "The hasDescription property relates an IdentifiedElement to zero or more text descriptions. Domain-specific descriptions intended to be functional over some domain should specialize hasDescription and add the functional characteristic."
+            }
+          ]
+        }
+      ]
+    },
+   {
+      "id": "main",
+      "label": "Main",
+      "sparqlQuery": "mainProperties",
+      "icon": "IconChecklist",
+      "domainClass": "",
+      "preconditionExpression": "",
+      "groups": []
+    },
+    {
+      "id": "semantic",
+      "label": "Semantic",
+      "sparqlQuery": "semanticProperties",
+      "icon": "IconLink",
+      "domainClass": "",
+      "preconditionExpression": "",
+      "groups": []
+    }
+  ]
+}

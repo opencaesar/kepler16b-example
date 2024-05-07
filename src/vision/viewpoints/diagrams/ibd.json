@@ -1,0 +1,40 @@
+{
+    "ibd": {
+        "name": "IBD",
+        "queries": {
+          "subsystem": "subsystem.sparql",
+          "assembly": "assembly.sparql",
+          "edge": "junction.sparql"
+        },
+        "rowMapping": {
+          "id": "subsystem",
+          "name": "Subsystem",
+          "labelFormat": "{subsystem}",
+          "nodeColor": "Aqua",
+          "nodeTextColor": "black",
+          "nodeType": "{c1_type}",
+          "subRowMappings": [
+            {
+              "id": "assembly",
+              "name": "Assembly",
+              "labelFormat": "{assembly}",
+              "nodeColor": "Navy",
+              "nodeTextColor": "white",
+              "nodeType": "subsystem",
+              "edgeMatchKey": "assembly"
+            }
+          ]
+        },
+        "edges": [
+          {
+            "id": "edge",
+            "name": "Edge",
+            "animated": true,
+            "labelFormat": "{j1_localname}",
+            "legendItems": "junctions",
+            "sourceKey": "from",
+            "targetKey": "to"
+          }
+        ]
+      }
+}

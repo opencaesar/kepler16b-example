@@ -1,0 +1,22 @@
+{
+  "objectives": {
+    "name": "Objectives",
+    "diagrams": {
+      "all-rows": "objectives-diagram"
+    },
+    "columnNames": {
+      "o1_id": "Objective 1 ID",
+      "o1_name": "Objective 1 Name",
+      "o2_id": "Objective 2 ID",
+      "o2_name": "Objective 2 Name"
+    },
+    "queries": {
+      "obj-query": "objectives.sparql"
+    },
+    "rowMapping": {
+      "id": "obj-query",
+      "name": "Objectives",
+      "labelFormat": "Objective"
+    }
+  }
+}

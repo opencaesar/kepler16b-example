@@ -1,0 +1,29 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX scenario:   <http://opencaesar.io/open-source-rover/vocabulary/scenario#>
+PREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?scenario ?task ?f2_id ?f2_cname ?f3_id
+WHERE {
+	?f1 a scenario:Scenario ;
+    OPTIONAL{
+        ?f1 scenario:hasTask ?f2 .
+        OPTIONAL{
+            ?f2 base:hasIdentifier ?f2_id .
+            ?f2 base:hasCanonicalName ?f2_cname .
+#			OPTIONAL{
+#				?f2_invoke base:hasIdentifier ?f2_invoke_id. 
+#			}        
+        }
+        OPTIONAL{
+            ?f2 mission:invokes ?f3 .
+            ?f3 base:hasIdentifier ?f3_id .
+        }
+    }
+	# Extract the local name
+    BIND(STRAFTER(STR(?f1), "#") AS ?scenario) .
+    BIND(STRAFTER(STR(?f2), "#") AS ?task) .
+	FILTER(REGEX(STR(?f1), "http://opencaesar.io/open-source-rover/description/behavior/scenario_move#")).
+} 
+ORDER BY ?f2_id 
