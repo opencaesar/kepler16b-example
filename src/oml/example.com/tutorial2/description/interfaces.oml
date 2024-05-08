@@ -1,25 +1,14 @@
 description <http://example.com/tutorial2/description/interfaces#> as interfaces {
 
-	uses <http://imce.jpl.nasa.gov/foundation/base#> as base
-
-//	uses <http://example.com/tutorial2/vocabulary/mission#> as mission
-	uses <http://imce.jpl.nasa.gov/foundation/mission#> as mission
-
 	extends <http://example.com/tutorial2/description/components#> as components
 
-	instance orbiter-ground-data-system.telemetryIn : mission:Interface [
-		base:hasIdentifier "I.04"
-		base:hasCanonicalName "Telemetry In"
-	]
+	uses <http://imce.jpl.nasa.gov/foundation/base#> as base
 
-	relation instance orbiter-ground-data-system.presents.telemetryIn : mission:Presents [
-		from components:orbiter-ground-data-system
-		to orbiter-ground-data-system.telemetryIn
-	]
+	uses <http://imce.jpl.nasa.gov/foundation/mission#> as mission
 
 	instance orbiter-ground-data-system.commandOut : mission:Interface [
-		base:hasIdentifier "I.03"
 		base:hasCanonicalName "Command Out"
+		base:hasIdentifier "I.03"
 	]
 
 	relation instance orbiter-ground-data-system.presents.commandOut : mission:Presents [
@@ -27,9 +16,19 @@ description <http://example.com/tutorial2/description/interfaces#> as interfaces
 		to orbiter-ground-data-system.commandOut
 	]
 
+	relation instance orbiter-ground-data-system.presents.telemetryIn : mission:Presents [
+		from components:orbiter-ground-data-system
+		to orbiter-ground-data-system.telemetryIn
+	]
+
+	instance orbiter-ground-data-system.telemetryIn : mission:Interface [
+		base:hasCanonicalName "Telemetry In"
+		base:hasIdentifier "I.04"
+	]
+
 	instance orbiter-spacecraft.commandIn : mission:Interface [
-		base:hasIdentifier "I.01"
 		base:hasCanonicalName "Command In"
+		base:hasIdentifier "I.01"
 	]
 
 	relation instance orbiter-spacecraft.presents.commandIn : mission:Presents [
@@ -37,13 +36,13 @@ description <http://example.com/tutorial2/description/interfaces#> as interfaces
 		to orbiter-spacecraft.commandIn
 	]
 
-	instance orbiter-spacecraft.telemetryOut : mission:Interface [
-		base:hasIdentifier "I.02"
-		base:hasCanonicalName "Telemetry Out"
-	]
-
 	relation instance orbiter-spacecraft.presents.telemetryOut : mission:Presents [
 		from components:orbiter-spacecraft
 		to orbiter-spacecraft.telemetryOut
+	]
+
+	instance orbiter-spacecraft.telemetryOut : mission:Interface [
+		base:hasCanonicalName "Telemetry Out"
+		base:hasIdentifier "I.02"
 	]
 }
