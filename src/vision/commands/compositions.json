@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Delete Connection",
+        "id": "delete-connection",
+        "command": {
+            "type": "delete"
+        }
+    }
+]
