@@ -2,19 +2,24 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: 'feature'
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Checklist before submitting a feature request
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+- [ ] I have reviewed [CONTRIBUTING.md](https://github.com/opencaesar/oml-vision/blob/master/CONTRIBUTING.md) document
+- [ ] I have done a quick search on the issue tracker to check if the feature request is not redundant
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## Is your feature request related to a problem? If yes, describe the problem
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+[If your feature is related to some problem, please describe it. E.g. _I am annoyed that whenever I do X, I need to..._ ]
+
+## Describe the desired feature
+
+[Clearly and concisely describe the functionality that you would like to see]
+
+## Additional context
+
+[Any additional context]
