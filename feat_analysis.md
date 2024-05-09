@@ -47,7 +47,6 @@ We need a description that configures the set of analysis codes or tools that ca
 1. First, without scenario to simplify the sa vocabularies.
 
 2. Modeling state variables
-    - 
 
 2. Using astropy. Build actual workflow using quarto.
 

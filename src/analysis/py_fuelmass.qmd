@@ -1,0 +1,161 @@
+---
+title: "Calcurate Fuel Mass"
+format: html
+editor: source
+jupyter: python3
+---
+
+## Start Python
+
+```{python}
+import os
+print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
+print("PATH:", os.environ.get('PATH'))
+```
+## Calcurate delta V needed
+
+```{python}
+from astropy import units as u
+from poliastro.bodies import Earth
+from poliastro.twobody import Orbit
+from poliastro.maneuver import Maneuver
+from poliastro.util import norm
+import numpy as np
+
+# Rocket parameters
+g0 = 9.81 * u.m / u.s**2  # Standard gravity
+
+# Initial Payload mass
+m_init = 1000 * u.kg
+
+I_sp = 350 * u.s  # Specific impulse
+
+
+# Define the orbits
+leo = Orbit.circular(Earth, alt=400 * u.km)
+geo = Orbit.circular(Earth, alt=35786 * u.km)
+
+# Calculate the Hohmann transfer maneuver
+hohmann_maneuver = Maneuver.hohmann(leo, geo.a)
+ss_a, ss_f = leo.apply_maneuver(hohmann_maneuver, intermediate=True)
+
+
+print(f"Hohmann transfer maneuvers: {hohmann_maneuver.impulses}")
+
+# Calculate the total delta-v
+total_delta_v = sum(norm(dv) for (_, dv) in hohmann_maneuver.impulses) 
+print(f"Total delta-v: {total_delta_v}")
+
+# total_delta_v = norm(hohmann_maneuver.impulses[1][1])
+# print(f"Total delta-v: {total_delta_v}")
+```
+
+
+## Calcurate Fuel Mass[kg] needed
+
+```{python}
+# Convert delta_v to a dimensionless value by dividing by the unit (m/s)
+dimensionless_delta_v = total_delta_v.to(u.m / u.s).value
+# Tsiolkovsky rocket equation
+m_final = m_init / np.exp(dimensionless_delta_v / (I_sp * g0).value)
+
+m_fuel = m_init - m_final
+print(f"m_init: {m_init.to(u.kg)}")
+print(f"m_final: {m_final.to(u.kg)}")
+print(f"m_fuel: {m_fuel.to(u.kg)}")
+
+
+m_init = 2000 * u.kg
+dimensionless_delta_v = total_delta_v.to(u.m / u.s).value
+m_final = m_init / np.exp(dimensionless_delta_v / (I_sp * g0).value)
+m_fuel = m_init - m_final
+print(f"m_init: {m_init.to(u.kg)}")
+print(f"m_final: {m_final.to(u.kg)}")
+print(f"m_fuel: {m_fuel.to(u.kg)}")
+
+
+m_init = 3950 * u.kg
+dimensionless_delta_v = 1900 
+
+# この２つは同じ結果が得られる式である
+m_final = m_init / np.exp(dimensionless_delta_v / (220 * g0).value)
+m_final = m_init * np.exp(-dimensionless_delta_v / (220 * g0).value)
+
+m_fuel = m_init - m_final
+print(f"m_init: {m_init.to(u.kg)}")
+print(f"m_final: {m_final.to(u.kg)}")
+print(f"m_fuel: {m_fuel.to(u.kg)}")
+
+m_init = 1000 * u.kg
+dimensionless_delta_v = 3300 
+m_final = m_init / np.exp(dimensionless_delta_v / (350 * g0).value)
+m_fuel = m_init - m_final
+print(f"m_init: {m_init.to(u.kg)}")
+print(f"m_final: {m_final.to(u.kg)}")
+print(f"m_fuel: {m_fuel.to(u.kg)}")
+```
+
+
+## Visualize Orbit
+
+```{python}
+from poliastro.plotting import OrbitPlotter2D
+
+
+
+op = OrbitPlotter2D()
+# ss_a, ss_f = ss_i.apply_maneuver(hoh, intermediate=True)
+op.plot(leo, label="Initial orbit")
+op.plot(ss_a, label="Transfer orbit")
+op.plot(geo, label="Final orbit")
+# op.plot(ss_f, label="Final orbit-2")
+
+```
+
+# 次に、ここで構築したコードを、CICDパイプラインでExecutableにする。
+
+
+
+```{python}
+from astropy import units as u
+from poliastro.bodies import Earth
+from poliastro.twobody import Orbit
+from poliastro.maneuver import Maneuver
+from poliastro.util import norm
+import numpy as np
+
+class Rocket:
+    def __init__(self, m_init, I_sp):
+        self.m_init = m_init
+        self.I_sp = I_sp
+        self.g0 = 9.81 * u.m / u.s**2
+
+    def calculate_delta_v(self, leo, geo):
+        hohmann_maneuver = Maneuver.hohmann(leo, geo.a)
+        total_delta_v = sum(norm(dv) for (_, dv) in hohmann_maneuver.impulses)
+        return total_delta_v
+
+    def calculate_fuel_mass(self, total_delta_v):
+        dimensionless_delta_v = total_delta_v.to(u.m / u.s).value
+        m_final = self.m_init / np.exp(dimensionless_delta_v / (self.I_sp * self.g0).value)
+        m_fuel = self.m_init - m_final
+        return m_fuel
+
+# Example usage
+leo = Orbit.circular(Earth, alt=400 * u.km)
+geo = Orbit.circular(Earth, alt=35786 * u.km)
+
+rocket = Rocket(m_init=1000 * u.kg, I_sp=350 * u.s)
+total_delta_v = rocket.calculate_delta_v(leo, geo)
+m_fuel = rocket.calculate_fuel_mass(total_delta_v)
+
+print(f"Total delta-v: {total_delta_v}")
+print(f"Required fuel mass: {m_fuel.to(u.kg)}")
+
+```
+
+
+
+
+
+

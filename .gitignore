@@ -11,3 +11,4 @@ build
 #Jupyter
 __pycache__/
 *.py[cod]
+.Rproj.user
