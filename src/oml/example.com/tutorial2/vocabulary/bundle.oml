@@ -11,5 +11,8 @@ vocabulary bundle <http://example.com/tutorial2/vocabulary/bundle#> as ^bundle {
 	includes <http://imce.jpl.nasa.gov/foundation/mission#>
 	includes <http://imce.jpl.nasa.gov/foundation/project#>
 	includes <http://imce.jpl.nasa.gov/foundation/analysis#>
+
+	// added 
+	includes <http://example.com/tutorial2/vocabulary/stateanalysis#>
 	
 }
