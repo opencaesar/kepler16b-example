@@ -5,7 +5,7 @@ The goal of this branch is to demonstrate the integration of the mathematical an
 
 ## Here is a minimum set of state variables
 
-```{mermaid}
+```mermaid
 flowchart LR
     id1((deltaV)) -- affects --> id2((fuelMass))
     id3((initialOrbit)) -- affects --> id1
@@ -20,6 +20,9 @@ flowchart LR
 
 
 ```
+
+### Circles refer to the state variables
+### Squares refer to the analysis vocab
 
 ## analysis:Characterizes
 
