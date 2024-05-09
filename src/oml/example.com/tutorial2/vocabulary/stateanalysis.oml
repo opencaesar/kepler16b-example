@@ -8,6 +8,8 @@ vocabulary <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa {
 	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
 	extends <http://imce.jpl.nasa.gov/foundation/mission#> as mission
 	extends <http://imce.jpl.nasa.gov/foundation/base#> as base
+	extends <http://imce.jpl.nasa.gov/foundation/analysis#> as analysis
+	extends <http://www.w3.org/2001/XMLSchema#> as xsd
 
 	@rdfs:label "State Variable"
 	@dc:description "A state variable models a particular aspect or property of a system that is a focus of control. The property can be one that is the subject of control, or one that must be known in order to control some other property.
@@ -38,6 +40,20 @@ vocabulary <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa {
 	// 	restricts vim4:instantiates to iso-80000-4.1:mass
 	// 	restricts vim4:unit to iso-80000-4.1:kilogram
 	// ]
+
+	scalar property hasStateValue [
+		domain StateVariable
+		range xsd:string
+	]
+
+	relation entity CharacterizesStateOf [
+		from StateVariable
+		to mission:Component
+		@rdfs:label "Characterizes State of"
+		forward characterizesStateOf
+		@rdfs:label "is Characterized by"
+		reverse isCharacterizedBy
+	] < analysis:Characterizes
 
 }
 
