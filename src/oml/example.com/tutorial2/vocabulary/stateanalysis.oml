@@ -18,7 +18,7 @@ vocabulary <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa {
         Time derivatives of a state variable's value are usually included in the definition of its value vector
         (which property is the base property is a matter of system focus)
         State variables have values that are continuous over time."
-	concept StateVariable
+	concept StateVariable < analysis:Constraint
 
 	@rdfs:label "Affects"
 	@dc:description "A [=StateVariable=] [=affects=] zero or more [=StateVariable=]s."

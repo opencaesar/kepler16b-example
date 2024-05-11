@@ -131,9 +131,6 @@ ret5 <- omlhashiR::oml_owlLoad(oml_repository)
 
 ## Get Configuration & Mass Properties
 
-1)  コンフィグレーションの取得
-2)  関連ワークパッケージの取得(isSuppliedBy + isAuthorizedBy)
-3)  グラフツリーの作成
 
 ```{r}
 library(tansakusuR)

@@ -1,0 +1,849 @@
+---
+title: "Generate OML-Vision File"
+date: now
+author: "Yuta Nakajima"
+description: "<BR> This qmd notebook generates oml-vision files."
+title-block-banner: true
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly    
+    fontsize: 1.0em
+    self-contained: true
+    toc: true
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    grid:
+      sidebar-width: 200px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 2.5rem
+execute:
+  warning: false
+
+---
+
+## omlvision_wrapper.R
+
+Current omlvision_wrapper.R is too specific to each model.
+I want to generalize this.
+
+## Reusable Functions.
+
+### omlファイルのフレーム作成
+
+```{r}
+generateOmlHeader <- function(iri, as){
+  ### assemly.omlのフレーム作成
+  omldescriptions <- paste0("description <", iri, "> as ", as, " {\n")
+  
+  return(omldescriptions)
+}
+
+generateOmlUses<- function(header, iri, as){
+
+  omldescriptions <- ""
+  
+  for (i in 1:length(iri)){
+    omldescriptions <- paste0(omldescriptions, "  	uses <", iri[i], "> as ", as[i], "\n")
+  }
+  
+  omldescriptions <- paste0(header, "\n", omldescriptions, "\n")
+  # 
+  # omldescriptions <- paste0(omldescriptions,"\n}\n")
+  
+  return(omldescriptions)
+}
+
+generateOmlExtends <- function(iri, as){
+	# extends <http://opencaesar.io/open-source-rover/description/cruisestage/workpackage#> as workpackage
+  
+  extendsdescriptions <- ""
+  
+  for (i in 1:length(iri)){
+    extendsdescriptions <- paste0(extendsdescriptions, "  	extends <", iri[i], "> as ", as[i], "\n")
+  }
+
+  return(extendsdescriptions)
+}
+```
+
+
+### instanceの量産
+
+```{.oml .rdf}
+description <http://opencaesar.io/open-source-rover/description/cruisestage/component#> as component {
+
+    uses <http://imce.jpl.nasa.gov/foundation/mission#> as mission
+    uses <http://imce.jpl.nasa.gov/foundation/base#> as base
+    
+
+    instance cuise-stage : mission:Component 
+
+    instance sun-sensors-1 : mission:Component [
+        base:isContainedIn cuise-stage
+    ]
+    instance sun-sensors-2 : mission:Component [
+        base:isContainedIn cuise-stage
+    ]
+
+}
+```
+
+
+Pattern
+
+instance <INSTANCENAME> : <TYPE> [
+  base:isContainedIn <PARENT>
+]
+
+```{r}
+generateInstances <- function(type, instancename, hasCanonicalName, hasIdentifier, hasShortName, hasDescription, relationType, relationTo){
+  
+  text <- paste0("// Instances\n")
+  text_instance <- ""
+
+  for (i in 1:length(instancename)){
+    text_instance <- paste0(text_instance,
+                            "	instance ", instancename[i], " : ", type, " [","\n")
+    if(!is.na(hasIdentifier[i])){
+      text_instance <- paste0(text_instance,
+                            "		base:hasIdentifier \"", hasIdentifier[i],"\"\n")
+    }
+    if(!is.na(hasCanonicalName[i])){
+      text_instance <- paste0(text_instance,
+                            "		base:hasCanonicalName \"", hasCanonicalName[i],"\"\n")
+    }
+    if(!is.na(hasShortName[i])){
+      text_instance <- paste0(text_instance,
+                            "		base:hasShortName \"", hasShortName[i],"\"\n")
+      }
+    if(!is.na(hasDescription[i])){
+      text_instance <- paste0(text_instance,
+                            "		base:hasDescription \"", hasDescription[i],"\"\n")
+      }
+    if(!is.na(relationTo[i])){
+      text_instance <- paste0(text_instance,
+                            "		", relationType[i], " ", relationTo[i],"\n")
+      }
+    text_instance <- paste0(text_instance, "	]\n\n")
+  }
+
+  text <- paste0(text, text_instance)
+  return(text)
+}
+```
+
+### project:WorkPackage
+
+```{r}
+omlrepo <- "../"
+
+filename <- "workpackage"
+outputdir <- paste0(omlrepo,"src/oml/opencaesar.io/open-source-rover/description/cruisestage/")
+
+outputfile <- paste0(outputdir, "workpackage.oml")
+
+iri <- paste0("http://opencaesar.io/open-source-rover/description/cruisestage/", filename,"#")
+as  <- filename
+
+uses_iri <- c("http://imce.jpl.nasa.gov/foundation/base#",
+              "http://imce.jpl.nasa.gov/foundation/project#")
+uses_as <- c("base",
+             "project")
+
+```
+
+```{r}
+prefix_id <- "WP.01"
+classtype <- "project:WorkPackage"
+relationtype <- "project:isAuthorizedBy"
+
+df_instance <- data.frame(
+  instancename = parent_wp,
+  type = classtype,
+  hasIdentifier=prefix_id,
+  hasCanonicalName="Cruise Stage",
+  hasShortName=prefix_id,
+  hasDescription="Cruise Stage",
+  relationType=NA,    
+  relationTo=NA,
+  specialize="system"
+)
+
+parent<-cp$parent[2]
+
+# for subsystem work packages
+wp_subsystem <- cp %>% 
+  filter(specialize=="subsystem") %>%
+  mutate(instancename = instancename) %>%
+  mutate(type = classtype) %>%
+  mutate(hasIdentifier = paste0(prefix_id, ".", formatC(row_number(), width = 2, flag="0"))) %>%
+  mutate(hasCanonicalName=Component) %>%
+  mutate(hasShortName=instancename) %>%
+  mutate(hasDescription=instancename) %>%
+  mutate(relationTo=parent) %>% 
+  mutate(relationType=relationtype) %>%
+  # mutate(isAuthorizedBy=parent) %>%
+  select(
+    instancename,
+    type,
+    hasIdentifier,
+    hasCanonicalName,
+    hasShortName,
+    specialize,
+    hasDescription,
+    relationType,    
+    relationTo,
+    # isAuthorizedBy,
+    specialize
+  )
+
+
+# for assembly work packages
+wp_assembly <- cp %>% 
+  filter(specialize=="assembly") 
+
+wp_assembly <- wp_assembly %>%
+  mutate(instancename = instancename) %>%
+  mutate(type = classtype) %>%
+  mutate(prefix = wp_subsystem$hasIdentifier[match(unlist(wp_assembly$parent), wp_subsystem$instancename)]) %>%
+  mutate(hasIdentifier = paste0(prefix, ".", formatC(row_number(), width = 2, flag="0"))) %>%
+  mutate(hasCanonicalName=Component) %>%
+  mutate(hasShortName=instancename) %>%
+  mutate(hasDescription=instancename) %>%
+  mutate(relationTo=parent) %>%
+  mutate(relationType=relationtype) %>%
+  # mutate(isAuthorizedBy=parent) %>%
+  select(
+    instancename,
+    type,
+    hasIdentifier,
+    hasCanonicalName,
+    hasShortName,
+    specialize,
+    hasDescription,
+    relationType,    
+    relationTo,
+    specialize
+  )
+
+df_instance <- bind_rows(df_instance, wp_subsystem, wp_assembly)
+
+
+
+instancedescriptions <- generateInstances(type = classtype, 
+                           instancename = df_instance$instancename, 
+                           hasCanonicalName = df_instance$hasCanonicalName,
+                           hasIdentifier = df_instance$hasIdentifier, 
+                           hasShortName = df_instance$hasShortName, 
+                           hasDescription = df_instance$hasDescription,
+                           relationType = df_instance$relationType,
+                           relationTo = df_instance$relationTo)
+
+# cat(instancedescriptions)
+```
+
+```{r}
+header <- generateOmlHeader(iri,as)
+omldescriptions <- generateOmlUses(header,uses_iri,uses_as)
+omldescriptions <- paste0(omldescriptions, "\n", instancedescriptions, "\n}\n")
+# cat(omldescriptions)
+
+cat(file=outputfile, omldescriptions)
+
+```
+
+
+## Validate Model
+
+```{r}
+source("/Users/mlab/Workspaces/github/open-source-rover/quarto_docs/osr_common.R")
+omlrepo <- "/Users/mlab/Workspaces/github/open-source-rover/"
+
+library(tansakusuR)
+endpoint_url <- "http://localhost:3030/open-source-rover/sparql"
+query_string <- "/Users/mlab/Workspaces/github/open-source-rover/src/vision/sparql/work-package.sparql"
+df_query <- send_query_from_file(endpoint_url,query_string)
+
+
+df_query$c1_type <- "WorkPackage"
+
+df_query <- df_query %>%
+  mutate(c2_label = paste0(c2_1d,": ",c2_instancename)) %>%
+  mutate(c1_label = paste0(c1_1d,": ",c1_instancename)) 
+  
+df_query$c2_label[1] = NA
+
+plotCollapsibleTreeFromDataframe(df_query, palette="BluYl", 
+                                 parent="c2_label",
+                                 child="c1_label",
+                                 type="c2_1d")
+
+df_query_workpackage <- df_query
+
+```
+
+
+
+
+## mission:Component
+
+```{r}
+omlrepo <- "../"
+
+filename <- "components"
+outputdir <- paste0(omlrepo,"src/oml/opencaesar.io/open-source-rover/description/cruisestage/")
+
+outputfile <- paste0(outputdir, "components.oml")
+
+
+iri <- "http://opencaesar.io/open-source-rover/description/cruisestage/components#"
+as  <- "components"
+
+uses_iri <- c("http://imce.jpl.nasa.gov/foundation/base#",
+              "http://imce.jpl.nasa.gov/foundation/mission#",
+              "http://imce.jpl.nasa.gov/foundation/project#")
+uses_as <- c("base",
+             "mission",
+             "project")
+
+
+	# extends <http://opencaesar.io/open-source-rover/description/cruisestage/workpackage#> as workpackage
+extends_iri <- c("http://opencaesar.io/open-source-rover/description/cruisestage/workpackage#")
+extends_as <- c("workpackage")
+
+
+
+
+prefix_id <- "CS"
+classtype <- "mission:Component"
+# relationtype <- "base:isContainedIn"
+
+relationtype <- "project:isSuppliedBy"
+
+parent_cp <- parent_wp # this is also a name for mission:Component
+
+
+df_instance <- data.frame(
+  instancename = parent_cp,
+  type = classtype,
+  hasIdentifier=paste0(prefix_id, ".01"),
+  hasCanonicalName="Cruise Stage",
+  hasShortName=prefix_id,
+  hasDescription="Cruise Stage",
+  relationType=relationtype,    
+  relationTo=paste0("workpackage:",parent_wp),
+  specialize="system"
+)
+
+
+```
+
+## ここまでOK
+
+df_assemblyは、numの数だけinstanceを作成する必要がある。<TODO>
+mass propertyも付与する必要がある。<TBD>
+
+
+
+```{r}
+# this is for prefix
+cp_subsystem <- cp %>% 
+  filter(specialize=="subsystem") %>%
+  mutate(instancename = instancename) %>%
+  mutate(type = classtype) %>%
+  mutate(hasIdentifier = paste0(prefix_id, ".", formatC(row_number(), width = 2, flag="0"))) %>%
+  # mutate(isAuthorizedBy=parent) %>%
+  select(
+    instancename,
+    type,
+    hasIdentifier,
+    specialize,
+  )
+
+
+df_assembly<- cp %>% 
+  filter(type == "mission:Component") %>%
+  mutate(num = as.numeric(`Flt Units`)) %>%
+  mutate(instancename = instancename) %>%
+  mutate(type = classtype)
+
+df_assembly <- df_assembly %>%
+  mutate(prefix = wp_assembly$hasIdentifier[match(unlist(df_assembly$instancename), wp_assembly$instancename)]) %>%
+  mutate(prefix = str_replace_all(prefix, "WP.", "")) %>%
+  mutate(hasIdentifier = paste0(prefix_id, ".", prefix)) %>%
+  mutate(hasCanonicalName=Component) %>%
+  mutate(hasShortName=instancename) %>%
+  mutate(hasDescription=instancename) %>%
+  mutate(relationTo=paste0("workpackage:", instancename)) %>% # wp is assembly wp
+  mutate(relationType=relationtype) %>%
+  # mutate(isAuthorizedBy=parent) %>%
+  select(
+    num,
+    instancename,
+    type,
+    hasIdentifier,
+    hasCanonicalName,
+    hasShortName,
+    specialize,
+    hasDescription,
+    relationType,
+    relationTo,
+    specialize
+  )
+```
+
+ここまでは共通のパラメータ。
+あとは、numの個数だけinstancename,hasCanonicalNameを修正すれば良い、
+
+```{r}
+index <- 2
+
+for (i in 1:nrow(df_assembly)){
+  id_count <- 1
+  for (j in 1:df_assembly$num[i]) {
+    df_instance_added <- data.frame(
+      instancename = paste0(df_assembly$instancename[i], "-", j),
+      type = df_assembly$type[i],
+      hasIdentifier = paste0(df_assembly$hasIdentifier[i], ".", formatC(j, width = 3, flag="0")),
+      hasCanonicalName = paste0(df_assembly$hasCanonicalName[i], "-", j), # temporary
+      hasShortName = paste0(df_assembly$hasShortName[i], "-", j), # temporary
+      hasDescription = paste0(df_assembly$hasDescription[i], "-", j), # temporary
+      relationType =  df_assembly$relationType[i],
+      relationTo = df_assembly$relationTo[i],
+      specialize =  df_assembly$specialize[i]
+    )
+   
+    df_instance <- bind_rows(df_instance, df_instance_added)
+    index <- index + 1
+  }
+}
+
+    
+instancedescriptions <- generateInstances(type = classtype, 
+                           instancename = df_instance$instancename, 
+                           hasCanonicalName = df_instance$hasCanonicalName,
+                           hasIdentifier = df_instance$hasIdentifier, 
+                           hasShortName = df_instance$hasShortName, 
+                           hasDescription = df_instance$hasDescription,
+                           relationType = df_instance$relationType,
+                           relationTo = df_instance$relationTo)
+```
+
+
+
+### make contains
+
+```{.oml}
+	ref instance cruise-stage [
+		base:contains sun-sensors-1
+	]
+```
+
+```{r}
+generateInstanceRefs <- function(parent_instancename, relationType, child_instancename){
+  
+  text <- paste0("// Instance Contains\n")
+  text_instance <- ""
+  text_instance <- paste0(text_instance,
+                          "  ref instance ", parent_instancename, " [","\n")
+
+  for (i in 1:length(child_instancename)){
+    text_instance <- paste0(text_instance,
+                            "		", relationType, " ", child_instancename[i],"\n")
+  }
+  
+  text_instance <- paste0(text_instance, "	]\n\n")
+
+  text <- paste0(text, text_instance)
+  return(text)
+}
+```
+
+```{r}
+
+df_config <- df_instance %>% filter(specialize=="assembly")
+
+instancerefdescriptions <- generateInstanceRefs(parent_instancename=parent_cp,
+                     relationType="base:contains", 
+                     child_instancename=df_config$instancename)
+
+# cat(instancerefdescriptions)
+```
+
+
+### Finally, create .oml file
+
+```{r}
+header <- generateOmlHeader(iri,as)
+omldescriptions <- generateOmlUses(header, uses_iri, uses_as)
+
+extendsdescription <- generateOmlExtends(extends_iri, extends_as)
+omldescriptions <- paste0(omldescriptions, extendsdescription, "\n")
+
+omldescriptions <- paste0(omldescriptions, "\n", 
+                          instancedescriptions, "\n",
+                          instancerefdescriptions, "\n",
+                          "}\n")
+
+
+# cat(omldescriptions)
+
+
+cat(file=outputfile, omldescriptions)
+
+    
+```
+
+
+
+## Validate Model
+
+```{r}
+source("/Users/mlab/Workspaces/github/open-source-rover/quarto_docs/osr_common.R")
+omlrepo <- "/Users/mlab/Workspaces/github/open-source-rover/"
+
+library(tansakusuR)
+endpoint_url <- "http://localhost:3030/open-source-rover/sparql"
+query_string <- "/Users/mlab/Workspaces/github/open-source-rover/src/vision/sparql/cuise-stage-containment.sparql"
+df_query <- send_query_from_file(endpoint_url,query_string)
+
+
+df_query$c1_type <- "component"
+
+df_query <- df_query %>%
+  mutate(c2_label = paste0(c2_1d,": ",c2_instancename)) %>%
+  mutate(c1_label = paste0(c1_1d,": ",c1_instancename)) 
+  
+df_query$c2_label[1] = NA
+
+plotCollapsibleTreeFromDataframe(df_query, palette="BluYl", 
+                                 parent="c2_label",
+                                 child="c1_label",
+                                 type="c2_1d")
+
+
+df_query_component <- df_query
+```
+
+
+ここまできたら、あとは、MELをワークパッケージに沿って生成するのみ。
+これは、3つのステップでできる。
+
+1) コンフィグレーションの取得
+2) 関連ワークパッケージの取得(isSuppliedBy + isAuthorizedBy)
+3) グラフツリーの作成
+
+
+```{r}
+configuration_root_iri <- "http://opencaesar.io/open-source-rover/description/cruisestage/components#cruise-stage"
+```
+
+1) コンフィグレーションの取得
+
+```{r}
+query_string <- '
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX project:        <http://imce.jpl.nasa.gov/foundation/project#>
+
+SELECT DISTINCT ?c1 ?c1_instancename ?c1_1d ?c1_name ?c2 ?c2_instancename ?c2_1d ?c2_name ?c3 ?c3_instancename ?c3_1d ?c3_name ?c4
+WHERE {
+
+  VALUES ?c1 { <http://opencaesar.io/open-source-rover/description/cruisestage/components#cruise-stage> }
+
+ # ?c1 a ?componentType ;
+ # FILTER (CONTAINS(str(?c1), "http://opencaesar.io/open-source-rover/description/cruisestage/")) .
+ 
+   OPTIONAL{ 
+    ?c1 base:hasIdentifier ?c1_1d ;
+      base:hasCanonicalName ?c1_name ;
+  }
+  OPTIONAL{
+    ?c1 base:contains ?c2 ;
+    OPTIONAL{
+      ?c2 base:hasIdentifier ?c2_1d ;
+          base:hasCanonicalName ?c2_name .
+    }
+    OPTIONAL{
+      ?c2 project:isSuppliedBy ?c3 ;
+          OPTIONAL{
+            ?c3 base:hasIdentifier ?c3_1d ;
+                base:hasCanonicalName ?c3_name;
+                project:isAuthorizedBy ?c4 .
+          }          
+    }    
+  }
+
+
+  BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
+  BIND(STRAFTER(STR(?c3), "#") AS ?c3_instancename) .
+ }
+ORDER BY ?c1_1d
+
+'
+
+df_query <- send_query_from_file(endpoint_url,query_string)
+```
+
+```{r}
+df_query$c1_type <- "component"
+
+df_query <- df_query %>%
+  mutate(c2_label = paste0(c2_1d,": ",c2_instancename)) %>%
+  mutate(c1_label = paste0(c1_1d,": ",c1_instancename)) 
+  
+df_query$c2_label[1] = NA
+
+plotCollapsibleTreeFromDataframe(df_query, palette="BluYl", 
+                                 parent="c2_label",
+                                 child="c1_label",
+                                 type="c2_1d")
+
+df_config <- df_query
+```
+
+
+
+
+ここでは、wpのツリーにcpを統合する。
+wp supplies cp のシンプルなツリーをまずは作る。
+
+c1 - c2
+c2 - c3
+
+この関係性を取得すれば良い
+
+
+```{r}
+df_supplies1 <- df_query_workpackage %>%
+  select(c1,
+         c1_instancename,
+         c1_1d,
+         c1_name,
+         c2,
+         c2_instancename,
+         c2_1d,
+         c2_name) %>%
+  mutate(relation = "authorizes")
+
+df_supplies2 <- df_config %>%
+  select(c2,
+         c2_instancename,
+         c2_1d,
+         c2_name,
+         c3,
+         c3_instancename,
+         c3_1d,
+         c3_name) %>%
+  mutate(relation = "supplies")
+
+colnames(df_supplies1) <- c("c_iri","c_instancename","c_id","c_name", "p_iri","p_instancename","p_id","p_name","type")
+colnames(df_supplies2) <- c("c_iri","c_instancename","c_id","c_name", "p_iri","p_instancename","p_id","p_name","type")
+
+df_supplies <- rbind(df_supplies1, df_supplies2)
+```
+
+
+```{r}
+# I want to plot graph as dendrogram. graph doesnt have NA root for plotCollapsibleTreeFromDataframe
+plotGraph2Dendrogram <- function(g){
+
+  # find root nodes
+  root_wp <- which(degree(g, mode = "in") == 0)
+  root_wp <- names(root_wp)
+
+  # Add NA
+#  g <- add_vertices(g, 1, name="NA")
+#  g <- add_edges(g, c("NA", root_wp))
+
+  df <- igraph::as_data_frame(g, what = "edges") %>%
+    add_row(from=NA, to=root_wp)
+  
+  
+  g2 <- graph_from_data_frame(df, 
+                           directed = TRUE, 
+                           vertices = NULL)
+
+  df_deg <- data.frame(
+    name = names(degree(g2)),
+    degree = degree(g2),
+    distance = distances(g2)["NA",]
+  )
+  
+  df_g <- df %>%
+    left_join(df_deg, by=c("to"="name")) 
+  
+  p<-plotCollapsibleTreeFromDataframe(df_g, palette="BluYl", parent="from", child="to",type="distance")
+  
+  
+  return(p)
+}
+```
+
+
+```{r}
+
+df_supplies <- df_supplies %>%
+  mutate(p_label = paste0(p_id,": ",p_instancename)) %>%
+  mutate(c_label = paste0(c_id,": ",c_instancename)) 
+  
+df_supplies$p_label[1] = NA
+
+plotCollapsibleTreeFromDataframe(df_supplies, palette="BluYl", 
+                                 parent="p_label",
+                                 child="c_label",
+                                 type="type")
+
+```
+
+
+```{r}
+library(igraph)
+
+df_g <- df_supplies %>%
+  mutate(parent = p_label) %>%
+  mutate(child = c_label) %>%
+  select("parent","child","type")
+
+df_g <- df_g[-1,]
+
+g2 <- graph_from_data_frame(df_g, 
+                           directed = TRUE, 
+                           vertices = NULL)
+
+
+plot(g2, layout=layout_as_tree)
+plotGraph2Dendrogram(g2)
+
+```
+
+
+```{r}
+query_string <- '
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX vim4:        <http://bipm.org/jcgm/vim4#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX project:     <http://imce.jpl.nasa.gov/foundation/project#>
+
+SELECT DISTINCT ?c1 ?c1_instancename ?c1_1d ?c1_name ?c2 ?c2_instancename ?c2_1d ?c2_name 
+WHERE {
+
+  VALUES ?componentType { project:WorkPackage }
+
+  ?c1 a ?componentType ;
+    base:hasIdentifier ?c1_1d ;
+    base:hasCanonicalName ?c1_name ;
+
+  OPTIONAL{
+    ?c1 project:isAuthorizedBy ?c2 ;
+    OPTIONAL{
+      ?c2 base:hasIdentifier ?c2_1d ;
+          base:hasCanonicalName ?c2_name ;
+#          project:supplies ?c3 .
+#      OPTIONAL{
+#        ?c3 base:hasIdentifier ?c3_1d ;
+#            base:hasCanonicalName ?c3_name .
+#      }
+    }
+
+  }
+
+
+  BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
+#  BIND(STRAFTER(STR(?c3), "#") AS ?c3_instancename) .
+ }
+ORDER BY ?c1_1d
+'
+df_query <- send_query_from_file(endpoint_url,query_string)
+
+```
+
+```{r}
+df_query$c1_type <- "component"
+
+df_query <- df_query %>%
+  mutate(c2_label = paste0(c2_1d,": ",c2_instancename)) %>%
+  mutate(c1_label = paste0(c1_1d,": ",c1_instancename)) 
+  
+df_query$c2_label[1] = NA
+
+plotCollapsibleTreeFromDataframe(df_query, palette="BluYl", 
+                                 parent="c2_label",
+                                 child="c1_label",
+                                 type="c2_1d")
+
+```
+
+
+
+
+```{.r}
+#| warning: false
+#| echo: false
+
+library(igraph)
+
+searchDirectory <- function(iteration, pattern, parent_directory){
+  for(i in 1:iteration){
+      path <- list.files(parent_directory, recursive = TRUE, pattern = pattern, full.names = TRUE)
+      if(length(path)){
+        return(path)
+      }
+      parent_directory <- dirname(parent_directory)
+  }
+  print("file not found")
+  return(path)
+}
+
+source(searchDirectory(4, "osr_common.R", (getwd())))
+source(searchDirectory(4, "massRollup.R", (getwd())))
+
+omlrepo
+```
+
+```{.sql}
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
+PREFIX vim4:        <http://bipm.org/jcgm/vim4#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+
+SELECT DISTINCT ?c1 ?c1_instancename ?c1_1d ?c1_name ?c2 ?c2_instancename ?c2_1d ?c2_name 
+WHERE {
+
+  VALUES ?componentType { mission:Component }
+
+  ?c1 a ?componentType ;
+  FILTER (CONTAINS(str(?c1), "http://opencaesar.io/open-source-rover/description/cruisestage/")) .
+ 
+   OPTIONAL{ 
+    ?c1 base:hasIdentifier ?c1_1d ;
+      base:hasCanonicalName ?c1_name ;
+  }
+  OPTIONAL{
+    ?c1 base:isContainedIn ?c2 ;
+    OPTIONAL{
+      ?c2 base:hasIdentifier ?c2_1d ;
+          base:hasCanonicalName ?c2_name .
+    }
+  }
+
+
+  BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
+ }
+ORDER BY ?c1_1d
+
+```
+
+
+
