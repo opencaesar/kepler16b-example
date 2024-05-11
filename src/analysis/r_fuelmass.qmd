@@ -35,6 +35,8 @@ library(tidyverse)
 
 ## Calcurate dV
 
+This function moved to `calcDeltaV.R`.
+
 ```{r}
 calcDeltaV <- function(initOrbit=400, targetOrbit = 35786){
   # Circular Orbit, Haumann transfer
@@ -69,6 +71,9 @@ calcDeltaV <- function(initOrbit=400, targetOrbit = 35786){
 ```
 
 ## Calcutrate fuelmass
+
+This function moved to `calcWetMass.R`.
+
 
 ```{r}
 calcWetMass <- function(dv=3.3, m_dry=1000, I_sp=350){
@@ -108,6 +113,8 @@ calcDryMass <- function(dv=3.3, m_wet=1000, I_sp=350){
 ```
 
 ```{r}
+  I_sp=350
+  dv=3.3
   # Forward Problem
   m_wet = 1000  
   m_dry = calcDryMass(dv, 1000.000, I_sp)
@@ -123,12 +130,43 @@ calcDryMass <- function(dv=3.3, m_wet=1000, I_sp=350){
 ```
 
 
+
+## Now we can use functions.
+
 ```{r}
-dv <- calcDeltaV(initOrbit=400, targetOrbit = 35786)
-m_fuel <- calcFuelMass(dv, m_init, I_sp)
-m_final <- m_init - m_fuel
-m_init
-m_fuel
-m_final
+source("calcWetMass.R")
+  I_sp=350
+  dv=3.3
+  m_dry=382.4649
+  # Inverse Problem
+  m_wet = calcWetMass(dv, m_dry, I_sp)
+  m_fuel = m_wet - m_dry
+  c(m_wet, m_dry, m_fuel)
+
+  
+  I_sp=350
+  dv=3.3
+  m_dry=1000
+  # Inverse Problem
+  m_wet = calcWetMass(dv, m_dry, I_sp)
+  m_fuel = m_wet - m_dry
+  c(m_wet, m_dry, m_fuel)
 ```
+
+
+## Validation of Function 
+
+```{r}
+source("calcWetMass.R")
+I_sp <- 350
+dv <- sum(dv)
+m_dry <- 325.47880079
+# Inverse Problem
+m_wet <- calcWetMass(dv, m_dry, I_sp)
+m_fuel <- m_wet - m_dry
+c(m_wet, m_dry, m_fuel)
+
+# [1] 1000.0000  382.4649  617.5351
+```
+
 

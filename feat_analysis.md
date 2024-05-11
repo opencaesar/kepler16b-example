@@ -17,6 +17,7 @@ flowchart LR
     id9((subsystemN-Mass)) -- affects--> id6
     id10[python:deltaV] -- analyzes --> id1
     id11[python:rocketEquation] -- analyzes --> id2
+    id12[R:massRollup] -- analyzes --> id6
 
 
 ```
@@ -51,7 +52,11 @@ We need a description that configures the set of analysis codes or tools that ca
 
 2. Modeling state variables
 
-2. Using astropy. Build actual workflow using quarto.
+3.  Build actual workflow using quarto.
 
+    - case-A: Using astropy to calcurate dV and fuelMass.
+    - case-B: Using R to calcurate dV and fuelMass. 
+
+4. 
 
  
