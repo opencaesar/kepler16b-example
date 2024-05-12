@@ -1,68 +1,78 @@
 [
-    { "title": "Home", "path": "/", "type": "home" },
-    {
-      "title": "Kepler16b",
-      "type": "group",
-      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/satellite.svg",
-      "children": [
-        {
-          "title": "decompositions-autogen",
-          "type": "diagram",
-          "path": "decompositions-autogen"
-        },
-        { 
-          "title": "IBD",
-          "type": "diagram",
-          "path": "ibd"
-        },
-        { 
-          "title": "IBD with Sys",
-          "type": "diagram",
-          "path": "ibd-sys"
-        },
-       {
-          "title": "Components Tree",
-          "type": "tree",
-          "path": "components-tree"
-        },
-        {
-          "title": "Components Mass Tree",
-          "type": "tree",
-          "path": "components-mass-tree"
-        }
-      ]
-    },
-    {
-      "title": "Requirements",
-      "type": "group",
-      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
-      "children": [
-        {
-          "title": "Requirements",
-          "type": "tree",
-          "path": "requirements"
-        }
-      ]
-    },    
-    {
-      "title": "Tree",
-      "type": "group",
-      "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
-      "children": [
-        { 
-          "title": "Objectives",
-          "type": "table",
-          "path": "objectives"
-        },
-        {
-          "title": "Missions",
-          "type": "tree",
-          "path": "missions"
-        },
-        {
-          "title": "Connections",
-          "type": "table",
-          "path": "connections"
-        }      ]
-    }    
- ]
+  {
+    "title": "Home",
+    "path": "/",
+    "type": "home"
+  },
+  {
+    "title": "Kepler16b",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/satellite.svg",
+    "children": [
+      {
+        "title": "decompositions-autogen",
+        "type": "diagram",
+        "path": "decompositions-autogen"
+      },
+      {
+        "title": "IBD",
+        "type": "diagram",
+        "path": "ibd"
+      },
+      {
+        "title": "IBD with Sys",
+        "type": "diagram",
+        "path": "ibd-sys"
+      },
+      {
+        "title": "Components Tree",
+        "type": "tree",
+        "path": "components-tree"
+      },
+      {
+        "title": "Components Mass Tree",
+        "type": "tree",
+        "path": "components-mass-tree"
+      },
+      {
+        "title": "Auto Test Diagram",
+        "type": "diagram",
+        "path": "auto-decomposition-2"
+      }
+    ]
+  },
+  {
+    "title": "Requirements",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
+    "children": [
+      {
+        "title": "Requirements",
+        "type": "tree",
+        "path": "requirements"
+      }
+    ]
+  },
+  {
+    "title": "Tree",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/checklist_on_page.svg",
+    "children": [
+      {
+        "title": "Objectives",
+        "type": "table",
+        "path": "objectives"
+      },
+      {
+        "title": "Missions",
+        "type": "tree",
+        "path": "missions"
+      },
+      {
+        "title": "Connections",
+        "type": "table",
+        "path": "connections"
+      }
+    ]
+  }
+]

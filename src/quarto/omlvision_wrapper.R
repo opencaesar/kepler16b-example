@@ -1,22 +1,40 @@
 print("for oml-vision 0.2.6")
+print("this code is updating in kepler-16b=IMCE")
 print("this code is not same as open-source-rover")
+
 # Reusable wrapper functions for oml-vision
 library(tidyverse)
 library(jsonlite)
 
 ###############################################################################
 #### for sparql
+generatePrefix <- function(df_prefix=NULL){
 
-generateQueryDecomposition <- function(df){
+  if(is.null(df_prefix)){
+    df_prefix <- data.frame(
+      prefix = c("base",
+                 "mission"),
+      iri = c("http://imce.jpl.nasa.gov/foundation/base#",
+              "http://imce.jpl.nasa.gov/foundation/mission#")
+    )
+  }
+  # generate PREFIX Strings
+  df_prefix <- df_prefix |>
+    mutate(querystring = paste0("PREFIX ", prefix, ":        <", iri, ">\n"))
+
+  text_instance <- ""
+  for(string in df_prefix$querystring){
+    text_instance <- paste0(text_instance, string)
+  }
+  return(text_instance)
+}
+
+
+generateQueryDecomposition <- function(df, df_prefix){
   
   text_instance <- ""
   text_instance <- paste0(text_instance,
-                          "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>","\n",
-                          "PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>","\n",
-                          "PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>","\n",
-                          "PREFIX vim4:        <http://bipm.org/jcgm/vim4#>","\n",
-                          "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>","\n",
-                          "PREFIX project:     <http://imce.jpl.nasa.gov/foundation/project#>","\n",
+                          generatePrefix(df_prefix),
                           "\n"
   )
   text_instance <- paste0(text_instance,
@@ -151,6 +169,7 @@ generatePageDiagram <- function(df){
 ###############################################################################
 #
 omlvisionDecomposition <- function(omlrepo,
+                                   df_prefix = NULL,
                                    viewname = "auto",
                                    title = "title",
                                    targetConcept = c("structure:System structure:Subsystem structure:Assembly"),
@@ -183,7 +202,7 @@ omlvisionDecomposition <- function(omlrepo,
     mutate(edge_labelFormat = targetRelation) %>%
     mutate(edge_legendItems = child_instancename)
   
-  df_keys$querytext <- generateQueryDecomposition(df_keys)
+  df_keys$querytext <- generateQueryDecomposition(df_keys, df_prefix)
   df_keys$diagramLayouttext <- generateDiagramLayoutDecomposition(df_keys)
   df_keys$pagetext <- generatePageDiagram(df_keys)
 

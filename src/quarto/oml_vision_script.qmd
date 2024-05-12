@@ -31,6 +31,57 @@ execute:
 Current omlvision_wrapper.R is too specific to each model.
 I want to generalize this.
 
+```{r}
+#| warning: false
+
+source("omlvision_wrapper.R")
+
+searchDirectory <- function(iteration, pattern, parent_directory){
+  for(i in 1:iteration){
+      path <- list.files(parent_directory, recursive = TRUE, pattern = pattern, full.names = TRUE)
+      if(length(path)){
+        return(path)
+      }
+      parent_directory <- dirname(parent_directory)
+  }
+  print("file not found")
+  return(path)
+}
+
+source(searchDirectory(4, "osr_common.R", (getwd())))
+
+omlrepo
+```
+
+```{r}
+df_prefix <- data.frame(
+  prefix = c("base",
+             "mission"),
+  iri = c("http://imce.jpl.nasa.gov/foundation/base#",
+          "http://imce.jpl.nasa.gov/foundation/mission#")
+)
+
+query_string <- generatePrefix(df_prefix)
+cat(query_string)
+```
+
+```{r}
+df_keys <- omlvisionDecomposition(omlrepo = omlrepo, 
+                                  df_prefix = df_prefix, 
+                                  viewname = "auto-decomposition-2", 
+                                  title = "Auto Test Diagram", 
+                                  targetConcept = c("mission:Component"),
+                                  targetRelation = "base:isContainedIn",
+                                  nodeColor = "#006994",
+                                  nodeTextColor = "white")
+
+```
+
+
+```{r}
+
+```
+
 ## Reusable Functions.
 
 ### omlファイルのフレーム作成
