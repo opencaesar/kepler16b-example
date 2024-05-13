@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Calcurate Fuel Mass</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="py_fuelmass_files/libs/clipboard/clipboard.min.js"></script>
+<script src="py_fuelmass_files/libs/quarto-html/quarto.js"></script>
+<script src="py_fuelmass_files/libs/quarto-html/popper.min.js"></script>
+<script src="py_fuelmass_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="py_fuelmass_files/libs/quarto-html/anchor.min.js"></script>
+<link href="py_fuelmass_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="py_fuelmass_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="py_fuelmass_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="py_fuelmass_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="py_fuelmass_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.31.1.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Calcurate Fuel Mass</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="start-python" class="level2">
+<h2 class="anchored" data-anchor-id="start-python">Start Python</h2>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"PYTHONPATH:"</span>, os.environ.get(<span class="st">'PYTHONPATH'</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"PATH:"</span>, os.environ.get(<span class="st">'PATH'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PYTHONPATH: 
+PATH: /Users/mlab/opt/anaconda3/envs/py393/bin:/Users/mlab/opt/anaconda3/condabin:/Users/mlab/opt/anaconda3/condabin:/Users/mlab/opt/anaconda3/bin:/Users/mlab/opt/anaconda3/condabin:/Users/mlab/opt/anaconda3/bin:/Users/mlab/opt/anaconda3/condabin:/Users/mlab/opt/anaconda3/bin:/Users/mlab/opt/anaconda3/condabin:/Users/mlab/opt/anaconda3/envs/py393/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Applications/quarto/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/mlab/Applications/quarto/bin:/Library/TeX/texbin:/usr/texbin:/Applications/RStudio.app/Contents/Resources/app/bin/postback</code></pre>
+</div>
+</div>
+</section>
+<section id="calcurate-delta-v-needed" class="level2">
+<h2 class="anchored" data-anchor-id="calcurate-delta-v-needed">Calcurate delta V needed</h2>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy <span class="im">import</span> units <span class="im">as</span> u</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.bodies <span class="im">import</span> Earth</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.twobody <span class="im">import</span> Orbit</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.maneuver <span class="im">import</span> Maneuver</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.util <span class="im">import</span> norm</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Rocket parameters</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>g0 <span class="op">=</span> <span class="fl">9.81</span> <span class="op">*</span> u.m <span class="op">/</span> u.s<span class="op">**</span><span class="dv">2</span>  <span class="co"># Standard gravity</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial Payload mass</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>m_init <span class="op">=</span> <span class="dv">1000</span> <span class="op">*</span> u.kg</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>I_sp <span class="op">=</span> <span class="dv">350</span> <span class="op">*</span> u.s  <span class="co"># Specific impulse</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the orbits</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>leo <span class="op">=</span> Orbit.circular(Earth, alt<span class="op">=</span><span class="dv">400</span> <span class="op">*</span> u.km)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> Orbit.circular(Earth, alt<span class="op">=</span><span class="dv">35786</span> <span class="op">*</span> u.km)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the Hohmann transfer maneuver</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>hohmann_maneuver <span class="op">=</span> Maneuver.hohmann(leo, geo.a)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>ss_a, ss_f <span class="op">=</span> leo.apply_maneuver(hohmann_maneuver, intermediate<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Hohmann transfer maneuvers: </span><span class="sc">{</span>hohmann_maneuver<span class="sc">.</span>impulses<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the total delta-v</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>total_delta_v <span class="op">=</span> <span class="bu">sum</span>(norm(dv) <span class="cf">for</span> (_, dv) <span class="kw">in</span> hohmann_maneuver.impulses) </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co"># total_delta_v = norm(hohmann_maneuver.impulses[1][1])</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"Total delta-v: {total_delta_v}")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/mlab/opt/anaconda3/envs/py393/lib/python3.9/site-packages/poliastro/core/maneuver.py:49: NumbaPerformanceWarning:
+
+'@' is faster on contiguous arrays, called on (Array(float64, 1, 'A', False, aligned=True), Array(float64, 1, 'A', False, aligned=True))
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hohmann transfer maneuvers: ((&lt;Quantity 0. s&gt;, &lt;Quantity [   0.        , 2397.47262208,    0.        ] m / s&gt;), (&lt;Quantity 19048.56204275 s&gt;, &lt;Quantity [    0.        , -1456.48674102,     0.        ] m / s&gt;))
+Total delta-v: 3853.959363102248 m / s</code></pre>
+</div>
+</div>
+</section>
+<section id="calcurate-fuel-masskg-needed" class="level2">
+<h2 class="anchored" data-anchor-id="calcurate-fuel-masskg-needed">Calcurate Fuel Mass[kg] needed</h2>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert delta_v to a dimensionless value by dividing by the unit (m/s)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dimensionless_delta_v <span class="op">=</span> total_delta_v.to(u.m <span class="op">/</span> u.s).value</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Tsiolkovsky rocket equation</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>m_final <span class="op">=</span> m_init <span class="op">/</span> np.exp(dimensionless_delta_v <span class="op">/</span> (I_sp <span class="op">*</span> g0).value)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>m_fuel <span class="op">=</span> m_init <span class="op">-</span> m_final</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_init: </span><span class="sc">{</span>m_init<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_final: </span><span class="sc">{</span>m_final<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_fuel: </span><span class="sc">{</span>m_fuel<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>m_init <span class="op">=</span> <span class="dv">2000</span> <span class="op">*</span> u.kg</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>dimensionless_delta_v <span class="op">=</span> total_delta_v.to(u.m <span class="op">/</span> u.s).value</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>m_final <span class="op">=</span> m_init <span class="op">/</span> np.exp(dimensionless_delta_v <span class="op">/</span> (I_sp <span class="op">*</span> g0).value)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>m_fuel <span class="op">=</span> m_init <span class="op">-</span> m_final</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_init: </span><span class="sc">{</span>m_init<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_final: </span><span class="sc">{</span>m_final<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_fuel: </span><span class="sc">{</span>m_fuel<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>m_init <span class="op">=</span> <span class="dv">3950</span> <span class="op">*</span> u.kg</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>dimensionless_delta_v <span class="op">=</span> <span class="dv">1900</span> </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># この２つは同じ結果が得られる式である</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>m_final <span class="op">=</span> m_init <span class="op">/</span> np.exp(dimensionless_delta_v <span class="op">/</span> (<span class="dv">220</span> <span class="op">*</span> g0).value)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>m_final <span class="op">=</span> m_init <span class="op">*</span> np.exp(<span class="op">-</span>dimensionless_delta_v <span class="op">/</span> (<span class="dv">220</span> <span class="op">*</span> g0).value)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>m_fuel <span class="op">=</span> m_init <span class="op">-</span> m_final</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_init: </span><span class="sc">{</span>m_init<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_final: </span><span class="sc">{</span>m_final<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_fuel: </span><span class="sc">{</span>m_fuel<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>m_init <span class="op">=</span> <span class="dv">1000</span> <span class="op">*</span> u.kg</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>dimensionless_delta_v <span class="op">=</span> <span class="dv">3300</span> </span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>m_final <span class="op">=</span> m_init <span class="op">/</span> np.exp(dimensionless_delta_v <span class="op">/</span> (<span class="dv">350</span> <span class="op">*</span> g0).value)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>m_fuel <span class="op">=</span> m_init <span class="op">-</span> m_final</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_init: </span><span class="sc">{</span>m_init<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_final: </span><span class="sc">{</span>m_final<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"m_fuel: </span><span class="sc">{</span>m_fuel<span class="sc">.</span>to(u.kg)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>m_init: 1000.0 kg
+m_final: 325.4788007869482 kg
+m_fuel: 674.5211992130518 kg
+m_init: 2000.0 kg
+m_final: 650.9576015738965 kg
+m_fuel: 1349.0423984261035 kg
+m_init: 3950.0 kg
+m_final: 1637.7974374587097 kg
+m_fuel: 2312.2025625412903 kg
+m_init: 1000.0 kg
+m_final: 382.46490088770645 kg
+m_fuel: 617.5350991122936 kg</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-orbit" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-orbit">Visualize Orbit</h2>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.plotting <span class="im">import</span> OrbitPlotter2D</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>op <span class="op">=</span> OrbitPlotter2D()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ss_a, ss_f = ss_i.apply_maneuver(hoh, intermediate=True)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>op.plot(leo, label<span class="op">=</span><span class="st">"Initial orbit"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>op.plot(ss_a, label<span class="op">=</span><span class="st">"Transfer orbit"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>op.plot(geo, label<span class="op">=</span><span class="st">"Final orbit"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># op.plot(ss_f, label="Final orbit-2")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="c590dcc7-eb32-410d-8c05-e7db5d0f9ab7" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c590dcc7-eb32-410d-8c05-e7db5d0f9ab7")) {                    Plotly.newPlot(                        "c590dcc7-eb32-410d-8c05-e7db5d0f9ab7",                        [{"hoverinfo":"none","line":{"color":"rgb(31, 119, 180)","dash":"dash","width":2},"mode":"lines","name":"2000-01-01 12:00 (Initial orbit)","x":[6778.1366,6772.11096023989,6754.044754327161,6723.970103316635,6681.940478840295,6628.030608036671,6562.336340688721,6484.974478806406,6396.0825689569865,6295.818657712242,6184.361010647435,6061.907795391621,5928.676729292841,5784.904692324612,5630.847305921994,5466.778478495991,5292.989918434404,5109.790615454955,4917.506291232848,4716.4788202795135,4507.065622102215,4289.6390257251915,4064.5856077022513,3832.305504797768,3593.211702558098,3347.7293010383764,3096.2947589901146,2839.3551178534717,2577.3672069338954,2310.796831176262,2040.11794298072,1765.8117995326006,1488.366107144688,1208.274154133225,926.0339337692756,642.1472588648404,357.11886956803346,71.45553595346958,-214.33484299639224,-499.74414241712316,-784.2649149898085,-1067.3912931638204,-1348.6198885709102,-1627.4506870313146,-1903.3879375607455,-2175.9410337975405,-2444.625386282868,-2708.9632840431195,-2968.4847439425503,-3222.7283462961886,-3471.242055257158,-3713.5840225199377,-3949.323372910522,-4178.040970466748,-4399.3301636467595,-4612.797508340594,-4818.063467399448,-5014.763085438884,-5202.546637716191,-5381.080251928201,-5550.04650182408,-5709.144971577595,-5858.09278991551,-5996.625133052373,-6124.4956955375455,-6241.477128177309,-6347.361442253439,-6441.960379319541,-6525.105745917715,-6596.64971262037,-6656.465076865566,-6704.445489118515,-6740.505641957181,-6764.581421745761,-6776.63002262639,-6776.63002262639,-6764.581421745762,-6740.505641957181,-6704.445489118513,-6656.465076865565,-6596.64971262037,-6525.1057459177155,-6441.960379319543,-6347.361442253439,-6241.477128177309,-6124.495695537543,-5996.625133052373,-5858.092789915512,-5709.144971577595,-5550.04650182408,-5381.080251928201,-5202.5466377161865,-5014.763085438884,-4818.063467399449,-4612.797508340594,-4399.3301636467595,-4178.040970466748,-3949.3233729105164,-3713.5840225199354,-3471.242055257158,-3222.7283462961914,-2968.4847439425503,-2708.9632840431204,-2444.6253862828707,-2175.941033797538,-1903.3879375607466,-1627.450687031316,-1348.6198885709132,-1067.3912931638295,-784.26491498981,-499.7441424171247,-214.33484299639375,71.45553595346807,357.118869568032,642.1472588648389,926.0339337692741,1208.2741541332296,1488.3661071446923,1765.8117995325995,2040.1179429807241,2310.796831176266,2577.3672069338936,2839.3551178534744,3096.29475899012,3347.7293010383764,3593.211702558098,3832.3055047977655,4064.5856077022513,4289.6390257251915,4507.065622102217,4716.4788202795135,4917.506291232848,5109.790615454957,5292.989918434404,5466.778478495991,5630.847305921996,5784.904692324612,5928.676729292841,6061.907795391623,6184.361010647435,6295.818657712242,6396.082568956987,6484.974478806407,6562.336340688721,6628.030608036671,6681.940478840295,6723.970103316635,6754.044754327161,6772.11096023989,6778.1366],"y":[0.0,285.74273474282666,570.9774293308949,855.1969468862928,1137.8959554788341,1418.5718265877813,1696.7255287570026,1971.8625148547096,2243.4936013601987,2511.135838114292,2774.3133669871168,3032.55826793647,3285.4113909526004,3532.423172410158,3773.1544343759074,4007.1771654510876,4234.075281760034,4453.445366732147,4664.897388361819,4868.055392671115,5062.558172142216,5248.059907931214,5424.230784721395,5590.757577122825,5747.344206575685,5893.7122677671205,6029.601523625745,6154.770368013647,6268.996255293293,6372.076096005548,6463.8266179553175,6544.084692062825,6612.70762240117,6669.573399904465,6714.580919295511,6747.650158847296,6768.722322658687,6777.759945191417,6774.746957882432,6759.688717713216,6732.611997685266,6693.564939218684,6642.6169665584775,6579.85866334079,6505.4016115385075,6419.378193072569,6321.941354441758,6213.264334789393,6093.540357890468,5962.982288606817,5821.822254421172,5670.311232722962,5508.7186045796725,5337.331675787147,5156.455166050349,4966.41066720286,4767.536071428341,4560.1849705005425,4344.726027110055,4121.542319395482,3891.0306598444895,3653.600889775704,3409.675150655773,3159.687133547271,2904.0813080218045,2643.3121319093375,2377.843243288736,2108.1466361562216,1834.7018212372238,1557.9949734338509,1278.5180674236326,996.7680029465029,713.2457213352011,428.4553148598458,142.9031304702863,-142.9031304702833,-428.4553148598398,-713.2457213352011,-996.7680029465089,-1278.5180674236356,-1557.9949734338509,-1834.7018212372209,-2108.146636156216,-2377.843243288736,-2643.3121319093375,-2904.08130802181,-3159.687133547271,-3409.67515065577,-3653.600889775704,-3891.0306598444895,-4121.542319395482,-4344.7260271100595,-4560.1849705005425,-4767.536071428338,-4966.41066720286,-5156.455166050349,-5337.331675787147,-5508.718604579676,-5670.311232722964,-5821.822254421172,-5962.982288606816,-6093.540357890468,-6213.264334789393,-6321.9413544417575,-6419.378193072571,-6505.4016115385075,-6579.85866334079,-6642.616966558477,-6693.564939218682,-6732.611997685266,-6759.688717713215,-6774.746957882432,-6777.759945191417,-6768.7223226586875,-6747.650158847296,-6714.580919295512,-6669.573399904464,-6612.707622401168,-6544.0846920628255,-6463.826617955316,-6372.076096005546,-6268.996255293294,-6154.7703680136465,-6029.601523625742,-5893.7122677671205,-5747.344206575685,-5590.757577122827,-5424.230784721395,-5248.059907931214,-5062.558172142214,-4868.055392671115,-4664.897388361819,-4453.445366732145,-4234.075281760034,-4007.1771654510876,-3773.154434375905,-3532.423172410158,-3285.4113909526004,-3032.5582679364675,-2774.3133669871168,-2511.135838114292,-2243.4936013601955,-1971.8625148547067,-1696.7255287570026,-1418.5718265877813,-1137.8959554788341,-855.1969468862958,-570.9774293308949,-285.74273474282666,-3.01009732694979e-12],"type":"scatter"},{"marker":{"color":"rgb(31, 119, 180)","size":10,"symbol":"circle"},"mode":"markers","showlegend":false,"x":[6778.1366],"y":[0.0],"type":"scatter"},{"hoverinfo":"none","line":{"color":"rgb(255, 127, 14)","dash":"dash","width":2},"mode":"lines","name":"2000-01-01 12:00 (Transfer orbit)","x":[6778.136600000001,6756.382206075271,6691.157702819593,6582.579057019521,6430.839317544924,6236.20827211515,5999.0319676263,5719.732094892479,5398.805238894915,5036.821995871988,4634.4259588199375,4192.332573207995,3711.327864942467,3192.2670428413394,2636.072978104222,2043.7345634810156,1416.304955056716,754.899699778318,60.69475205302116,-665.0756170557231,-1421.1210143172025,-2206.0972186054455,-3018.60857087536,-3857.2104555936085,-4720.411869212249,-5606.678071118696,-6514.433312348491,-7442.06363720941,-8387.919752835875,-9350.319961571464,-10327.55315096593,-11317.88183607063,-12319.54524862359,-13330.762467630988,-14349.735585779767,-15374.652906051264,-16403.692162852345,-17435.02376193718,-18466.814033358907,-19497.22849166817,-20524.43509756094,-21546.607515177846,-22561.928359262485,-23568.592426406172,-24564.809904633737,-25548.809555623877,-26518.841863906273,-27473.182147436102,-28410.133624015994,-29328.030428112852,-30225.240572705763,-31100.168850899543,-31951.259672144304,-32776.99982801873,-33575.921182659455,-34346.60328305301,-35087.67588454927,-35797.82138710684,-36475.777177937445,-37120.33787638574,-37730.35747705177,-38304.751387346994,-38842.49835586031,-39342.642288105686,-39804.2939464233,-40226.63253101179,-40608.90713928013,-40950.43810092516,-41250.618186360574,-41508.91368634897,-41724.86536091728,-41898.08925586893,-42028.27738544009,-42115.19827988739,-42158.697397032454,-42158.697397032454,-42115.19827988739,-42028.27738544009,-41898.08925586893,-41724.86536091728,-41508.91368634897,-41250.618186360574,-40950.43810092516,-40608.90713928013,-40226.63253101179,-39804.29394642332,-39342.642288105664,-38842.498355860334,-38304.751387346994,-37730.357477051766,-37120.33787638575,-36475.77717793747,-35797.82138710684,-35087.67588454927,-34346.60328305296,-33575.921182659455,-32776.99982801873,-31951.259672144304,-31100.168850899518,-30225.240572705763,-29328.030428112852,-28410.133624015994,-27473.182147436088,-26518.841863906255,-25548.8095556239,-24564.809904633774,-23568.592426406172,-22561.928359262485,-21546.607515177857,-20524.43509756096,-19497.22849166816,-18466.81403335893,-17435.023761937162,-16403.692162852345,-15374.652906051278,-14349.735585779767,-13330.762467630988,-12319.545248623577,-11317.881836070641,-10327.553150965907,-9350.319961571464,-8387.919752835884,-7442.06363720941,-6514.433312348477,-5606.678071118713,-4720.411869212254,-3857.210455593605,-3018.608570875367,-2206.0972186054423,-1421.1210143171993,-665.0756170557315,60.69475205302116,754.8996997783203,1416.3049550567139,2043.7345634810138,2636.072978104222,3192.267042841335,3711.3278649424647,4192.3325732079975,4634.425958819932,5036.821995871988,5398.805238894918,5719.7320948924835,5999.031967626299,6236.20827211515,6430.8393175449255,6582.57905701952,6691.157702819593,6756.382206075271,6778.136600000001],"y":[0.0,712.6751966694524,1424.0832828468888,2132.9594009165025,2838.043195009389,3538.0810518702738,4231.828329736148,4918.05157126389,5595.53069657241,6263.061172500161,6919.456154221135,7563.548595411661,8194.19332321617,8810.26907432275,9410.680488528384,9994.36005624944,10560.270016514729,11107.404202066646,11634.789828289864,12141.489222786835,12626.60149252514,13089.264125592379,13528.654524710904,13943.991469785775,14334.536506885526,14699.595261186367,15038.518671545247,15350.704144506864,15635.596625692888,15892.689586668359,16121.52592553076,16321.698779620498,16492.85224890793,16634.682028770563,16746.935951035597,16829.414432325724,16881.9708289111,16904.511697436545,16896.99696106039,16859.43998070968,16791.90753132493,16694.519683136656,16567.449588184983,16410.923172461553,16225.218734221413,16010.666449178827,15767.647783466946,15496.594815404933,15197.989467278476,14872.362648499497,14520.293311668718,14142.407423218947,13739.376850469655,13311.91816707139,12860.791378963986,12386.798573113705,11890.782491431966,11373.625032410855,10836.245683139905,10279.599884491488,9704.677332381933,9112.500218128285,8504.121411029322,7880.622586402481,7243.112302404673,6592.724029056085,5930.614132972169,5257.959821385793,4575.9570491157065,3885.818392202748,3188.770891993646,2486.053873506405,1778.9167419556727,1068.616761355712,356.4168191511423,-356.416819151161,-1068.616761355731,-1778.916741955654,-2486.053873506405,-3188.770891993646,-3885.818392202748,-4575.9570491157065,-5257.9598213857735,-5930.614132972169,-6592.724029056085,-7243.112302404658,-7880.6225864024955,-8504.121411029308,-9112.500218128285,-9704.677332381949,-10279.599884491474,-10836.245683139892,-11373.625032410855,-11890.782491431966,-12386.798573113723,-12860.791378963986,-13311.91816707139,-13739.376850469655,-14142.40742321895,-14520.293311668718,-14872.362648499497,-15197.989467278476,-15496.594815404942,-15767.64778346695,-16010.666449178827,-16225.218734221404,-16410.923172461553,-16567.449588184983,-16694.519683136652,-16791.907531324927,-16859.439980709685,-16896.99696106039,-16904.51169743654,-16881.9708289111,-16829.414432325728,-16746.935951035597,-16634.682028770563,-16492.852248907926,-16321.6987796205,-16121.525925530752,-15892.689586668359,-15635.596625692888,-15350.704144506864,-15038.51867154524,-14699.595261186376,-14334.536506885528,-13943.991469785773,-13528.65452471091,-13089.264125592375,-12626.601492525137,-12141.48922278684,-11634.789828289864,-11107.404202066642,-10560.270016514729,-9994.360056249441,-9410.680488528384,-8810.269074322754,-8194.193323216172,-7563.5485954116575,-6919.456154221141,-6263.061172500161,-5595.530696572408,-4918.051571263881,-4231.828329736151,-3538.0810518702738,-2838.043195009383,-2132.9594009165053,-1424.0832828468888,-712.6751966694462,-3.0100973269497903e-12],"type":"scatter"},{"marker":{"color":"rgb(255, 127, 14)","size":10,"symbol":"circle"},"mode":"markers","showlegend":false,"x":[6778.1366],"y":[0.0],"type":"scatter"},{"hoverinfo":"none","line":{"color":"rgb(44, 160, 44)","dash":"dash","width":2},"mode":"lines","name":"2000-01-01 12:00 (Final orbit)","x":[42164.136600000005,42126.65345191065,42014.27065131203,41827.18801072241,41565.73815624956,41230.38593619363,40821.72759456388,40340.48971097855,39787.52790883284,39163.82533403173,38470.490906992425,37708.75735102435,36879.97900059208,35985.629393358045,35027.29865028642,34006.69064846601,32925.619991679,31786.00878410164,30589.883212873166,29339.369945608985,28036.692349263336,26684.166537063877,25284.197250546968,23839.273584014976,22351.96455901733,20824.914556724136,19260.838616312823,17662.5176077276,16032.793287394245,14374.563245680689,12690.775755087336,10984.42452832603,9258.543395608,7516.200910604659,5760.494894671066,3994.5469290324863,2221.49680472715,444.4969401720678,-1333.2932237216105,-3108.712840919352,-4878.605280132253,-6639.823737192015,-8389.236829954216,-10123.734165781227,-11840.231871706976,-13535.67807745048,-15207.058341529828,-16851.401010829246,-18465.782504089653,-20047.33250992974,-21593.2390901546,-23100.75367927937,-24567.19597137833,-25989.95868557098,-27366.51220167241,-28694.40905776559,-29971.28830169932,-31194.879688775025,-32363.00771815903,-33473.59550084356,-34524.66845227975,-35514.3578031167,-36440.9039218054,-37302.65944315927,-38098.09219730938,-38825.78793384657,-39484.452836307115,-40072.915822531075,-40590.13062680375,-41035.177660077854,-41407.26564496933,-41705.73302261966,-41930.049128923325,-42079.81513802931,-42154.764771438844,-42154.764771438844,-42079.81513802931,-41930.049128923325,-41705.73302261965,-41407.26564496933,-41035.177660077854,-40590.13062680376,-40072.91582253108,-39484.452836307115,-38825.78793384657,-38098.092197309365,-37302.65944315927,-36440.90392180541,-35514.3578031167,-34524.66845227975,-33473.59550084356,-32363.007718159006,-31194.879688775025,-29971.28830169933,-28694.40905776559,-27366.51220167241,-25989.95868557098,-24567.195971378296,-23100.753679279354,-21593.2390901546,-20047.332509929754,-18465.782504089653,-16851.401010829253,-15207.058341529844,-13535.678077450462,-11840.231871706983,-10123.734165781238,-8389.236829954234,-6639.823737192071,-4878.605280132263,-3108.7128409193615,-1333.2932237216198,444.49694017205843,2221.4968047271404,3994.546929032477,5760.4948946710565,7516.200910604687,9258.543395608027,10984.424528326022,12690.775755087361,14374.563245680714,16032.793287394235,17662.51760772762,19260.838616312856,20824.914556724136,22351.96455901733,23839.273584014958,25284.197250546968,26684.166537063877,28036.69234926335,29339.369945608985,30589.883212873166,31786.008784101654,32925.619991679,34006.69064846601,35027.29865028643,35985.629393358045,36879.97900059208,37708.75735102437,38470.490906992425,39163.82533403173,39787.527908832846,40340.48971097856,40821.72759456388,41230.38593619363,41565.73815624956,41827.18801072241,42014.27065131203,42126.65345191065,42164.136600000005],"y":[0.0,1777.4937879171853,3551.827256745564,5319.845706328285,7078.405664382315,8824.380475477394,10554.665860115227,12266.185434025263,13955.8961778636,15620.793847590281,17257.918315905692,18864.358835248724,20437.25921299985,21973.8228896873,23471.317911167727,24927.081785941064,26338.52621896313,27703.14171353988,29018.502033120876,30282.26851505937,31492.194228669094,32646.127970185076,33742.01808752543,34777.91612805382,35751.98030285726,36662.47876137945,37507.79267058797,38286.4190932003,38996.97365985143,39638.19303045215,40208.937140361566,40708.19122738038,41135.06763596121,41488.807395427575,41768.78156939616,41974.49237400278,42105.574062943815,42161.79357775992,42143.05096220536,42049.37953996662,41880.94585541408,41638.049377492236,41321.1219672748,40930.7271101315,40467.55891387167,39932.44087464584,39326.32441279973,38650.28718128344,37905.53114962402,37093.38046686732,36215.2791072895,35272.788303063324,34267.583768444376,33201.4527204123,32076.29070106416,30894.098207409774,29656.97713456113,28367.127038639483,27026.841226044882,25638.50267604108,24204.579803905282,22727.622072176055,21210.255457801723,19655.177783249397,18065.153919874978,16443.01087208283,14791.63275101498,13113.955646707009,11412.96240782682,9691.677338278821,7953.160820101806,6200.503872221394,4436.822654731237,2665.2529284739635,888.9444797729179,-888.9444797728992,-2665.2529284739257,-4436.822654731237,-6200.503872221432,-7953.160820101823,-9691.677338278821,-11412.962407826803,-13113.955646706972,-14791.63275101498,-16443.01087208283,-18065.15391987501,-19655.177783249397,-21210.255457801704,-22727.622072176055,-24204.579803905282,-25638.50267604108,-27026.841226044908,-28367.127038639483,-29656.977134561115,-30894.098207409774,-32076.29070106416,-33201.4527204123,-34267.5837684444,-35272.78830306333,-36215.2791072895,-37093.38046686732,-37905.53114962402,-38650.28718128344,-39326.324412799724,-39932.44087464586,-40467.55891387167,-40930.7271101315,-41321.12196727479,-41638.04937749222,-41880.94585541408,-42049.37953996661,-42143.05096220536,-42161.79357775992,-42105.57406294382,-41974.49237400278,-41768.78156939617,-41488.80739542757,-41135.067635961204,-40708.19122738039,-40208.93714036155,-39638.193030452145,-38996.973659851436,-38286.41909320029,-37507.79267058795,-36662.47876137945,-35751.98030285726,-34777.91612805383,-33742.01808752543,-32646.127970185076,-31492.19422866908,-30282.26851505937,-29018.502033120876,-27703.141713539866,-26338.52621896313,-24927.081785941064,-23471.317911167713,-21973.8228896873,-20437.25921299985,-18864.35883524871,-17257.918315905692,-15620.793847590281,-13955.896177863582,-12266.185434025245,-10554.665860115227,-8824.380475477394,-7078.405664382315,-5319.845706328304,-3551.827256745564,-1777.4937879171853,-1.8724638106704108e-11],"type":"scatter"},{"marker":{"color":"rgb(44, 160, 44)","size":10,"symbol":"circle"},"mode":"markers","showlegend":false,"x":[42164.136600000005],"y":[0.0],"type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"title":{"text":" x (km)"},"constrain":"domain"},"yaxis":{"title":{"text":" y (km)"},"scaleanchor":"x"},"autosize":true,"shapes":[{"fillcolor":"#2a7bd1","line":{"color":"#2a7bd1"},"opacity":1,"type":"circle","x0":-6378.1366,"x1":6378.1366,"xref":"x","y0":-6378.1366,"y1":6378.1366,"yref":"y"},{"fillcolor":"#2a7bd1","line":{"color":"#2a7bd1"},"opacity":1,"type":"circle","x0":-6378.1366,"x1":6378.1366,"xref":"x","y0":-6378.1366,"y1":6378.1366,"yref":"y"},{"fillcolor":"#2a7bd1","line":{"color":"#2a7bd1"},"opacity":1,"type":"circle","x0":-6378.1366,"x1":6378.1366,"xref":"x","y0":-6378.1366,"y1":6378.1366,"yref":"y"},{"fillcolor":"#2a7bd1","line":{"color":"#2a7bd1"},"opacity":1,"type":"circle","x0":-6378.1366,"x1":6378.1366,"xref":"x","y0":-6378.1366,"y1":6378.1366,"yref":"y"},{"fillcolor":"#2a7bd1","line":{"color":"#2a7bd1"},"opacity":1,"type":"circle","x0":-6378.1366,"x1":6378.1366,"xref":"x","y0":-6378.1366,"y1":6378.1366,"yref":"y"},{"fillcolor":"#2a7bd1","line":{"color":"#2a7bd1"},"opacity":1,"type":"circle","x0":-6378.1366,"x1":6378.1366,"xref":"x","y0":-6378.1366,"y1":6378.1366,"yref":"y"}]},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('c590dcc7-eb32-410d-8c05-e7db5d0f9ab7');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+</section>
+<section id="次にここで構築したコードをcicdパイプラインでexecutableにする" class="level1">
+<h1>次に、ここで構築したコードを、CICDパイプラインでExecutableにする。</h1>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get dv value as [m/s] unit total_delta_v.to(u.m / u.s).value</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># get dv value as [km/s] unit total_delta_v.to(u.km / u.s).value</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy <span class="im">import</span> units <span class="im">as</span> u</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.bodies <span class="im">import</span> Earth</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.twobody <span class="im">import</span> Orbit</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.maneuver <span class="im">import</span> Maneuver</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poliastro.util <span class="im">import</span> norm</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> hohmanTransfer:</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_delta_v(<span class="va">self</span>):</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        hohmann_maneuver <span class="op">=</span> Maneuver.hohmann(<span class="va">self</span>.orb1, <span class="va">self</span>.orb2.a)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        total_delta_v <span class="op">=</span> <span class="bu">sum</span>(norm(dv) <span class="cf">for</span> (_, dv) <span class="kw">in</span> hohmann_maneuver.impulses)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total_delta_v <span class="op">=</span> total_delta_v</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> total_delta_v</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, orbit_init, orbit_target, m_init, I_sp):</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.m_init <span class="op">=</span> m_init</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.m_final <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.m_fuel <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.I_sp <span class="op">=</span> I_sp</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total_delta_v <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.g0 <span class="op">=</span> <span class="fl">9.81</span> <span class="op">*</span> u.m <span class="op">/</span> u.s<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.orbit_init <span class="op">=</span> orbit_init</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.orbit_target <span class="op">=</span> orbit_target</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.orb1 <span class="op">=</span> Orbit.circular(Earth, <span class="va">self</span>.orbit_init <span class="op">*</span> u.km)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.orb2 <span class="op">=</span> Orbit.circular(Earth, <span class="va">self</span>.orbit_target <span class="op">*</span> u.km)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_fuel_mass(<span class="va">self</span>):</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>         dimensionless_delta_v <span class="op">=</span> <span class="va">self</span>.total_delta_v.to(u.m <span class="op">/</span> u.s).value</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>         <span class="va">self</span>.m_final <span class="op">=</span> <span class="va">self</span>.m_init <span class="op">/</span> np.exp(dimensionless_delta_v <span class="op">/</span> (<span class="va">self</span>.I_sp <span class="op">*</span> <span class="va">self</span>.g0).value)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>         <span class="va">self</span>.m_fuel <span class="op">=</span> <span class="va">self</span>.m_init <span class="op">-</span> <span class="va">self</span>.m_final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-usage" class="level1">
+<h1>Example usage</h1>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> analysisOrbit</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy <span class="im">import</span> units <span class="im">as</span> u</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>analysisRocket <span class="op">=</span> analysisOrbit.hohmanTransfer(orbit_init<span class="op">=</span><span class="dv">400</span>, orbit_target<span class="op">=</span><span class="dv">35786</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>total_delta_v <span class="op">=</span> analysisRocket.calculate_delta_v()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>analysisRocket.calculate_init_mass(I_sp, m_final<span class="op">=</span> <span class="fl">325.47880079</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Required fuel mass: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_fuel<span class="sc">}</span><span class="ch">\n</span><span class="ss"> final: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_final<span class="sc">}</span><span class="ch">\n</span><span class="ss"> init: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_init<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total delta-v: 3853.959363102248 m / s
+Required fuel mass: 674.5211992193763
+ final: 325.47880079
+ init: 1000.0000000093762</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

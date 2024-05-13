@@ -1,9 +1,9 @@
 {
-"auto-decomposition-2": {
-  "name": "auto-decomposition-2",
+"auto-decomposition": {
+  "name": "auto-decomposition",
   "queries": {
-    "node": "auto-decomposition-2.sparql",
-    "edge": "auto-decomposition-2.sparql"
+    "node": "auto-decomposition.sparql",
+    "edge": "auto-decomposition.sparql"
   },
   "rowMapping": {
     "id": "node",

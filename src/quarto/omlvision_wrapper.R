@@ -264,19 +264,14 @@ omlvisionDecomposition <- function(omlrepo,
 
 ###############################################################################
 #### for sparql
-
-generateQueryRelationMap <- function(df){
+generateQueryRelationMap <- function(df, df_prefix){
   
   text_instance <- ""
   text_instance <- paste0(text_instance,
-                          "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>","\n",
-                          "PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>","\n",
-                          "PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>","\n",
-                          "PREFIX vim4:        <http://bipm.org/jcgm/vim4#>","\n",
-                          "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>","\n",
-                          "PREFIX sa:          <http://example.com/stateanalysis/vocabulary/stateanalysis#>","\n",
+                          generatePrefix(df_prefix),
                           "\n"
   )
+
   text_instance <- paste0(text_instance,
                           "SELECT DISTINCT ",
                           "?", df$source, " ",
@@ -421,7 +416,7 @@ setKeyRelationMap <- function(omlrepo,
     mutate(source_node_nodeType = "NA") %>% # Assembly or Subsystem
     mutate(source_edgeMatchKey = source_instancename) %>%
     mutate(edge_labelFormat = targetRelation) %>%
-    mutate(edge_legendItems = target_instancename)
+    mutate(edge_legendItems = targetRelation)
   
 
   
@@ -431,6 +426,7 @@ setKeyRelationMap <- function(omlrepo,
 ###############################################################################
 #
 omlvisionRelationMap <- function(omlrepo,
+                                 df_prefix = NULL,
                                    viewname = "auto",
                                    title = "title",
                                    targetConcept = c("mission:Component"),
@@ -465,7 +461,7 @@ omlvisionRelationMap <- function(omlrepo,
   #   mutate(edge_labelFormat = targetRelation) %>%
   #   mutate(edge_legendItems = target_instancename)
   
-  df_keys$querytext <- generateQueryRelationMap(df_keys)
+  df_keys$querytext <- generateQueryRelationMap(df_keys, df_prefix)
   df_keys$diagramLayouttext <- generateDiagramLayoutRelationMap(df_keys)
   df_keys$pagetext <- generatePageDiagram(df_keys)
   

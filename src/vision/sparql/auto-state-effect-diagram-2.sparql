@@ -1,0 +1,26 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+SELECT DISTINCT ?iri ?source ?targetIri ?target ?cpIri ?component
+WHERE {
+
+  VALUES ?componentType { sa:StateVariable }
+  VALUES ?relationType { sa:affects }
+
+  ?iri a ?componentType ;
+
+  OPTIONAL{
+    ?iri ?relationType ?targetIri ;
+  }
+  OPTIONAL{
+    ?iri analysis:constrains ?cpIri
+	}
+
+
+  BIND(STRAFTER(STR(?iri), "#") AS ?source) .
+  BIND(STRAFTER(STR(?targetIri), "#") AS ?target) .
+  BIND(STRAFTER(STR(?cpIri), "#") AS ?component) .
+ }
+ORDER BY ?iri

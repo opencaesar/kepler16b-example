@@ -31,6 +31,26 @@ vocabulary <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa {
 		reverse isAffectedBy
 	]
 
+	// @rdfs:label "hasState"
+	// @dc:description "A [=StateVariable=] [=has=] a [=StateValue=]."
+	// relation entity hasStateValue [
+	// 	from StateVariable
+	// 	to StateValue
+	// 	@rdfs:label "has state value"
+	// 	forward hastatevalue
+	// 	@rdfs:label "is owned by"
+	// 	reverse isOwnedBy
+	// ]
+
+
+	// concept StateValue 
+
+	scalar property hasStateValue[
+		domain StateVariable
+		range xsd:string
+	]
+
+
 //	@rdfs:comment "The class of magnitudes in kilograms for mass quantities on mechanical components"
  	// @dc:description "A StateValue is an instance of the value content of a StateVariable.  A given StateVariable may contain a history (time ordered set) of StateValues, or it may contain a producing state function that produces time-dependent values on demand."
 	// @rdfs:label "State Value"
@@ -41,19 +61,19 @@ vocabulary <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa {
 	// 	restricts vim4:unit to iso-80000-4.1:kilogram
 	// ]
 
-	scalar property hasStateValue [
-		domain StateVariable
-		range xsd:string
-	]
+	// scalar property hasStateValue [
+	// 	domain StateVariable
+	// 	range xsd:string
+	// ]
 
-	relation entity CharacterizesStateOf [
-		from StateVariable
-		to mission:Component
-		@rdfs:label "Characterizes State of"
-		forward characterizesStateOf
-		@rdfs:label "is Characterized by"
-		reverse isCharacterizedBy
-	] < analysis:Characterizes
+	// relation entity CharacterizesStateOf [
+	// 	from StateVariable
+	// 	to mission:Component
+	// 	@rdfs:label "Characterizes State of"
+	// 	forward characterizesStateOf
+	// 	@rdfs:label "is Characterized by"
+	// 	reverse isCharacterizedBy
+	// ] < analysis:Characterizes
 
 }
 

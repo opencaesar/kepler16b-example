@@ -166,15 +166,12 @@ class hohmanTransfer:
 import analysisOrbit
 from astropy import units as u
 
-analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=1000 * u.kg, I_sp=350 * u.s)
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786)
 total_delta_v = analysisRocket.calculate_delta_v()
-analysisRocket.calculate_fuel_mass()
-analysisRocket.m_init
-analysisRocket.m_final
 
+analysisRocket.calculate_init_mass(I_sp, m_final= 325.47880079)
 print(f"Total delta-v: {total_delta_v}")
-print(f"Required fuel mass: {analysisRocket.m_fuel.to(u.kg)}\n final: {analysisRocket.m_final.to(u.kg)}\n init: {analysisRocket.m_init.to(u.kg)}")
-
+print(f"Required fuel mass: {analysisRocket.m_fuel}\n final: {analysisRocket.m_final}\n init: {analysisRocket.m_init}")
 ```
 
 

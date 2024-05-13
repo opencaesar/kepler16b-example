@@ -376,7 +376,7 @@ df_table <- df_mel_after %>%
 
 df_table$componenttype <- factor(df_table$componenttype)
 
-datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1), filter = list(
+datatable(df_table, options = list(autoWidth = FALSE, pageLength = -1), filter = list(
   position = 'top', clear = FALSE
 ))
 
@@ -388,7 +388,7 @@ datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1), filter = 
 
 ```{r}
 df_parameters$m_dry <- df_mel_after$mass[1]
-df_parameters$m_dry <- 325.47880079
+# df_parameters$m_dry <- 325.47880079
 ```
 
 

@@ -1,0 +1,27 @@
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+SELECT DISTINCT ?iri ?statevariable ?value
+WHERE {
+
+#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}
+   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}
+  VALUES ?componentType { sa:StateVariable }
+  VALUES ?relationType { sa:isAffectedBy }
+
+  #	Recursive Query to get state variables
+  ?analysisTarget sa:isAffectedBy* ?iri ;
+  
+  OPTIONAL{
+    ?iri sa:hasStateValue ?value;
+         }
+
+
+
+  BIND(STRAFTER(STR(?iri), "#") AS ?statevariable) .
+  BIND(STRAFTER(STR(?targetIri), "#") AS ?target) .
+  BIND(STRAFTER(STR(?cpIri), "#") AS ?component) .
+ }
+ORDER BY ?iri

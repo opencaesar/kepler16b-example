@@ -37,7 +37,29 @@
       {
         "title": "Auto Test Diagram",
         "type": "diagram",
-        "path": "auto-decomposition-2"
+        "path": "auto-decomposition"
+      },
+      {
+        "title": "Auto State Effect Diagram",
+        "type": "diagram",
+        "path": "auto-state-effect-diagram"
+      },
+      {
+        "title": "Auto State Effect Diagram 2",
+        "type": "diagram",
+        "path": "auto-state-effect-diagram-2"
+      }
+    ]
+  },
+  {
+    "title": "Simulation",
+    "type": "group",
+    "iconUrl": "https://nasa-jpl.github.io/stellar/icons/satellite.svg",
+    "children": [
+      {
+        "title": "Parameter Table",
+        "type": "table",
+        "path": "parametertable"
       }
     ]
   },

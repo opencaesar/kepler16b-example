@@ -35,11 +35,12 @@ description <http://example.com/tutorial2/description/statedictionary#> as state
 
 	instance orbiter-spacecraft.initial-orbit : sa:StateVariable[
         sa:affects orbiter-spacecraft.delta-v
-//        analysis:characterizes components:orbiter-spacecraft
+        sa:hasStateValue "400"
     ]
 
 	instance orbiter-spacecraft.target-orbit : sa:StateVariable[
         sa:affects orbiter-spacecraft.delta-v
+        sa:hasStateValue "35786"
     ]
 
 	instance orbiter-spacecraft.delta-v : sa:StateVariable[
@@ -48,6 +49,7 @@ description <http://example.com/tutorial2/description/statedictionary#> as state
 
 	instance orbiter-spacecraft.isp : sa:StateVariable [
         sa:affects orbiter-spacecraft.mass.fuel
+        sa:hasStateValue "350"
     ]
 
 	instance orbiter-spacecraft.mass.dry : sa:StateVariable [
