@@ -89,6 +89,8 @@ like a rugby pass-and-receive.
 
 ```{r}
 #| warning: false
+library(reactable)
+library(stringr)
 
 searchDirectory <- function(iteration, pattern, parent_directory){
   for(i in 1:iteration){
@@ -190,7 +192,6 @@ WHERE {
 ORDER BY ?c2_id
 
 '
-library(stringr)
 query_string <- str_replace(query_string, "\\$configuration_root_iri", configuration_root_iri)
 ```
 
@@ -200,6 +201,8 @@ query_string <- str_replace(query_string, "\\$configuration_root_iri", configura
 df_query <- send_query(endpoint_url,query_string)
 ```
 
+
+
 ## Binding Variables: toR Parameter Table
 
 -   OML descriptions shall specify this parameter table using IMCE
@@ -208,30 +211,82 @@ df_query <- send_query(endpoint_url,query_string)
     simulation.
 -   Get initial value from oml descriptions by SPARQL Query.
 
+
+### SPARQL CODE
+
+```{r}
+query_param_string <- '
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+SELECT DISTINCT ?iri ?statevariable ?value
+WHERE {
+
+#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}
+   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}
+  VALUES ?componentType { sa:StateVariable }
+  VALUES ?relationType { sa:isAffectedBy }
+
+  #	Recursive Query to get state variables
+  ?analysisTarget sa:isAffectedBy* ?iri ;
+#  ?iri a ?componentType
+  
+  OPTIONAL{
+    ?iri sa:hasStateValue ?value;
+         }
+
+
+
+  BIND(STRAFTER(STR(?iri), "#") AS ?statevariable) .
+  BIND(STRAFTER(STR(?targetIri), "#") AS ?target) .
+  BIND(STRAFTER(STR(?cpIri), "#") AS ?component) .
+ }
+ORDER BY ?iri
+
+'
+```
+
+### Query
+
+```{r}
+df_query_param <- send_query(endpoint_url,query_param_string)
+```
+
+### Binding to R Dataframe
+
 ```{r}
 df_parameters <- data.frame(
-  initOrbit = 0.0,
-  targetOrbit = 0.0,
+  initOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.initial-orbit"]),
+  targetOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.target-orbit"]),
   m_wet = 0.0,
   m_dry = 0.0,
   m_fuel = 0.0,
-  dv = 0.0
+  dv = 0.0,
+  I_sp = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.isp"])
 )
 ```
 
-Currently, we don't have a description for this parameter table, so in
-this version, below codes specify the initial value of variables.
+```{r}
+
+df_table <- df_parameters %>% 
+  mutate(id=1) %>%
+  pivot_longer(!id, names_to = "parameter", values_to = "value") %>%
+  select(-id)
+
+datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
+
+
+```
+
 
 ```{r}
-df_parameters$m_dry <- 325.47880079
-df_parameters$initOrbit <- 400
-df_parameters$targetOrbit <- 35786
-df_parameters$I_sp <- 350
-
-# initOrbit <- 400
-# targetOrbit <- 35786
-# m_dry <- 325.47880079
-# I_sp <- 300
+## These are test paramters
+# df_parameters$m_dry <- 325.47880079
+# df_parameters$initOrbit <- 400
+# df_parameters$targetOrbit <- 35786
+# df_parameters$I_sp <- 350
 
 ```
 
@@ -368,7 +423,6 @@ df_mel_after$componenttype <- ifelse(df_mel_after$distance == 0, "system",
 ```
 
 ```{r}
-library(reactable)
 
 df_table <- df_mel_after %>%
   mutate(totalmass=mass) %>%

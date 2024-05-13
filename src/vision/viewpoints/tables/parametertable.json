@@ -6,7 +6,6 @@
     },
     "columnNames": {
       "statevariable": "State Variable",
-      "iri": "IRI",
       "value": "State Value"
     },
     "queries": {

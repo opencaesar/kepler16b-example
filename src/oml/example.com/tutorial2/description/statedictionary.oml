@@ -62,6 +62,7 @@ description <http://example.com/tutorial2/description/statedictionary#> as state
 
 	instance orbiter-spacecraft.mass.wet : sa:StateVariable
 
+	instance orbiter-spacecraft.transfertime : sa:StateVariable
 
 
 	// instance orbiter-spacecraft.mass.magnitude : mechanical:MassMagnitude [
