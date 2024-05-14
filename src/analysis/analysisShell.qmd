@@ -277,13 +277,14 @@ mapping <- list(c("dv", "orbiter-spacecraft.delta-v"),
   c("targetOrbit","orbiter-spacecraft.target-orbit")
 )
 
-# データフレームに変換
+# Convert to dataframe
 mapping_df <- mapping %>% 
   map_df(~data.frame(.x[1], .x[2])) 
 colnames(mapping_df) <- c("parameter", "statevariable")
 
 df_parameters_before <- left_join(df_query_param, mapping_df, by=c("statevariable"="statevariable")) 
 
+# parameter database for quarto with R
 df_parameters <- df_parameters_before %>% 
   mutate(value2 = as.double(replace(value, is.na(value), 0))) %>%
   select(parameter,value2) %>%
@@ -555,11 +556,19 @@ datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
 ```{r}
 df_parameters_after <-  left_join(df_parameters_before, df_table,
                                   by = c("parameter"="parameter"),
-                                  suffix=c("_before","_after"))
-
+                                  suffix=c("_before","_after")) %>%
+  mutate(status = case_when(
+    as.double(value_before) == value_after ~ "unchanged",
+    TRUE ~ "changed"
+  ))
 
 ```
 
+### query for updating parameters
+
+```{r}
+
+```
 
 
 
