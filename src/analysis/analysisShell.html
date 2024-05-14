@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yuta Nakajima">
-<meta name="dcterms.date" content="2024-05-13">
+<meta name="dcterms.date" content="2024-05-14">
 <meta name="description" content="This shell scripts execute different types of analysis codes.">
 
 <title>Prototype for integration of descriptive and analysis model</title>
@@ -6723,7 +6723,7 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 13, 2024</p>
+        <p class="date">May 14, 2024</p>
       </div>
     </div>
     
@@ -6764,7 +6764,11 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
   <li><a href="#deltav-using-python" id="toc-deltav-using-python" class="nav-link" data-scroll-target="#deltav-using-python"><span class="header-section-number">2.8</span> deltaV ( Using Python)</a></li>
   <li><a href="#binding-variables-tor-1" id="toc-binding-variables-tor-1" class="nav-link" data-scroll-target="#binding-variables-tor-1"><span class="header-section-number">2.9</span> Binding Variables: toR</a></li>
   <li><a href="#fuelmass-using-r" id="toc-fuelmass-using-r" class="nav-link" data-scroll-target="#fuelmass-using-r"><span class="header-section-number">2.10</span> fuelMass (Using R)</a></li>
-  <li><a href="#finally-update-oml" id="toc-finally-update-oml" class="nav-link" data-scroll-target="#finally-update-oml"><span class="header-section-number">2.11</span> Finally, Update OML</a></li>
+  <li><a href="#finally-update-oml" id="toc-finally-update-oml" class="nav-link" data-scroll-target="#finally-update-oml"><span class="header-section-number">2.11</span> Finally, Update OML</a>
+  <ul class="collapse">
+  <li><a href="#parameter-table-updated" id="toc-parameter-table-updated" class="nav-link" data-scroll-target="#parameter-table-updated"><span class="header-section-number">2.11.1</span> parameter table updated</a></li>
+  <li><a href="#parameters-before-and-after" id="toc-parameters-before-and-after" class="nav-link" data-scroll-target="#parameters-before-and-after"><span class="header-section-number">2.11.2</span> parameters before and after</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#discussion-proposed-process-and-data-flow" id="toc-discussion-proposed-process-and-data-flow" class="nav-link" data-scroll-target="#discussion-proposed-process-and-data-flow"><span class="header-section-number">3</span> Discussion: Proposed Process and Data Flow</a></li>
   <li><a href="#todo" id="toc-todo" class="nav-link" data-scroll-target="#todo"><span class="header-section-number">4</span> TODO</a>
@@ -7035,15 +7039,41 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_parameters <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">initOrbit =</span> <span class="fu">as.double</span>(df_query_param<span class="sc">$</span>value[df_query_param<span class="sc">$</span>statevariable<span class="sc">==</span><span class="st">&quot;orbiter-spacecraft.initial-orbit&quot;</span>]),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">targetOrbit =</span> <span class="fu">as.double</span>(df_query_param<span class="sc">$</span>value[df_query_param<span class="sc">$</span>statevariable<span class="sc">==</span><span class="st">&quot;orbiter-spacecraft.target-orbit&quot;</span>]),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">m_wet =</span> <span class="fl">0.0</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">m_dry =</span> <span class="fl">0.0</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">m_fuel =</span> <span class="fl">0.0</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv =</span> <span class="fl">0.0</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">I_sp =</span> <span class="fu">as.double</span>(df_query_param<span class="sc">$</span>value[df_query_param<span class="sc">$</span>statevariable<span class="sc">==</span><span class="st">&quot;orbiter-spacecraft.isp&quot;</span>])</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapping to parameters to instance</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters &lt;- data.frame(</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   initOrbit = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.initial-orbit&quot;]),</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   targetOrbit = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.target-orbit&quot;]),</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_wet = 0.0,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_dry = 0.0,</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_fuel = 0.0,</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   dv = 0.0,</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   I_sp = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.isp&quot;])</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>mapping <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;dv&quot;</span>, <span class="st">&quot;orbiter-spacecraft.delta-v&quot;</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>, <span class="st">&quot;orbiter-spacecraft.initial-orbit&quot;</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;orbiter-spacecraft.isp&quot;</span>),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.dry&quot;</span>),     </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.fuel&quot;</span>),</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.wet&quot;</span>),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;orbiter-spacecraft.target-orbit&quot;</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># データフレームに変換</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>mapping_df <span class="ot">&lt;-</span> mapping <span class="sc">%&gt;%</span> </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span><span class="fu">data.frame</span>(.x[<span class="dv">1</span>], .x[<span class="dv">2</span>])) </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mapping_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;statevariable&quot;</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>df_parameters_before <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_query_param, mapping_df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;statevariable&quot;</span><span class="ot">=</span><span class="st">&quot;statevariable&quot;</span>)) </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>df_parameters <span class="ot">&lt;-</span> df_parameters_before <span class="sc">%&gt;%</span> </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value2 =</span> <span class="fu">as.double</span>(<span class="fu">replace</span>(value, <span class="fu">is.na</span>(value), <span class="dv">0</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(parameter,value2) <span class="sc">%&gt;%</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#    id_cols = age_cat,</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> parameter,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value2</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -7058,8 +7088,8 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-35fff9a1bfc23810c2a1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-35fff9a1bfc23810c2a1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["initOrbit","targetOrbit","m_wet","m_dry","m_fuel","dv","I_sp"],[400,35786,0,0,0,0,350]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4efb4219c3795432d73d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4efb4219c3795432d73d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["dv","initOrbit","I_sp","m_dry","m_fuel","m_wet","targetOrbit"],[0,400,350,0,0,0,35786]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -7112,8 +7142,8 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 <span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type=</span><span class="st">&quot;c2_id&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="collapsibleTree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2b298a9e80d03c4dbe6a" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-2b298a9e80d03c4dbe6a">{"x":{"data":{"name":"C.02: orbiter-spacecraft","fill":"#F9FFAF","WeightOfNode":9,"children":[{"name":"C.02.09: orbiter-propulsion-subsystem","fill":"#2E4F79","WeightOfNode":1},{"name":"C.02.08: orbiter-spacraft-flight-software","fill":"#1C6685","WeightOfNode":1},{"name":"C.02.07: orbiter-mechanical-subsystem","fill":"#057C8E","WeightOfNode":1},{"name":"C.02.06: orbiter-guidance-navigation-control-subsystem","fill":"#109195","WeightOfNode":1},{"name":"C.02.05: orbiter-telecom-subsystem","fill":"#33A69A","WeightOfNode":1},{"name":"C.02.04: orbiter-command-and-data-handling-subsystem","fill":"#58BA9D","WeightOfNode":1},{"name":"C.02.03: orbiter-thermal-subsystem","fill":"#7FCD9F","WeightOfNode":1},{"name":"C.02.02: orbiter-harness","fill":"#A6DEA2","WeightOfNode":1},{"name":"C.02.01: orbiter-power-subsystem","fill":"#CFEFA8","WeightOfNode":1}]},"options":{"hierarchy":[1,2],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":10,"tooltip":true,"collapsed":false,"zoomable":true,"margin":{"top":20,"bottom":20,"left":145,"right":295}}},"evals":[],"jsHooks":[]}</script>
+<div class="collapsibleTree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a34345bedd3dd9d6a9fd" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a34345bedd3dd9d6a9fd">{"x":{"data":{"name":"C.02: orbiter-spacecraft","fill":"#F9FFAF","WeightOfNode":9,"children":[{"name":"C.02.09: orbiter-propulsion-subsystem","fill":"#2E4F79","WeightOfNode":1},{"name":"C.02.08: orbiter-spacraft-flight-software","fill":"#1C6685","WeightOfNode":1},{"name":"C.02.07: orbiter-mechanical-subsystem","fill":"#057C8E","WeightOfNode":1},{"name":"C.02.06: orbiter-guidance-navigation-control-subsystem","fill":"#109195","WeightOfNode":1},{"name":"C.02.05: orbiter-telecom-subsystem","fill":"#33A69A","WeightOfNode":1},{"name":"C.02.04: orbiter-command-and-data-handling-subsystem","fill":"#58BA9D","WeightOfNode":1},{"name":"C.02.03: orbiter-thermal-subsystem","fill":"#7FCD9F","WeightOfNode":1},{"name":"C.02.02: orbiter-harness","fill":"#A6DEA2","WeightOfNode":1},{"name":"C.02.01: orbiter-power-subsystem","fill":"#CFEFA8","WeightOfNode":1}]},"options":{"hierarchy":[1,2],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":10,"tooltip":true,"collapsed":false,"zoomable":true,"margin":{"top":20,"bottom":20,"left":145,"right":295}}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -7225,8 +7255,8 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-700cb77c346f17641819" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-700cb77c346f17641819">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"106\" data-max=\"1957\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;subsystem&quot;,&quot;system&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10"],["C.02","C.02.01","C.02.02","C.02.03","C.02.04","C.02.05","C.02.06","C.02.07","C.02.08","C.02.09"],["orbiter-spacecraft","orbiter-power-subsystem","orbiter-harness","orbiter-thermal-subsystem","orbiter-command-and-data-handling-subsystem","orbiter-telecom-subsystem","orbiter-guidance-navigation-control-subsystem","orbiter-mechanical-subsystem","orbiter-spacraft-flight-software","orbiter-propulsion-subsystem"],[1957,297,138,307,147,316,156,325,165,106],["system","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>c_id<\/th>\n      <th>name<\/th>\n      <th>totalmass<\/th>\n      <th>componenttype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":false,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-810bac094829505b44f5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-810bac094829505b44f5">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"106\" data-max=\"1957\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;subsystem&quot;,&quot;system&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10"],["C.02","C.02.01","C.02.02","C.02.03","C.02.04","C.02.05","C.02.06","C.02.07","C.02.08","C.02.09"],["orbiter-spacecraft","orbiter-power-subsystem","orbiter-harness","orbiter-thermal-subsystem","orbiter-command-and-data-handling-subsystem","orbiter-telecom-subsystem","orbiter-guidance-navigation-control-subsystem","orbiter-mechanical-subsystem","orbiter-spacraft-flight-software","orbiter-propulsion-subsystem"],[1957,297,138,307,147,316,156,325,165,106],["system","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>c_id<\/th>\n      <th>name<\/th>\n      <th>totalmass<\/th>\n      <th>componenttype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":false,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -7333,6 +7363,8 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 </section>
 <section id="finally-update-oml" class="level2" data-number="2.11">
 <h2 data-number="2.11" class="anchored" data-anchor-id="finally-update-oml"><span class="header-section-number">2.11</span> Finally, Update OML</h2>
+<section id="parameter-table-updated" class="level3" data-number="2.11.1">
+<h3 data-number="2.11.1" class="anchored" data-anchor-id="parameter-table-updated"><span class="header-section-number">2.11.1</span> parameter table updated</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -7345,10 +7377,22 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-334e8b88c8e6326ffb10" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-334e8b88c8e6326ffb10">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["initOrbit","targetOrbit","m_wet","m_dry","m_fuel","dv","I_sp"],[400,35786,6012.680381236295,1957,4055.680381236295,3.853959363102248,350]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-44cda2488ba123a77b55" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-44cda2488ba123a77b55">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["dv","initOrbit","I_sp","m_dry","m_fuel","m_wet","targetOrbit"],[3.853959363102248,400,350,1957,4055.680381236295,6012.680381236295,35786]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
+</section>
+<section id="parameters-before-and-after" class="level3" data-number="2.11.2">
+<h3 data-number="2.11.2" class="anchored" data-anchor-id="parameters-before-and-after"><span class="header-section-number">2.11.2</span> parameters before and after</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_parameters_after <span class="ot">&lt;-</span>  <span class="fu">left_join</span>(df_parameters_before, df_table,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;parameter&quot;</span><span class="ot">=</span><span class="st">&quot;parameter&quot;</span>),</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">suffix=</span><span class="fu">c</span>(<span class="st">&quot;_before&quot;</span>,<span class="st">&quot;_after&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
 </section>
 </section>
 <section id="discussion-proposed-process-and-data-flow" class="level1" data-number="3">
@@ -7391,22 +7435,22 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 </section>
 <section id="todo" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> TODO</h1>
-<p>this is not good idea to bind the parameters I think this could be better.</p>
+<p><code>df_parameters</code> is not good idea to bind the parameters I think this could be better.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_parameters2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter =</span> <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>,<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;dv&quot;</span>),</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">400</span>,<span class="dv">35786</span>,<span class="dv">350</span>,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_dry, </span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_fuel, </span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_wet,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>dv),</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;output&quot;</span>)</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how to access data</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>df_parameters2<span class="sc">$</span>value[df_parameters2<span class="sc">$</span>parameter <span class="sc">==</span> <span class="st">&quot;m_dry&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df_parameters2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter =</span> <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>,<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;dv&quot;</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">400</span>,<span class="dv">35786</span>,<span class="dv">350</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_dry, </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_fuel, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_wet,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>dv),</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;output&quot;</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how to access data</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>df_parameters2<span class="sc">$</span>value[df_parameters2<span class="sc">$</span>parameter <span class="sc">==</span> <span class="st">&quot;m_dry&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1957</code></pre>
@@ -7416,8 +7460,8 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> r.df_parameters2</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">&#39;parameter&#39;</span>]<span class="op">==</span><span class="st">&#39;I_sp&#39;</span>].value.values[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> r.df_parameters2</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">&#39;parameter&#39;</span>]<span class="op">==</span><span class="st">&#39;I_sp&#39;</span>].value.values[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>350.0</code></pre>
@@ -7428,15 +7472,15 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>analysisRocket.calculate_init_mass(I_sp, m_final)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>analysisRocket.calculate_init_mass(I_sp, m_final)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total delta-v: 3853.959363102248 m / s</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Required fuel mass: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_fuel<span class="sc">}</span><span class="ch">\n</span><span class="ss"> final: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_final<span class="sc">}</span><span class="ch">\n</span><span class="ss"> init: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_init<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Required fuel mass: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_fuel<span class="sc">}</span><span class="ch">\n</span><span class="ss"> final: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_final<span class="sc">}</span><span class="ch">\n</span><span class="ss"> init: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_init<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Required fuel mass: 4055.680381236295
@@ -7450,9 +7494,9 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;calcDeltaV.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> <span class="fu">calcDeltaV</span>(<span class="at">initOrbit=</span>df_parameters<span class="sc">$</span>initOrbit, <span class="at">targetOrbit =</span> df_parameters<span class="sc">$</span>targetOrbit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;calcDeltaV.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> <span class="fu">calcDeltaV</span>(<span class="at">initOrbit=</span>df_parameters<span class="sc">$</span>initOrbit, <span class="at">targetOrbit =</span> df_parameters<span class="sc">$</span>targetOrbit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.397473 1.456487</code></pre>

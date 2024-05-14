@@ -2,13 +2,163 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "This query gets the assembly layer objects only",
+    "value": "state variables",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>\nPREFIX rdfs:        <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX sa:\t\t\t<http://example.com/tutorial2/description/camerasystemstatevariable#>\n\nSELECT DISTINCT ?iri ?subsystem ?c1_id ?c1_name ?c1_type ?subsystemIri ?systemIri\nWHERE {\n\n    VALUES ?componentType { mission:Component }\n\n\t?iri a ?componentType ;\n\t\tbase:hasIdentifier ?c1_id ;\n\t\tbase:hasCanonicalName ?c1_name ;\n      base:isContainedIn ?subsystemIri.\n  \n  \t?subsystemIri base:isContainedIn ?systemIri\n\n\n  \n    BIND(STRAFTER(STR(?iri), \"#\") AS ?subsystem) .\n\n \tFILTER (STRSTARTS(STR(?iri), STR(sa:))) .\n\n}\nORDER BY ?c1_id",
+    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nSELECT DISTINCT ?iri ?statevariable ?value\nWHERE {\n\n#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}\n   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}\n  VALUES ?componentType { sa:StateVariable }\n  VALUES ?relationType { sa:isAffectedBy }\n\n  #\tRecursive Query to get state variables\n  ?analysisTarget sa:isAffectedBy* ?iri ;\n#  ?iri a ?componentType\n  \n  OPTIONAL{\n    ?iri sa:hasStateValue ?value;\n         }\n\n\n\n  BIND(STRAFTER(STR(?iri), \"#\") AS ?statevariable) .\n  BIND(STRAFTER(STR(?targetIri), \"#\") AS ?target) .\n  BIND(STRAFTER(STR(?cpIri), \"#\") AS ?component) .\n }\nORDER BY ?iri",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "delete",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\n#SELECT *\n\nDELETE WHERE {\n#      VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp>}\n\n      <http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?beforeValue.\n\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "check",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nSELECT DISTINCT ?iri ?statevariable ?value\nWHERE {\n\n#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}\n   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}\n  VALUES ?componentType { sa:StateVariable }\n  VALUES ?relationType { sa:isAffectedBy }\n\n  #\tRecursive Query to get state variables\n  ?analysisTarget sa:isAffectedBy* ?iri ;\n#  ?iri a ?componentType\n  \n  OPTIONAL{\n    ?iri sa:hasStateValue ?value;\n         }\n\n\n\n  BIND(STRAFTER(STR(?iri), \"#\") AS ?statevariable) .\n  BIND(STRAFTER(STR(?targetIri), \"#\") AS ?target) .\n  BIND(STRAFTER(STR(?cpIri), \"#\") AS ?component) .\n }\nORDER BY ?iri",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "insert",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nINSERT {\n\n      ?analysisTarget sa:hasStateValue \"3000\" .\n\n}\nWHERE{\n  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp>}\n\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "check",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nSELECT DISTINCT ?iri ?statevariable ?value\nWHERE {\n\n#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}\n   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}\n  VALUES ?componentType { sa:StateVariable }\n  VALUES ?relationType { sa:isAffectedBy }\n\n  #\tRecursive Query to get state variables\n  ?analysisTarget sa:isAffectedBy* ?iri ;\n#  ?iri a ?componentType\n  \n  OPTIONAL{\n    ?iri sa:hasStateValue ?value;\n         }\n\n\n\n  BIND(STRAFTER(STR(?iri), \"#\") AS ?statevariable) .\n  BIND(STRAFTER(STR(?targetIri), \"#\") AS ?target) .\n  BIND(STRAFTER(STR(?cpIri), \"#\") AS ?component) .\n }\nORDER BY ?iri",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nSELECT DISTINCT ?iri ?statevariable ?value\nWHERE {\n\n#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}\n   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}\n  VALUES ?componentType { sa:StateVariable }\n  VALUES ?relationType { sa:isAffectedBy }\n\n  #\tRecursive Query to get state variables\n  ?analysisTarget sa:isAffectedBy* ?iri ;\n#  ?iri a ?componentType\n  \n  OPTIONAL{\n    ?iri sa:hasStateValue ?value;\n         }\n\n\n\n  BIND(STRAFTER(STR(?iri), \"#\") AS ?statevariable) .\n  BIND(STRAFTER(STR(?targetIri), \"#\") AS ?target) .\n  BIND(STRAFTER(STR(?cpIri), \"#\") AS ?component) .\n }\nORDER BY ?iri",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nDELETE {\n\n      ?analysisTarget sa:hasStateValue ?value .\n\n}\nWHERE{\n  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp>}\n\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nSELECT DISTINCT ?iri ?statevariable ?value\nWHERE {\n\n#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}\n   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}\n  VALUES ?componentType { sa:StateVariable }\n  VALUES ?relationType { sa:isAffectedBy }\n\n  #\tRecursive Query to get state variables\n  ?analysisTarget sa:isAffectedBy* ?iri ;\n#  ?iri a ?componentType\n  \n  OPTIONAL{\n    ?iri sa:hasStateValue ?value;\n         }\n\n\n\n  BIND(STRAFTER(STR(?iri), \"#\") AS ?statevariable) .\n  BIND(STRAFTER(STR(?targetIri), \"#\") AS ?target) .\n  BIND(STRAFTER(STR(?cpIri), \"#\") AS ?component) .\n }\nORDER BY ?iri",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Step 1: Query this endpoint tutorial2-tdb/update with this query (edited) ",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\ndelete {\n  graph <http://example.com/tutorial2/description/statedictionary> {\n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?beforeValue .\n\t\t}\n}\n\ninsert { \n  graph <http://example.com/tutorial2/description/statedictionary> {\n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?afterValue .\n\t\t}\n}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n  \tBIND(\"350\" AS ?beforeValue) \n    BIND(\"3000\" AS ?afterValue) \n \n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Step 2: Query this endpoint tutorial2/update with this query (Note the graph is removed) (edited) ",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\ndelete {\n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?beforeValue .\n}\n\ninsert { \n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?afterValue .\n}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n  \tBIND(\"350\" AS ?beforeValue) \n    BIND(\"3000\" AS ?afterValue) \n \n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "UTNAK: works",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nINSERT {\n\n      ?analysisTarget sa:hasStateValue \"aaron3\" .\n\n}\nWHERE{\n  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp>}\n\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nSELECT DISTINCT ?iri ?statevariable ?value\nWHERE {\n\n#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}\n   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}\n  VALUES ?componentType { sa:StateVariable }\n  VALUES ?relationType { sa:isAffectedBy }\n\n  #\tRecursive Query to get state variables\n  ?analysisTarget sa:isAffectedBy* ?iri ;\n#  ?iri a ?componentType\n  \n  OPTIONAL{\n    ?iri sa:hasStateValue ?value;\n         }\n\n\n\n  BIND(STRAFTER(STR(?iri), \"#\") AS ?statevariable) .\n  BIND(STRAFTER(STR(?targetIri), \"#\") AS ?target) .\n  BIND(STRAFTER(STR(?cpIri), \"#\") AS ?component) .\n }\nORDER BY ?iri",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "single shot",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\ndelete {\n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?beforeValue .\n}\n\ninsert { \n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?afterValue .\n}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n#  \tBIND(\"test_before\" AS ?beforeValue) \n    BIND(\"30000\" AS ?afterValue) \n \n \t\t?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?beforeValue .  \n  \n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "",
     "metadata": {}
   }
 ]

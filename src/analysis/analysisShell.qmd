@@ -257,15 +257,42 @@ df_query_param <- send_query(endpoint_url,query_param_string)
 ### Binding to R Dataframe
 
 ```{r}
-df_parameters <- data.frame(
-  initOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.initial-orbit"]),
-  targetOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.target-orbit"]),
-  m_wet = 0.0,
-  m_dry = 0.0,
-  m_fuel = 0.0,
-  dv = 0.0,
-  I_sp = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.isp"])
+# mapping to parameters to instance
+# df_parameters <- data.frame(
+#   initOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.initial-orbit"]),
+#   targetOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.target-orbit"]),
+#   m_wet = 0.0,
+#   m_dry = 0.0,
+#   m_fuel = 0.0,
+#   dv = 0.0,
+#   I_sp = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.isp"])
+# )
+
+mapping <- list(c("dv", "orbiter-spacecraft.delta-v"),
+  c("initOrbit", "orbiter-spacecraft.initial-orbit"),
+  c("I_sp","orbiter-spacecraft.isp"),
+  c("m_dry","orbiter-spacecraft.mass.dry"),     
+  c("m_fuel","orbiter-spacecraft.mass.fuel"),
+  c("m_wet","orbiter-spacecraft.mass.wet"),
+  c("targetOrbit","orbiter-spacecraft.target-orbit")
 )
+
+# データフレームに変換
+mapping_df <- mapping %>% 
+  map_df(~data.frame(.x[1], .x[2])) 
+colnames(mapping_df) <- c("parameter", "statevariable")
+
+df_parameters_before <- left_join(df_query_param, mapping_df, by=c("statevariable"="statevariable")) 
+
+df_parameters <- df_parameters_before %>% 
+  mutate(value2 = as.double(replace(value, is.na(value), 0))) %>%
+  select(parameter,value2) %>%
+  pivot_wider(
+#    id_cols = age_cat,
+    names_from = parameter,
+    values_from = value2
+    )
+
 ```
 
 ```{r}
@@ -511,6 +538,7 @@ c(df_parameters$m_wet, df_parameters$m_dry, df_parameters$m_fuel)
 
 ## Finally, Update OML
 
+### parameter table updated
 ```{r}
 
 df_table <- df_parameters %>% 
@@ -521,6 +549,20 @@ df_table <- df_parameters %>%
 datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
 
 ```
+
+### parameters before and after
+
+```{r}
+df_parameters_after <-  left_join(df_parameters_before, df_table,
+                                  by = c("parameter"="parameter"),
+                                  suffix=c("_before","_after"))
+
+
+```
+
+
+
+
 
 
 
@@ -561,7 +603,7 @@ flowchart LR
 
 # TODO
 
-this is not good idea to bind the parameters I think this could be
+`df_parameters` is not good idea to bind the parameters I think this could be
 better.
 
 ```{r}
