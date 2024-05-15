@@ -567,9 +567,84 @@ df_parameters_after <-  left_join(df_parameters_before, df_table,
 ### query for updating parameters
 
 ```{r}
+update_value <- "quarto"
+update_iri <- "http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp"
+graph_iri <- str_extract(update_iri, "^[^#]*") # extract strings before "#"
+  
+  
+query_string_update <-'
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
 
+delete {
+    ?analysisTarget a owl:NamedIndividual ;
+      			sa:hasStateValue ?beforeValue .
+}
+
+insert { 
+    ?analysisTarget a owl:NamedIndividual ;
+      			sa:hasStateValue ?afterValue .
+}
+
+
+where{
+    BIND(<$UPDATEIRI> AS ?analysisTarget)
+    BIND("$UPDATEVALUE" AS ?afterValue) 
+  
+  		?analysisTarget a owl:NamedIndividual ;
+      			sa:hasStateValue ?beforeValue .
+}
+'
+
+query_string_update <- str_replace(query_string_update, "\\$UPDATEVALUE", update_value)
+query_string_update <- str_replace(query_string_update, "\\$UPDATEIRI", update_iri)
+query_string_update <- str_replace(query_string_update, "\\$GRAPHIRI", graph_iri)
+
+cat(query_string_update)
 ```
 
+```{r}
+query_string_update_tbd <- '
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+delete {
+  graph <$GRAPHIRI> {
+    ?analysisTarget a owl:NamedIndividual ;
+      			sa:hasStateValue ?beforeValue .
+		}
+}
+
+insert { 
+  graph <$GRAPHIRI> {
+    ?analysisTarget a owl:NamedIndividual ;
+      			sa:hasStateValue ?afterValue .
+		}
+}
+
+
+where{
+    BIND(<$UPDATEIRI> AS ?analysisTarget)
+    BIND("$UPDATEVALUE" AS ?afterValue) 
+  
+  		?analysisTarget a owl:NamedIndividual ;
+      			sa:hasStateValue ?beforeValue .
+}
+'
+
+query_string_update_tbd <- str_replace(query_string_update_tbd, "\\$UPDATEVALUE", update_value)
+query_string_update_tbd <- str_replace(query_string_update_tbd, "\\$UPDATEIRI", update_iri)
+query_string_update_tbd <- str_replace(query_string_update_tbd, "\\$GRAPHIRI", graph_iri)
+query_string_update_tbd <- str_replace(query_string_update_tbd, "\\$GRAPHIRI", graph_iri)
+
+cat(query_string_update_tbd)
+```
 
 
 
