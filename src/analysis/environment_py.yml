@@ -1,0 +1,11 @@
+name: py393
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - astropy=5.3.4
+  - numpy
+  - pandas
+  - poliastro
+  

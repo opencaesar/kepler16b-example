@@ -1,0 +1,25 @@
+
+
+
+# For R
+
+
+
+```{r}
+install.packages("reactable", repos='http://cran.us.r-project.org')
+install.packages("igraph")
+install.packages("networkD3")
+install.packages("reticulate")
+
+```
+
+
+## First Time Create Environment
+```{bash}
+conda env create -f environment_py.yml
+```
+
+## When Updating
+```{bash}
+# conda env update --file environment_py.yml --prune
+```
