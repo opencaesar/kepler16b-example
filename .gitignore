@@ -80,3 +80,4 @@ rsconnect/
 
 .Rhistory
 src/analysis/.Rhistory
+gradle/wrapper/gradle-7.6-bin.zip
