@@ -232,5 +232,65 @@
     "language": "sparql",
     "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\ndelete {\n  graph <http://example.com/tutorial2/description/statedictionary> {\n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?beforeValue .\n\t\t}\n}\n\ninsert { \n  graph <http://example.com/tutorial2/description/statedictionary> {\n    ?analysisTarget a owl:NamedIndividual ;\n      \t\t\tsa:hasStateValue ?afterValue .\n\t\t}\n}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n  \tBIND(\"350\" AS ?beforeValue) \n    BIND(\"HELLO\" AS ?afterValue) \n \n}",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# Works single shot insert for /tutorial2/update",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\nINSERT {\n\n      ?analysisTarget sa:hasStateValue \"aaron3\" .\n\n}\nWHERE{\n  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp>}\n\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Delete for /tutorial2/update",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\n#SELECT *\n\nDELETE WHERE {\n#      VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp>}\n\n      <http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> sa:hasStateValue ?beforeValue.\n\n}\n\n",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "# TESTING for /tutorial2/update delete and insert are separted",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\ndelete {\n    ?analysisTarget sa:hasStateValue ?beforeValue ;\n}\n\n#insert { \n#    ?analysisTarget a owl:NamedIndividual ;\n#\t\t\tsa:hasStateValue ?afterValue .\n#}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n    BIND(\"quarto\" AS ?afterValue) \n  \n  \t\t?analysisTarget a owl:NamedIndividual ;\n#      \t\t\tsa:hasStateValue ?beforeValue .\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\n#delete {\n#    ?analysisTarget sa:hasStateValue ?beforeValue ;\n#}\n\ninsert { \n    ?analysisTarget a owl:NamedIndividual ;\n\t\t\tsa:hasStateValue ?afterValue .\n}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n    BIND(\"quarto\" AS ?afterValue) \n  \n  \t\t?analysisTarget a owl:NamedIndividual ;\n#      \t\t\tsa:hasStateValue ?beforeValue .\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "for /tutorial2-tdb/update",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\ndelete {\n  graph <http://example.com/tutorial2/description/statedictionary> {\n    ?analysisTarget sa:hasStateValue ?beforeValue .\n\t\t}\n}\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n    BIND(\"quarto\" AS ?afterValue) \n  \n  \t\t?analysisTarget a owl:NamedIndividual ;\n#      \t\t\tsa:hasStateValue ?beforeValue .\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>\nPREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>\nPREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>\nPREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>\n\n\ninsert { \n  graph <http://example.com/tutorial2/description/statedictionary> {\n    ?analysisTarget sa:hasStateValue ?afterValue .\n\t\t}\n}\n\n\nwhere{\n    BIND(<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp> AS ?analysisTarget)\n    BIND(\"quarto\" AS ?afterValue) \n  \n  \t\t?analysisTarget a owl:NamedIndividual ;\n#      \t\t\tsa:hasStateValue ?beforeValue .\n}",
+    "metadata": {}
   }
 ]
