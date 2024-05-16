@@ -646,6 +646,83 @@ query_string_update_tbd <- str_replace(query_string_update_tbd, "\\$GRAPHIRI", g
 cat(query_string_update_tbd)
 ```
 
+### Get Intended State Value using affects relationship
+```
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+SELECT ?iri ?statevariable ?value
+WHERE {
+
+#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}
+   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}
+  VALUES ?componentType { sa:StateVariable }
+  VALUES ?relationType { sa:isAffectedBy }
+
+  #	Recursive Query to get state variables
+  ?analysisTarget sa:isAffectedBy* ?iri ;
+#  ?iri a ?componentType
+  
+  OPTIONAL{
+    ?iri sa:hasStateValue ?value;
+         }
+
+
+
+  BIND(STRAFTER(STR(?iri), "#") AS ?statevariable) .
+  BIND(STRAFTER(STR(?targetIri), "#") AS ?target) .
+  BIND(STRAFTER(STR(?cpIri), "#") AS ?component) .
+ }
+ORDER BY ?iri
+```
+
+### Get all state values
+
+```
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+SELECT DISTINCT ?iri ?statevariable ?value
+WHERE {
+
+#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}
+   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}
+  VALUES ?componentType { sa:StateVariable }
+  VALUES ?relationType { sa:isAffectedBy }
+
+  #	Recursive Query to get state variables
+#  ?analysisTarget sa:isAffectedBy* ?iri ;
+  ?iri a ?componentType; 
+  
+  OPTIONAL{
+    ?iri sa:hasStateValue ?value;
+         }
+
+
+
+  BIND(STRAFTER(STR(?iri), "#") AS ?statevariable) .
+  BIND(STRAFTER(STR(?targetIri), "#") AS ?target) .
+  BIND(STRAFTER(STR(?cpIri), "#") AS ?component) .
+ }
+ORDER BY ?iri
+```
+
+
+
+### Send Query
+This doesn't work. Needs to be fixed at [issue #11](https://github.com/UTNAK/kepler16b-using-imce-vocabulary/issues/11) .
+duplicated data. delete doesn't work well.
+lets make separated.
+query_string_update_tbd
+```{r}
+endpoint_url <- "http://localhost:3030/tutorial2/update"
+# df_query <- send_query(endpoint_url, query_string_update)
+# httpResponse <- httr::POST(url = endpoint_url, query = list(query = query_string_update))
+```
 
 
 
