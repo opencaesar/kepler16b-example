@@ -10,7 +10,13 @@ install.packages("reactable", repos='http://cran.us.r-project.org')
 install.packages("igraph")
 install.packages("networkD3")
 install.packages("reticulate")
+install.packages("tidyverse")
+install.packages("collapsibleTree")
+install.packages("colorspace")
+install.packages("jsonlite")
+install.packages("DT")
 
+install_github("UTNAK/tansakusuR")
 ```
 
 
