@@ -28,7 +28,11 @@ editor:
     wrap: 72
 ---
 
+
+
 # Workflow
+
+
 
 ```{mermaid}
   graph LR;
@@ -43,7 +47,11 @@ editor:
       O-->M;
 ```
 
+
+
 Below chart shows an actual workflow in this prototype.
+
+
 
 ```{mermaid}
 flowchart LR
@@ -54,6 +62,8 @@ flowchart LR
     id5 --> id6(owl2oml)
 ```
 
+
+
 # First Prototype of Process and Data Flow
 
 This prototype uses a Quarto notebook to orchestrate the different Like
@@ -61,6 +71,8 @@ openMBEE, Jupyter or Quarto perform the execution of codes. Quarto has a
 function to execute Python and R together. We can bind the data from
 Python to R using the [reticulate
 package](https://public.deq.virginia.gov/WPS/R/reticulate.pdf).
+
+
 
 ```{mermaid}
 flowchart LR
@@ -82,10 +94,14 @@ flowchart LR
     id10 -.-> id5
 ```
 
+
+
 In this approach, data is exchanged between different analysis tools
 like a rugby pass-and-receive.
 
 ## load utility files
+
+
 
 ```{r}
 #| warning: false
@@ -114,31 +130,38 @@ use_condaenv("py39")
 # use_python("/Users/mlab/opt/anaconda3/envs/py393/bin/python")
 ```
 
+
+
 ## Build and Run a Fuseki SPARQL endpoint for oml model query
 <!-- This runs build and load gradle tasks.  Can be run with OML Vision -->
+
+
 
 ```{r}
 #| warning: false
 library(omlhashiR)
 ## oml_repository <- "../open-source-rover/"
 oml_repository <- omlrepo
-ret1 <- omlhashiR::oml_refresh()
-ret2 <- omlhashiR::oml_stop_Daemon(oml_repository)
-ret3 <- omlhashiR::oml_build(oml_repository)
+# ret1 <- omlhashiR::oml_refresh()
+# ret2 <- omlhashiR::oml_stop_Daemon(oml_repository)
+# ret3 <- omlhashiR::oml_build(oml_repository)
+# ret4 <- omlhashiR::oml_startFuseki(oml_repository)
 
 ```
 
-## Start Fuseki Server
 ```{r}
 ret4 <- omlhashiR::oml_startFuseki(oml_repository)
 ```
 
-## Load in OWL ontologies to Fuseki Server
 ```{r}
 ret5 <- omlhashiR::oml_owlLoad(oml_repository)
 ```
 
+
+
 ## Get Configuration & Mass Properties
+
+
 ```{r}
 library(tansakusuR)
 endpoint_url <- "http://localhost:3030/tutorial2/sparql"
@@ -146,7 +169,11 @@ endpoint_url <- "http://localhost:3030/tutorial2/sparql"
 configuration_root_iri <- "http://example.com/tutorial2/description/components#orbiter-spacecraft"
 ```
 
+
+
 ### SPARQL CODE
+
+
 
 ```{r}
 query_string <- '
@@ -200,11 +227,17 @@ ORDER BY ?c2_id
 query_string <- str_replace(query_string, "\\$configuration_root_iri", configuration_root_iri)
 ```
 
+
+
 ### Query
+
+
 
 ```{r}
 df_query <- send_query(endpoint_url,query_string)
 ```
+
+
 
 
 
@@ -218,6 +251,8 @@ df_query <- send_query(endpoint_url,query_string)
 
 
 ### SPARQL CODE
+
+
 
 ```{r}
 query_param_string <- '
@@ -253,13 +288,21 @@ ORDER BY ?iri
 '
 ```
 
+
+
 ### Query
+
+
 
 ```{r}
 df_query_param <- send_query(endpoint_url,query_param_string)
 ```
 
+
+
 ### Binding to R Dataframe
+
+
 
 ```{r}
 # mapping to parameters to instance
@@ -313,9 +356,22 @@ datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
 
 ```
 
+```{r}
+## These are test paramters
+# df_parameters$m_dry <- 325.47880079
+# df_parameters$initOrbit <- 400
+# df_parameters$targetOrbit <- 35786
+# df_parameters$I_sp <- 350
+
+```
+
+
+
 ## MassRollUp
 
 ### Tidy Data
+
+
 
 ```{r}
 df_query$c1_type <- "component"
@@ -350,7 +406,11 @@ plotCollapsibleTreeFromDataframe(df_vis, palette="BluYl",
 
 ```
 
+
+
 ### Prepare a Graph Data for mass rollup calculation
+
+
 
 ```{r}
 library(igraph)
@@ -372,7 +432,11 @@ g <- graph_from_data_frame(df_g,
 
 ```
 
+
+
 ### RollUp Pattern
+
+
 
 ```{r}
 
@@ -461,7 +525,11 @@ datatable(df_table, options = list(autoWidth = FALSE, pageLength = -1), filter =
 ```
 
 
+
+
 ## Binding Variables : toR
+
+
 
 ```{r}
 df_parameters$m_dry <- df_mel_after$mass[1]
@@ -469,13 +537,17 @@ df_parameters$m_dry <- df_mel_after$mass[1]
 ```
 
 
+
+
 ## Binding Variables: toPython
 
+
+
 ```{python}
-orbit_init=r.df_parameters["initOrbit"]
-orbit_target=r.df_parameters["targetOrbit"]
-m_final=r.df_parameters["m_dry"]
-I_sp=r.df_parameters["I_sp"]
+orbit_init=r.df_parameters.initOrbit.values.tolist()[0]
+orbit_target=r.df_parameters.targetOrbit.values.tolist()[0]
+m_final=r.df_parameters.m_dry.values.tolist()[0]
+I_sp=r.df_parameters.I_sp.values.tolist()[0]
 # orbit_init=r.initOrbit
 # orbit_target=r.targetOrbit
 # m_init=1000
@@ -483,15 +555,25 @@ I_sp=r.df_parameters["I_sp"]
 ```
 
 
+
+
 ## deltaV ( Using Python)
+
+
 
 ```{python}
 import os
 import sys
-from src.analysis.analysisOrbit import hohmanTransfer
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+# from src.analysis import analysisOrbit
+import analysisOrbit
 from astropy import units as u
 
-analysisRocket = hohmanTransfer(orbit_init=orbit_init, orbit_target=orbit_target)
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=orbit_init, orbit_target=orbit_target)
 # analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)
 # analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)
 
@@ -504,14 +586,22 @@ print(f"Required fuel mass: {analysisRocket.m_fuel}\n final: {analysisRocket.m_f
 ```
 
 
+
+
 ## Binding Variables: toR
+
+
 
 ```{r}
 df_parameters$dv <- py$total_delta_v /1000.0 # km/s
 ```
 
 
+
+
 ## fuelMass (Using R)
+
+
 
 ```{r}
 source(searchDirectory(4, "calcWetMass.R", (getwd())))
@@ -526,9 +616,13 @@ c(df_parameters$m_wet, df_parameters$m_dry, df_parameters$m_fuel)
 ```
 
 
+
+
 ## Finally, Update OML
 
 ### parameter table updated
+
+
 ```{r}
 
 df_table <- df_parameters %>% 
@@ -540,7 +634,11 @@ datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
 
 ```
 
+
+
 ### parameters before and after
+
+
 
 ```{r}
 df_parameters_after <-  left_join(df_parameters_before, df_table,
@@ -553,7 +651,11 @@ df_parameters_after <-  left_join(df_parameters_before, df_table,
 
 ```
 
+
+
 ### query for updating parameters
+
+
 
 ```{r}
 update_value <- "quarto"
@@ -635,6 +737,8 @@ query_string_update_tbd <- str_replace(query_string_update_tbd, "\\$GRAPHIRI", g
 cat(query_string_update_tbd)
 ```
 
+
+
 ### Get Intended State Value using affects relationship
 ```
 PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
@@ -707,11 +811,15 @@ This doesn't work. Needs to be fixed at [issue #11](https://github.com/UTNAK/kep
 duplicated data. delete doesn't work well.
 lets make separated.
 query_string_update_tbd
+
+
 ```{r}
 endpoint_url <- "http://localhost:3030/tutorial2/update"
 # df_query <- send_query(endpoint_url, query_string_update)
 # httpResponse <- httr::POST(url = endpoint_url, query = list(query = query_string_update))
 ```
+
+
 
 
 
@@ -728,6 +836,8 @@ To do this, we need to specify the analysis container with
 -   input
 -   output
 -   mapping of input and output with other containers
+
+
 
 ```{mermaid}
 flowchart LR
@@ -751,10 +861,14 @@ flowchart LR
 
 ```
 
+
+
 # TODO
 
 `df_parameters` is not good idea to bind the parameters I think this could be
 better.
+
+
 
 ```{r}
 
@@ -772,8 +886,12 @@ df_parameters2 <- data.frame(
 df_parameters2$value[df_parameters2$parameter == "m_dry"]
 ```
 
+
+
 Here is how to access values. when we add the mapping descriptions to
 analysis codes, we might automate the process of data exchange.
+
+
 
 ```{python}
 df = r.df_parameters2
@@ -781,7 +899,11 @@ df[df['parameter']=='I_sp'].value.values[0]
 
 ```
 
+
+
 ## OPTION: m_fuel ( Using Python codes)
+
+
 
 ```{python}
 analysisRocket.calculate_init_mass(I_sp, m_final)
@@ -790,7 +912,11 @@ print(f"Required fuel mass: {analysisRocket.m_fuel}\n final: {analysisRocket.m_f
 
 ```
 
+
+
 ## OPTION: deltaV ( Using R codes)
+
+
 
 ```{r}
 source(searchDirectory(4, "calcDeltaV.R", (getwd())))

@@ -5,6 +5,8 @@
 
 
 
+
+
 ```{r}
 install.packages("reactable", repos='http://cran.us.r-project.org')
 install.packages("igraph")
@@ -21,35 +23,42 @@ install.packages("devtools")
 library(devtools)
 
 install_github("UTNAK/tansakusuR")
-install_github("UTNAK/omlhashiR")
 ```
 
-## First Time Create Environment in the terminal
+
+
+## First Time Create Environment
+
+
 ```{bash}
 conda env create --file environment.yml
 ```
 
+
+
 ## Install dependencies in environment.yml by running this command in the terminal
+
+
 ```{bash}
 conda env update --file environment.yml --prune
 ```
 
+
+
 ## Verify install by running the following command in the terminal
+
+
 ```{bash}
 conda list
 ```
 
-## Install libglpk40 package in the terminal
+
+
+## Install libglpk40 package
+
+
 ```{bash}
 sudo apt-get update
 sudo apt install -y libglpk40
 ```
 
-# Troubleshooting
-## Start and activate conda environment in a terminal (debugging purposes only)
-```{markdown}
-conda create -y -n py39 python=3.9
-conda init
-<!-- Close and reopen the terminal -->
-conda activate py39
-```
