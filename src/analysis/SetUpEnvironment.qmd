@@ -8,8 +8,8 @@
 ```{r}
 install.packages("reactable", repos='http://cran.us.r-project.org')
 install.packages("igraph")
-install.packages("libmkl-rt")
-install.packages("libglpk40")
+#install.packages("libmkl-rt")
+#install.packages("libglpk40")
 install.packages("networkD3")
 install.packages("reticulate")
 install.packages("tidyverse")
@@ -56,6 +56,7 @@ sudo apt install -y libglpk40
 
 
 
+
 ## Fix libstdc++.so.6 for Quarto + Reticulate
 
 ```{bash}
@@ -66,6 +67,37 @@ strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
 
 ```
 
+
+## Verify Quarto + Reticulate + Python Environment
+
+```{r}
+library(reticulate)
+use_condaenv("py39")
+
+```
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+# from src.analysis import analysisOrbit
+import analysisOrbit
+from astropy import units as u
+
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=36000)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)
+
+total_delta_v = analysisRocket.calculate_delta_v()
+
+
+print(f"Total delta-v: {total_delta_v}")
+
+```
 
 # Troubleshooting
 ## Start and activate conda environment in a terminal (debugging purposes only)

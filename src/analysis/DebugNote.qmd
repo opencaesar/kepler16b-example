@@ -515,6 +515,7 @@ from poliastro.twobody import Orbit
 ```
 
 
+find / -name "libstdc++.so*"
 
 
  export LD_LIBRARY_PATH="/opt/conda/lib/:$LD_LIBRARY_PATH"
