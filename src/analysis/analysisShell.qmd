@@ -472,14 +472,15 @@ df_parameters$m_dry <- df_mel_after$mass[1]
 ## Binding Variables: toPython
 
 ```{python}
-orbit_init=r.df_parameters["initOrbit"]
-orbit_target=r.df_parameters["targetOrbit"]
-m_final=r.df_parameters["m_dry"]
-I_sp=r.df_parameters["I_sp"]
+orbit_init=r.df_parameters.initOrbit.values.tolist()[0]
+orbit_target=r.df_parameters.targetOrbit.values.tolist()[0]
+m_final=r.df_parameters.m_dry.values.tolist()[0]
+I_sp=r.df_parameters.I_sp.values.tolist()[0]
 # orbit_init=r.initOrbit
 # orbit_target=r.targetOrbit
 # m_init=1000
 # I_sp=r.I_sp
+
 ```
 
 
@@ -505,7 +506,6 @@ total_delta_v = analysisRocket.calculate_delta_v()
 
 
 print(f"Total delta-v: {total_delta_v}")
-print(f"Required fuel mass: {analysisRocket.m_fuel}\n final: {analysisRocket.m_final}\n init: {analysisRocket.m_init}")
 
 ```
 

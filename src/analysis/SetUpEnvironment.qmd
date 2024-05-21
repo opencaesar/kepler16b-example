@@ -29,13 +29,22 @@ install_github("UTNAK/omlhashiR")
 conda env create --file environment.yml
 ```
 
-## Install dependencies in environment.yml by running this command in the terminal
+## Update dependencies in environment.yml by running this command in the terminal
 ```{bash}
 conda env update --file environment.yml --prune
 ```
 
+
+```{bash}
+conda init
+```
+
+<!-- Close and reopen the terminal -->
+
+
 ## Verify install by running the following command in the terminal
 ```{bash}
+conda activate py39
 conda list
 ```
 
@@ -44,6 +53,19 @@ conda list
 sudo apt-get update
 sudo apt install -y libglpk40
 ```
+
+
+
+## Fix libstdc++.so.6 for Quarto + Reticulate
+
+```{bash}
+cd /opt/conda/envs/py39/lib/
+sudo cp libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4
+strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+
+```
+
 
 # Troubleshooting
 ## Start and activate conda environment in a terminal (debugging purposes only)
