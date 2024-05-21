@@ -488,10 +488,16 @@ I_sp=r.df_parameters["I_sp"]
 ```{python}
 import os
 import sys
-from src.analysis.analysisOrbit import hohmanTransfer
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+# from src.analysis import analysisOrbit
+import analysisOrbit
 from astropy import units as u
 
-analysisRocket = hohmanTransfer(orbit_init=orbit_init, orbit_target=orbit_target)
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=orbit_init, orbit_target=orbit_target)
 # analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)
 # analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)
 
