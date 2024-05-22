@@ -1,0 +1,133 @@
+---
+title: "Generate OML-Vision File"
+date: now
+author: "Yuta Nakajima"
+description: "<BR> This qmd notebook generates oml-vision files."
+title-block-banner: true
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly    
+    fontsize: 1.0em
+    self-contained: true
+    toc: true
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    grid:
+      sidebar-width: 200px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 2.5rem
+execute:
+  warning: false
+
+---
+
+## omlvision_wrapper.R
+
+Current omlvision_wrapper.R is too specific to each model.
+I want to generalize this.
+
+```{r}
+#| warning: false
+
+source("omlvision_wrapper.R")
+
+searchDirectory <- function(iteration, pattern, parent_directory){
+  for(i in 1:iteration){
+      path <- list.files(parent_directory, recursive = TRUE, pattern = pattern, full.names = TRUE)
+      if(length(path)){
+        return(path)
+      }
+      parent_directory <- dirname(parent_directory)
+  }
+  print("file not found")
+  return(path)
+}
+
+source(searchDirectory(4, "osr_common.R", (getwd())))
+
+omlrepo
+```
+
+```{r}
+df_prefix <- data.frame(
+  prefix = c("base",
+             "mission"),
+  iri = c("http://imce.jpl.nasa.gov/foundation/base#",
+          "http://imce.jpl.nasa.gov/foundation/mission#")
+)
+
+query_string <- generatePrefix(df_prefix)
+cat(query_string)
+```
+
+## Decomposition
+
+```{r}
+df_keys <- omlvisionDecomposition(omlrepo = omlrepo, 
+                                  df_prefix = df_prefix, 
+                                  viewname = "auto-decomposition", 
+                                  title = "Auto Test Diagram", 
+                                  targetConcept = c("mission:Component"),
+                                  targetRelation = "base:isContainedIn",
+                                  nodeColor = "#006994",
+                                  nodeTextColor = "white")
+
+```
+
+
+## State Dictionary
+
+```{r}
+df_prefix <- data.frame(
+  prefix = c("base",
+             "mission",
+             "sa"),
+  iri = c("http://imce.jpl.nasa.gov/foundation/base#",
+          "http://imce.jpl.nasa.gov/foundation/mission#",
+          "http://example.com/tutorial2/vocabulary/stateanalysis#")
+)
+
+query_string <- generatePrefix(df_prefix)
+cat(query_string)
+```
+
+```{r}
+df_keys <- omlvisionRelationMap(omlrepo = omlrepo, 
+                                  df_prefix = df_prefix, 
+                                  viewname = "auto-state-effect-diagram", 
+                                  title = "Auto State Effect Diagram", 
+                                  targetConcept = c("sa:StateVariable"),
+                                  targetRelation = "sa:affects",
+                                  nodeColor = "#006994",
+                                  nodeTextColor = "white")
+
+
+
+
+```
+
+
+## Prefix for imce foundation vocabularies
+
+```{r}
+df_prefix <- data.frame(
+  prefix = c("base",
+             "mission",
+             "project",
+             "analysis"),
+  iri = c("http://imce.jpl.nasa.gov/foundation/base#",
+          "http://imce.jpl.nasa.gov/foundation/mission#",
+          "http://imce.jpl.nasa.gov/foundation/analysis#",
+          "http://imce.jpl.nasa.gov/foundation/project#"
+          )
+)
+
+cat(generatePrefix(df_prefix))
+
+```
+

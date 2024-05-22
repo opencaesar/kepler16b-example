@@ -1,0 +1,79 @@
+@dc:creator "Yuta Nakajima"
+@dc:title "State Dictionary Ontology"
+@dc:description "Original Concept is exerpted from Reference: https://github.com/JPL-IMCE/gov.nasa.jpl.imce.ontologies.public/blob/vocabularies/vocabularies/imce.jpl.nasa.gov/vocabularies/discipline/state-analysis/state-analysis.oml"
+
+vocabulary <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa {
+
+	extends <http://purl.org/dc/elements/1.1/> as dc
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+	extends <http://imce.jpl.nasa.gov/foundation/mission#> as mission
+	extends <http://imce.jpl.nasa.gov/foundation/base#> as base
+	extends <http://imce.jpl.nasa.gov/foundation/analysis#> as analysis
+	extends <http://www.w3.org/2001/XMLSchema#> as xsd
+
+	@rdfs:label "State Variable"
+	@dc:description "A state variable models a particular aspect or property of a system that is a focus of control. The property can be one that is the subject of control, or one that must be known in order to control some other property.
+        State variables have values.
+        State variable values don't have to be atomic, but can include multidimensional quantities (vectors). I.e., position usually describes the position of an object in three dimensions as a vector quantity.
+        Time derivatives of a state variable's value are usually included in the definition of its value vector
+        (which property is the base property is a matter of system focus)
+        State variables have values that are continuous over time."
+	concept StateVariable < analysis:Constraint
+
+	@rdfs:label "Affects"
+	@dc:description "A [=StateVariable=] [=affects=] zero or more [=StateVariable=]s."
+	relation entity Affects [
+		from StateVariable
+		to StateVariable
+		@rdfs:label "affects"
+		forward affects
+		@rdfs:label "is affected by"
+		reverse isAffectedBy
+	]
+
+	// @rdfs:label "hasState"
+	// @dc:description "A [=StateVariable=] [=has=] a [=StateValue=]."
+	// relation entity hasStateValue [
+	// 	from StateVariable
+	// 	to StateValue
+	// 	@rdfs:label "has state value"
+	// 	forward hastatevalue
+	// 	@rdfs:label "is owned by"
+	// 	reverse isOwnedBy
+	// ]
+
+
+	// concept StateValue 
+
+	scalar property hasStateValue[
+		domain StateVariable
+		range xsd:string
+	]
+
+
+//	@rdfs:comment "The class of magnitudes in kilograms for mass quantities on mechanical components"
+ 	// @dc:description "A StateValue is an instance of the value content of a StateVariable.  A given StateVariable may contain a history (time ordered set) of StateValues, or it may contain a producing state function that produces time-dependent values on demand."
+	// @rdfs:label "State Value"
+	// concept StateValue < vim4:InherentUnitaryQuantityValue
+	// concept MassMagnitude < vim4:InherentUnitaryQuantityValue [
+	// 	restricts all vim4:characterizes to MechanicalComponent
+	// 	restricts vim4:instantiates to iso-80000-4.1:mass
+	// 	restricts vim4:unit to iso-80000-4.1:kilogram
+	// ]
+
+	// scalar property hasStateValue [
+	// 	domain StateVariable
+	// 	range xsd:string
+	// ]
+
+	// relation entity CharacterizesStateOf [
+	// 	from StateVariable
+	// 	to mission:Component
+	// 	@rdfs:label "Characterizes State of"
+	// 	forward characterizesStateOf
+	// 	@rdfs:label "is Characterized by"
+	// 	reverse isCharacterizedBy
+	// ] < analysis:Characterizes
+
+}
+

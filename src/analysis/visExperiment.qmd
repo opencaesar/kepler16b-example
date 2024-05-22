@@ -1,0 +1,283 @@
+---
+title: "Analyze mass rollup for Cruise Stage"
+date: now
+author: "Yuta Nakajima"
+description: "<BR>Alternative way to generate MEL. Using a “Work Package” viewpoint to aggregate the total mass of supplying components of authorships"
+title-block-banner: true
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: vapor    
+    fontsize: 1.0em
+    self-contained: true
+    toc: true
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    grid:
+      sidebar-width: 200px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 2.5rem
+execute:
+  warning: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Todo
+- mass の omlへの記述
+
+## Mass Description
+
+
+
+```{r}
+
+```
+
+
+# Workflow
+
+```{mermaid}
+  graph LR;
+      M[OML]-->S[SPARQL];
+      S-->API;
+      API-->P[Python];
+      P-->O[Oml2Owl];
+      API-->MATLAB;
+      MATLAB-->O;
+      API-->MODELICA;
+      MODELICA-->O;
+      O-->M;
+```
+
+# Get Configuration & Mass Properties
+
+```{mermaid}
+flowchart LR
+    id1[Build] --> id2[owlLoad]
+    id2 --> id3[Query:SPARQL]
+    id3 --> id4[massRollup:R]
+```
+
+## load utility files
+
+```{r}
+searchDirectory <- function(iteration, pattern, parent_directory){
+  for(i in 1:iteration){
+      path <- list.files(parent_directory, recursive = TRUE, pattern = pattern, full.names = TRUE)
+      if(length(path)){
+        return(path)
+      }
+      parent_directory <- dirname(parent_directory)
+  }
+  print("file not found")
+  return(path)
+}
+
+source(searchDirectory(4, "osr_common.R", (getwd())))
+source(searchDirectory(4, "massRollupKepler16b.R", (getwd())))
+
+```
+
+## Build and Run a Fuseki SPARQL endpoint for oml model query
+
+```{r}
+#| warning: false
+
+
+library(omlhashiR)
+## oml_repository <- "../open-source-rover/"
+oml_repository <- omlrepo
+ret1 <- omlhashiR::oml_refresh()
+ret2 <- omlhashiR::oml_stop_Daemon(oml_repository)
+ret3 <- omlhashiR::oml_build(oml_repository)
+ret4 <- omlhashiR::oml_startFuseki(oml_repository)
+ret5 <- omlhashiR::oml_owlLoad(oml_repository)
+```
+
+
+## Validate Model
+
+## mission:Component
+
+1)  コンフィグレーションの取得
+2)  関連ワークパッケージの取得(isSuppliedBy + isAuthorizedBy)
+3)  グラフツリーの作成
+
+```{r}
+library(tansakusuR)
+endpoint_url <- "http://localhost:3030/tutorial2/sparql"
+
+configuration_root_iri <- "http://example.com/tutorial2/description/components#orbiter-spacecraft"
+```
+
+1)  コンフィグレーションの取得
+
+```{r}
+query_string <- '
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX project:     <http://imce.jpl.nasa.gov/foundation/project#>
+PREFIX vim4:		<http://bipm.org/jcgm/vim4#>
+
+SELECT DISTINCT ?c1 ?c1_instancename ?c1_id ?c1_name ?c1_mass ?c2 ?c2_instancename ?c2_id ?c2_name ?c2_mass ?c3 ?c3_instancename ?c3_id ?c3_name ?c4
+WHERE {
+
+  VALUES ?c1 { <$configuration_root_iri> }
+
+
+   OPTIONAL{ 
+    ?c1 base:hasIdentifier ?c1_id ;
+      base:hasCanonicalName ?c1_name ;
+  }
+ 	OPTIONAL {
+		?c1_mass_mag vim4:characterizes ?c1 ;
+			vim4:hasDoubleNumber ?c1_mass .
+	} 
+  OPTIONAL{
+    ?c1 base:contains ?c2 ;
+    OPTIONAL{
+      ?c2 base:hasIdentifier ?c2_id ;
+          base:hasCanonicalName ?c2_name .
+    }
+ 	OPTIONAL {
+		?c2_mass_mag vim4:characterizes ?c2 ;
+			vim4:hasDoubleNumber ?c2_mass .
+	}     
+    OPTIONAL{
+      ?c2 project:isSuppliedBy ?c3 ;
+          OPTIONAL{
+            ?c3 base:hasIdentifier ?c3_id ;
+                base:hasCanonicalName ?c3_name;
+                project:isAuthorizedBy ?c4 .
+          }          
+    }    
+  }
+
+
+  BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
+  BIND(STRAFTER(STR(?c3), "#") AS ?c3_instancename) .
+ }
+ORDER BY ?c2_id
+
+'
+library(stringr)
+query_string <- str_replace(query_string, "\\$configuration_root_iri", configuration_root_iri)
+
+df_query <- send_query(endpoint_url,query_string)
+```
+
+```{r}
+df_query$c1_type <- "component"
+
+df_query <- df_query %>%
+  mutate(c2_label = paste0(c2_id,": ",c2_instancename)) %>%
+  mutate(c1_label = paste0(c1_id,": ",c1_instancename)) 
+
+df_config <- df_query
+
+# just for vis add NA to root
+df_vis <- df_config %>%
+  add_row(c1=NA,
+          c1_instancename=NA,
+          c1_id=NA,
+          c1_name=NA,
+          c1_mass=NA,
+          c2=df_config$c1[1],
+          c2_instancename=df_config$c1_instancename[1],
+          c2_id=df_config$c1_id[1],
+          c2_name=df_config$c1_name[1],
+          c2_mass=df_config$c1_mass[1],
+          c1_type=df_config$c1_type[1],
+          c2_label=NA,
+          c1_label=df_config$c1_label[1],  
+          .before = 1)
+
+plotCollapsibleTreeFromDataframe(df_vis, palette="BluYl", 
+                                 parent="c2_label",
+                                 child="c1_label",
+                                 type="c2_id")
+
+```
+
+
+
+```{r}
+# I want to plot graph as dendrogram. graph doesnt have NA root for plotCollapsibleTreeFromDataframe
+# node color = layer
+plotGraph2Dendrogram <- function(g){
+
+  # find root nodes
+  root_wp <- which(degree(g, mode = "in") == 0)
+  root_wp <- names(root_wp)
+
+  # Add NA
+#  g <- add_vertices(g, 1, name="NA")
+#  g <- add_edges(g, c("NA", root_wp))
+
+  df <- igraph::as_data_frame(g, what = "edges") %>%
+    add_row(from=NA, to=root_wp)
+  
+  
+  g2 <- graph_from_data_frame(df, 
+                           directed = TRUE, 
+                           vertices = NULL)
+
+  df_deg <- data.frame(
+    name = names(degree(g2)),
+    degree = degree(g2),
+    distance = distances(g2)["NA",]
+  )
+  
+  df_g <- df %>%
+    left_join(df_deg, by=c("to"="name")) 
+  
+  p<-plotCollapsibleTreeFromDataframe(df_g, palette="BluYl", parent="from", child="to",type="distance")
+  
+  
+  return(p)
+}
+```
+
+
+
+## Visualize only Subsystem
+
+## Visualize subgraph of Work Package of system and subsystem only
+
+```{r}
+library(igraph)
+
+df_g <- df_config %>%
+  mutate(parent = c1_instancename) %>%
+  mutate(child = c2_instancename) %>%
+  mutate(type = c2_instancename) %>%
+  # mutate(parent = paste0(p_id, ": ", p_instancename)) %>%
+  # mutate(child = paste0(c_id, ": ", c_instancename)) %>%  
+  select("parent","child","type")
+
+# df_g <- df_g[-1,]
+
+g <- graph_from_data_frame(df_g, 
+                           directed = TRUE, 
+                           vertices = NULL)
+
+#subgraph <- ego(g, nodes = 1, order = 2)
+# ノード1から2階層までの隣接ノードを取得
+neighbors <- neighborhood(graph = g, order = 2, nodes = V(g)[1])
+
+# サブグラフをグラフオブジェクトとして抽出
+subgraph <- induced_subgraph(graph = g, vids = unlist(neighbors))
+
+
+# plot(g, layout=layout_as_tree)
+plotGraph2Dendrogram(g)
+
+```
+

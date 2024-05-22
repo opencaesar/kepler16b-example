@@ -1,0 +1,172 @@
+---
+title: "R Fuel Mass"
+date: now
+author: "Yuta Nakajima"
+description: "<BR>Using R to calcurate mass"
+title-block-banner: true
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: vapor    
+    fontsize: 1.0em
+    self-contained: true
+    toc: true
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    grid:
+      sidebar-width: 200px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 2.5rem
+execute:
+  warning: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+## Calcurate dV
+
+This function moved to `calcDeltaV.R`.
+
+```{r}
+calcDeltaV <- function(initOrbit=400, targetOrbit = 35786){
+  # Circular Orbit, Haumann transfer
+  # Constant
+  GM <- 398600.4354360959 # 地球の重力定数, km3/s2
+  re <- 6378.1366 # 地球半径 km
+  
+  # initOrbit <- 400 # km
+  # targetOrbit <- 35786 #km
+  
+  rp <- re + initOrbit  # LEOの軌道半径, km
+  ra <- re + targetOrbit # GEOの軌道半径, km
+  
+  # LEOの軌道速度とGEOの軌道速度
+  v_LEO <- sqrt(GM/rp) * sqrt(2*rp/(rp+rp)) # 円軌道なので近点半径・遠点半径共にrp
+  v_GEO <- sqrt(GM/ra) * sqrt(2*ra/(ra+ra)) # 円軌道なので近点半径・遠点半径共にra
+  
+  # ホーマン遷移軌道の速度
+  vp = sqrt(GM/rp) * sqrt(2*ra/(rp+ra))
+  va = sqrt(GM/ra) * sqrt(2*rp/(rp+ra))
+  
+  # ΔV計算
+  dv1 = vp-v_LEO
+  dv2 = v_GEO-va
+  
+  print(c(dv1, dv2))
+  
+  dv = dv1 + dv2
+  
+  return(dv)
+}
+```
+
+## Calcutrate fuelmass
+
+This function moved to `calcWetMass.R`.
+
+
+```{r}
+calcWetMass <- function(dv=3.3, m_dry=1000, I_sp=350){
+  
+  # Tsiolkovsky rocket equation
+  g0 = 9.81   # Standard gravity u.m / u.s**2 
+
+  m_wet = m_dry * exp(dv*1000.0 / (I_sp * g0))
+  m_fuel = m_wet - m_dry
+
+  sprintf("m_dry: %f", m_dry)
+  sprintf("m_wet: %f", m_wet)
+  sprintf("m_fuel: %f", m_fuel)
+  return(m_wet)
+}
+
+```
+
+```{r}
+calcDryMass <- function(dv=3.3, m_wet=1000, I_sp=350){
+  
+  # Tsiolkovsky rocket equation
+  g0 = 9.81   # Standard gravity u.m / u.s**2 
+
+  # m_final = m_init / exp(dv*1000 / (I_sp * g0))
+  # m_fuel = m_init - m_final
+
+  m_dry = m_wet / exp(dv*1000.0 / (I_sp * g0))
+  m_fuel = m_wet - m_dry
+
+  sprintf("m_dry: %f", m_dry)
+  sprintf("m_wet: %f", m_wet)
+  sprintf("m_fuel: %f", m_fuel)
+  return(m_dry)
+}
+
+```
+
+```{r}
+  I_sp=350
+  dv=3.3
+  # Forward Problem
+  m_wet = 1000  
+  m_dry = calcDryMass(dv, 1000.000, I_sp)
+  m_fuel = m_wet - m_dry
+  c(m_wet, m_dry, m_fuel)
+
+  # Inverse Problem
+  m_wet = calcWetMass(dv, 382.4649, I_sp)
+  m_fuel = m_wet - m_dry
+  c(m_wet, m_dry, m_fuel)
+
+  
+```
+
+
+
+## Now we can use functions.
+
+```{r}
+source("calcWetMass.R")
+  I_sp=350
+  dv=3.3
+  m_dry=382.4649
+  # Inverse Problem
+  m_wet = calcWetMass(dv, m_dry, I_sp)
+  m_fuel = m_wet - m_dry
+  c(m_wet, m_dry, m_fuel)
+
+  
+  I_sp=350
+  dv=3.3
+  m_dry=1000
+  # Inverse Problem
+  m_wet = calcWetMass(dv, m_dry, I_sp)
+  m_fuel = m_wet - m_dry
+  c(m_wet, m_dry, m_fuel)
+```
+
+
+## Validation of Function 
+
+```{r}
+source("calcWetMass.R")
+I_sp <- 350
+dv <- sum(dv)
+m_dry <- 325.47880079
+# Inverse Problem
+m_wet <- calcWetMass(dv, m_dry, I_sp)
+m_fuel <- m_wet - m_dry
+c(m_wet, m_dry, m_fuel)
+
+# [1] 1000.0000  382.4649  617.5351
+```
+
+

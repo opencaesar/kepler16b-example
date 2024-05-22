@@ -206,6 +206,12 @@ task load (dependsOn: owlLoad, group: "vision")
 task save (dependsOn: owlToOml, group: "vision")
 
 /*
+ * A task to save the OML dataset from Fuseki
+ */
+task stop (dependsOn: stopFuseki, group: "vision")
+
+
+/*
  * A task to query the OML dataset in Fuseki
  */
 task query (dependsOn: owlQuery)

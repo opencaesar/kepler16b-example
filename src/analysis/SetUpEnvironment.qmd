@@ -1,0 +1,109 @@
+
+
+
+# For R
+
+
+
+```{r}
+install.packages("reactable", repos='http://cran.us.r-project.org')
+install.packages("igraph")
+#install.packages("libmkl-rt")
+#install.packages("libglpk40")
+install.packages("networkD3")
+install.packages("reticulate")
+install.packages("tidyverse")
+install.packages("collapsibleTree")
+install.packages("colorspace")
+install.packages("jsonlite")
+install.packages("DT")
+install.packages("devtools")
+library(devtools)
+
+install_github("UTNAK/tansakusuR")
+install_github("UTNAK/omlhashiR")
+```
+
+## First Time Create Environment in the terminal
+```{bash}
+conda env create --file environment.yml
+```
+
+## Update dependencies in environment.yml by running this command in the terminal
+```{bash}
+conda env update --file environment.yml --prune
+```
+
+
+```{bash}
+conda init
+```
+
+<!-- Close and reopen the terminal -->
+
+
+## Verify install by running the following command in the terminal
+```{bash}
+conda activate py39
+conda list
+```
+
+## Install libglpk40 package in the terminal
+```{bash}
+sudo apt-get update
+sudo apt install -y libglpk40
+```
+
+
+
+
+## Fix libstdc++.so.6 for Quarto + Reticulate
+
+```{bash}
+cd /opt/conda/envs/py39/lib/
+sudo cp libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4
+strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+
+```
+
+
+## Verify Quarto + Reticulate + Python Environment
+
+```{r}
+library(reticulate)
+use_condaenv("py39")
+
+```
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+# from src.analysis import analysisOrbit
+import analysisOrbit
+from astropy import units as u
+
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=36000)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)
+
+total_delta_v = analysisRocket.calculate_delta_v()
+
+
+print(f"Total delta-v: {total_delta_v}")
+
+```
+
+# Troubleshooting
+## Start and activate conda environment in a terminal (debugging purposes only)
+```{markdown}
+conda create -y -n py39 python=3.9
+conda init
+<!-- Close and reopen the terminal -->
+conda activate py39
+```

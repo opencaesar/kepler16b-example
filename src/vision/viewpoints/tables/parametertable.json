@@ -1,0 +1,20 @@
+{
+  "parametertable": {
+    "name": "Parameter Table",
+    "diagrams": {
+      "all-rows": "parameter-table"
+    },
+    "columnNames": {
+      "statevariable": "State Variable",
+      "value": "State Value"
+    },
+    "queries": {
+      "obj-query": "parametertable.sparql"
+    },
+    "rowMapping": {
+      "id": "obj-query",
+      "name": "SV",
+      "labelFormat": "SV"
+    }
+  }
+}

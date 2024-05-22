@@ -1,0 +1,29 @@
+{
+"auto-state-effect-diagram": {
+  "name": "auto-state-effect-diagram",
+  "queries": {
+    "node": "auto-state-effect-diagram.sparql",
+    "edge": "auto-state-effect-diagram.sparql"
+  },
+  "rowMapping": {
+    "id": "node",
+    "name": "source",
+    "labelFormat": "{source}",
+    "nodeColor": "#006994",
+    "nodeTextColor": "white",
+    "nodeType": "NA",
+    "edgeMatchKey": "source"
+  },
+  "edges": [
+    {
+      "id": "edge",
+      "name": "Edge",
+      "animated": true,
+      "labelFormat": "sa:affects",
+      "legendItems": "sa:affects",
+      "sourceKey": "source",
+      "targetKey": "target"
+    }
+  ]
+}
+}

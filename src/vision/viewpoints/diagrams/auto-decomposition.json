@@ -1,0 +1,29 @@
+{
+"auto-decomposition": {
+  "name": "auto-decomposition",
+  "queries": {
+    "node": "auto-decomposition.sparql",
+    "edge": "auto-decomposition.sparql"
+  },
+  "rowMapping": {
+    "id": "node",
+    "name": "Parent",
+    "labelFormat": "{c1_instancename}",
+    "nodeColor": "#006994",
+    "nodeTextColor": "white",
+    "nodeType": "NA",
+    "edgeMatchKey": "c1_instancename"
+  },
+  "edges": [
+    {
+      "id": "edge",
+      "name": "Edge",
+      "animated": true,
+      "labelFormat": "base:isContainedIn",
+      "legendItems": "c2_instancename",
+      "sourceKey": "c1_instancename",
+      "targetKey": "c2_instancename"
+    }
+  ]
+}
+}

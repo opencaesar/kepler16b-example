@@ -1,0 +1,64 @@
+
+
+
+# For R
+
+
+
+
+
+```{r}
+install.packages("reactable", repos='http://cran.us.r-project.org')
+install.packages("igraph")
+install.packages("libmkl-rt")
+install.packages("libglpk40")
+install.packages("networkD3")
+install.packages("reticulate")
+install.packages("tidyverse")
+install.packages("collapsibleTree")
+install.packages("colorspace")
+install.packages("jsonlite")
+install.packages("DT")
+install.packages("devtools")
+library(devtools)
+
+install_github("UTNAK/tansakusuR")
+```
+
+
+
+## First Time Create Environment
+
+
+```{bash}
+conda env create --file environment.yml
+```
+
+
+
+## Install dependencies in environment.yml by running this command in the terminal
+
+
+```{bash}
+conda env update --file environment.yml --prune
+```
+
+
+
+## Verify install by running the following command in the terminal
+
+
+```{bash}
+conda list
+```
+
+
+
+## Install libglpk40 package
+
+
+```{bash}
+sudo apt-get update
+sudo apt install -y libglpk40
+```
+

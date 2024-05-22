@@ -1,0 +1,569 @@
+
+---
+title: "Debug Note"
+date: now
+author: "Yuta & Aaron"
+description: "<BR>This documents the debugging history."
+title-block-banner: true
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly    
+    fontsize: 1.0em
+    self-contained: true
+    toc: true
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    grid:
+      sidebar-width: 200px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 2.5rem
+execute:
+  warning: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## First Time Create Environment in the terminal
+```{bash}
+conda env create --file environment.yml
+```
+
+```{bash}
+conda env list
+conda init
+```
+
+close terminal and reopen
+
+## Verify install by running the following command in the terminal
+```{bash}
+conda activate py39
+conda list
+python
+```
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+# from src.analysis import analysisOrbit
+import analysisOrbit
+from astropy import units as u
+
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=36000)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)
+
+total_delta_v = analysisRocket.calculate_delta_v()
+
+
+print(f"Total delta-v: {total_delta_v}")
+
+```
+
+this code works!
+next we verify the quarto executions.
+
+
+## Using Quarto
+
+```{r}
+1+1
+
+install.packages("reticulate")
+
+```
+
+```{r}
+Sys.setenv(RETICULATE_PYTHON = "/opt/conda/envs/py39/bin/")
+Sys.setenv(LD_LIBRARY_PATH = "/usr/lib/x86_64-linux-gnu")
+Sys.setenv(R_LD_LIBRARY_PATH = "/usr/lib/x86_64-linux-gnu")
+
+library(reticulate)
+Sys.setenv(RETICULATE_PYTHON = "/opt/conda/envs/py39/bin/")
+Sys.setenv(LD_LIBRARY_PATH = "/usr/lib/x86_64-linux-gnu")
+Sys.setenv(R_LD_LIBRARY_PATH = "/usr/lib/x86_64-linux-gnu")
+
+#use_condaenv("py39")
+
+```
+
+```{r}
+R.home()
+Sys.getenv("RETICULATE_PYTHON")
+Sys.getenv("LD_LIBRARY_PATH")
+
+```
+
+```{python}
+import sys
+
+print(sys.executable)
+print(sys.version)
+```
+
+```{r}
+reticulate::py_config()
+reticulate::use_python("/opt/conda/envs/py39/bin/python")
+```
+python:         /opt/conda/envs/py39/bin/python
+
+
+In python interpreter,
+
+>>> import sys
+>>> 
+>>> print(sys.executable)
+/opt/conda/envs/py39/bin/python
+
+```{python}
+import sys
+
+print(sys.executable)
+```
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+from astropy import units as u
+from poliastro.bodies import Earth
+from poliastro.twobody import Orbit
+
+```
+
+error logs
+
+```
+Traceback (most recent call last):
+  File "/opt/conda/envs/py39/lib/python3.9/site-packages/llvmlite/binding/ffi.py", line 136, in __getattr__
+    return self._fntab[name]
+KeyError: 'LLVMPY_AddSymbol'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/conda/envs/py39/lib/python3.9/site-packages/llvmlite/binding/ffi.py", line 117, in _load_lib
+    self._lib_handle = ctypes.CDLL(str(lib_path))
+  File "/opt/conda/envs/py39/lib/python3.9/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /opt/conda/envs/py39/lib/python3.9/site-packages/llvmlite/binding/libllvmlite.so)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/vscode/R/x86_64-pc-linux-gnu-library/4.3/reticulate/python/rpytools/loader.py", line 122, in _find_and_load_hook
+    return _run_hook(name, _hook)
+  File "/home/vscode/R/x86_64-pc-linux-gnu-library/4.3/reticulate/python/rpytools/loader.py", line 96, in _run_hook
+    module = hook()
+  File "/home/vscode/R/x86_64-pc-linux-gnu-library/4.3/reticulate/python/rpytools/loader.py", line 120, in _hook
+    return _find_and_load(name, import_)
+  File "/opt/conda/envs/py39/lib/python3.9/site-packages/poliastro/twobody/__init__.py", line 1, in <module>
+    from poliastro.twobody.orbit import Orbit
+  File "/home/vscode/R/x86_64-pc-linux-gnu-library/4.3/reticulate/python/rpytools/loader.py", line 122, in _find_and_load_hook
+    return _run_hook(name, _hook)
+  F
+```
+
+
+
+```{r}
+Sys.getenv("LD_LIBRARY_PATH")
+```
+
+```{python}
+import matplotlib.pyplot as plt
+# plt.ion()
+
+# from poliastro.examples import molniya
+# from poliastro.plotting import plot
+
+# plot(molniya)
+```
+
+
+# For R
+
+
+```r
+install.packages("reactable", repos='http://cran.us.r-project.org')
+install.packages("igraph")
+install.packages("libmkl-rt")
+install.packages("libglpk40")
+install.packages("networkD3")
+install.packages("reticulate")
+install.packages("tidyverse")
+install.packages("collapsibleTree")
+install.packages("colorspace")
+install.packages("jsonlite")
+install.packages("DT")
+install.packages("devtools")
+library(devtools)
+
+install_github("UTNAK/tansakusuR")
+install_github("UTNAK/omlhashiR")
+```
+
+
+## Install libglpk40 package in the terminal
+```{bash}
+sudo apt-get update
+sudo apt install -y libglpk40
+```
+
+## Install dependencies in environment.yml by running this command in the terminal
+```bash
+conda env update --file environment.yml --prune
+```
+
+
+
+# Troubleshooting
+## Start and activate conda environment in a terminal (debugging purposes only)
+```{markdown}
+conda create -y -n py39 python=3.9
+conda init
+<!-- Close and reopen the terminal -->
+conda activate py39
+```
+
+
+
+find / -name "libstdc++.so*"
+```
+find: ‘/etc/ssl/private’: Permission denied
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+/usr/lib/gcc/x86_64-linux-gnu/10/libstdc++.so
+/usr/share/gdb/auto-load/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28-gdb.py
+```
+
+
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4
+strings /usr/lib/gcc/x86_64-linux-gnu/10/libstdc++.so | grep GLIBCXX_3.4
+
+strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+strings /opt/conda/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+
+
+
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4
+strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+
+```
+(py39) (base) @UTNAK ➜ /workspaces/kepler16b-using-imce-vocabulary (feat/6-prototype-for-integration-of-orbital-analysis) $ find / -name "libstdc++.so*"
+find: ‘/etc/ssl/private’: Permission denied
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+/usr/lib/gcc/x86_64-linux-gnu/10/libstdc++.so
+/usr/share/gdb/auto-load/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28-gdb.py
+find: ‘/proc/tty/driver’: Permission denied
+find: ‘/proc/1/task/1/fd’: Permission denied
+find: ‘/proc/1/task/1/fdinfo’: Permission denied
+find: ‘/proc/1/task/1/ns’: Permission denied
+find: ‘/proc/1/fd’: Permission denied
+find: ‘/proc/1/map_files’: Permission denied
+find: ‘/proc/1/fdinfo’: Permission denied
+find: ‘/proc/1/ns’: Permission denied
+find: ‘/proc/115/task/115/fd’: Permission denied
+find: ‘/proc/115/task/115/fdinfo’: Permission denied
+find: ‘/proc/115/task/115/ns’: Permission denied
+find: ‘/proc/115/fd’: Permission denied
+find: ‘/proc/115/map_files’: Permission denied
+find: ‘/proc/115/fdinfo’: Permission denied
+find: ‘/proc/115/ns’: Permission denied
+find: ‘/proc/916/task/916/fd’: Permission denied
+find: ‘/proc/916/task/916/fdinfo’: Permission denied
+find: ‘/proc/916/task/916/ns’: Permission denied
+find: ‘/proc/916/fd’: Permission denied
+find: ‘/proc/916/map_files’: Permission denied
+find: ‘/proc/916/fdinfo’: Permission denied
+find: ‘/proc/916/ns’: Permission denied
+find: ‘/proc/26753/task/26753/fd’: Permission denied
+find: ‘/proc/26753/task/26753/fdinfo’: Permission denied
+find: ‘/proc/26753/task/26753/ns’: Permission denied
+find: ‘/proc/26753/fd’: Permission denied
+find: ‘/proc/26753/map_files’: Permission denied
+find: ‘/proc/26753/fdinfo’: Permission denied
+find: ‘/proc/26753/ns’: Permission denied
+find: ‘/proc/27384/task/27384/fd’: Permission denied
+find: ‘/proc/27384/task/27384/fdinfo’: Permission denied
+find: ‘/proc/27384/task/27384/ns’: Permission denied
+find: ‘/proc/27384/fd’: Permission denied
+find: ‘/proc/27384/map_files’: Permission denied
+find: ‘/proc/27384/fdinfo’: Permission denied
+find: ‘/proc/27384/ns’: Permission denied
+find: ‘/proc/42560/task/42560/fd’: Permission denied
+find: ‘/proc/42560/task/42560/fdinfo’: Permission denied
+find: ‘/proc/42560/task/42560/ns’: Permission denied
+find: ‘/proc/42560/fd’: Permission denied
+find: ‘/proc/42560/map_files’: Permission denied
+find: ‘/proc/42560/fdinfo’: Permission denied
+find: ‘/proc/42560/ns’: Permission denied
+/opt/conda/lib/libstdc++.so
+/opt/conda/lib/libstdc++.so.6
+/opt/conda/lib/libstdc++.so.6.0.29
+/opt/conda/envs/py39/lib/libstdc++.so.6.0.32
+/opt/conda/envs/py39/lib/gcc/x86_64-conda-linux-gnu/13.2.0/libstdc++.so
+/opt/conda/envs/py39/lib/libstdc++.so
+/opt/conda/envs/py39/lib/libstdc++.so.6
+/opt/conda/envs/py39/x86_64-conda-linux-gnu/lib/libstdc++.so.6.0.32
+/opt/conda/envs/py39/x86_64-conda-linux-gnu/lib/libstdc++.so
+/opt/conda/envs/py39/x86_64-conda-linux-gnu/lib/libstdc++.so.6
+/opt/conda/pkgs/libstdcxx-ng-13.2.0-hc0a3c3a_7/lib/libstdc++.so.6.0.32
+/opt/conda/pkgs/libstdcxx-ng-13.2.0-hc0a3c3a_7/lib/libstdc++.so
+/opt/conda/pkgs/libstdcxx-ng-13.2.0-hc0a3c3a_7/lib/libstdc++.so.6
+/opt/conda/pkgs/libstdcxx-devel_linux-64-13.2.0-hceb6213_107/lib/gcc/x86_64-conda-linux-gnu/13.2.0/libstdc++.so
+/opt/conda/pkgs/libstdcxx-devel_linux-64-13.2.0-hceb6213_107/x86_64-conda-linux-gnu/lib/libstdc++.so.6.0.32
+/opt/conda/pkgs/libstdcxx-devel_linux-64-13.2.0-hceb6213_107/x86_64-conda-linux-gnu/lib/libstdc++.so
+/opt/conda/pkgs/libstdcxx-devel_linux-64-13.2.0-hceb6213_107/x86_64-conda-linux-gnu/lib/libstdc++.so.6
+find: ‘/var/lib/apt/lists/partial’: Permission denied
+find: ‘/var/cache/ldconfig’: Permission denied
+find: ‘/var/cache/apt/archives/partial’: Permission denied
+find: ‘/root’: Permission denied
+/workspaces/.codespaces/shared/editors/jetbrains/pycharm-2023.1.1/plugins/remote-dev-server/selfcontained/lib/libstdc++.so.6
+/workspaces/.codespaces/shared/editors/jetbrains/JetBrainsRider-2023.1/plugins/remote-dev-server/selfcontained/lib/libstdc++.so.6
+/workspaces/.codespaces/shared/editors/jetbrains/RubyMine-2023.1.1/plugins/remote-dev-server/selfcontained/lib/libstdc++.so.6
+/workspaces/.codespaces/shared/editors/jetbrains/idea-IU-231.8770.65/plugins/remote-dev-server/selfcontained/lib/libstdc++.so.6
+(py39) (base) @UTNAK ➜ /workspaces/kepler16b-using-imce-vocabulary (feat/6-prototype-for-integration-of-orbital-analysis) $ 
+(py39) (base) @UTNAK ➜ /workspaces/kepler16b-using-imce-vocabulary (feat/6-prototype-for-integration-of-orbital-analysis) $ 
+(py39) (base) @UTNAK ➜ /workspaces/kepler16b-using-imce-vocabulary (feat/6-prototype-for-integration-of-orbital-analysis) $ strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+GLIBCXX_3.4
+GLIBCXX_3.4.1
+GLIBCXX_3.4.2
+GLIBCXX_3.4.3
+GLIBCXX_3.4.4
+GLIBCXX_3.4.5
+GLIBCXX_3.4.6
+GLIBCXX_3.4.7
+GLIBCXX_3.4.8
+GLIBCXX_3.4.9
+GLIBCXX_3.4.10
+GLIBCXX_3.4.11
+GLIBCXX_3.4.12
+GLIBCXX_3.4.13
+GLIBCXX_3.4.14
+GLIBCXX_3.4.15
+GLIBCXX_3.4.16
+GLIBCXX_3.4.17
+GLIBCXX_3.4.18
+GLIBCXX_3.4.19
+GLIBCXX_3.4.20
+GLIBCXX_3.4.21
+GLIBCXX_3.4.22
+GLIBCXX_3.4.23
+GLIBCXX_3.4.24
+GLIBCXX_3.4.25
+GLIBCXX_3.4.26
+GLIBCXX_3.4.27
+GLIBCXX_3.4.28
+GLIBCXX_3.4.29
+GLIBCXX_3.4.30
+GLIBCXX_3.4.31
+GLIBCXX_3.4.32
+_ZNKSt14basic_ifstreamIcSt11char_traitsIcEE7is_openEv@GLIBCXX_3.4
+_ZNSt13basic_istreamIwSt11char_traitsIwEE6ignoreEv@@GLIBCXX_3.4.5
+_ZNKSbIwSt11char_traitsIwESaIwEE11_M_disjunctEPKw@GLIBCXX_3.4
+_ZNKSt14basic_ifstreamIwSt11char_traitsIwEE7is_openEv@@GLIBCXX_3.4.5
+GLIBCXX_3.4.21
+GLIBCXX_3.4.9
+_ZSt10adopt_lock@@GLIBCXX_3.4.11
+GLIBCXX_3.4.10
+GLIBCXX_3.4.16
+GLIBCXX_3.4.32
+GLIBCXX_3.4.1
+_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv@GLIBCXX_3.4
+GLIBCXX_3.4.28
+_ZNSs7_M_copyEPcPKcm@GLIBCXX_3.4
+GLIBCXX_3.4.25
+_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv@@GLIBCXX_3.4.5
+_ZNSs7_M_moveEPcPKcm@@GLIBCXX_3.4.5
+_ZNKSt13basic_fstreamIwSt11char_traitsIwEE7is_openEv@GLIBCXX_3.4
+_ZNKSt13basic_fstreamIcSt11char_traitsIcEE7is_openEv@GLIBCXX_3.4
+_ZNSbIwSt11char_traitsIwESaIwEE4_Rep26_M_set_length_and_sharableEm@@GLIBCXX_3.4.5
+_ZNSs4_Rep26_M_set_length_and_sharableEm@GLIBCXX_3.4
+_ZSt10defer_lock@@GLIBCXX_3.4.11
+_ZN10__gnu_norm15_List_node_base4swapERS0_S1_@@GLIBCXX_3.4
+_ZNSs9_M_assignEPcmc@@GLIBCXX_3.4.5
+_ZNKSbIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc@@GLIBCXX_3.4.5
+_ZNKSt14basic_ifstreamIcSt11char_traitsIcEE7is_openEv@@GLIBCXX_3.4.5
+_ZNSbIwSt11char_traitsIwESaIwEE7_M_moveEPwPKwm@GLIBCXX_3.4
+GLIBCXX_3.4.24
+_ZNVSt9__atomic011atomic_flag12test_and_setESt12memory_order@@GLIBCXX_3.4.11
+GLIBCXX_3.4.20
+_ZNSt11char_traitsIwE2eqERKwS2_@@GLIBCXX_3.4.5
+GLIBCXX_3.4.12
+_ZNSi6ignoreEv@@GLIBCXX_3.4.5
+GLIBCXX_3.4.2
+_ZNSt11char_traitsIcE2eqERKcS2_@@GLIBCXX_3.4.5
+GLIBCXX_3.4.6
+_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE@GLIBCXX_3.4.11
+GLIBCXX_3.4.15
+GLIBCXX_3.4.31
+_ZNKSt13basic_fstreamIcSt11char_traitsIcEE7is_openEv@@GLIBCXX_3.4.5
+_ZNSs9_M_assignEPcmc@GLIBCXX_3.4
+GLIBCXX_3.4.19
+_ZNKSt14basic_ofstreamIwSt11char_traitsIwEE7is_openEv@GLIBCXX_3.4
+_ZNSt19istreambuf_iteratorIwSt11char_traitsIwEEppEv@GLIBCXX_3.4
+GLIBCXX_3.4.27
+_ZN10__gnu_norm15_List_node_base7reverseEv@@GLIBCXX_3.4
+_ZN10__gnu_norm15_List_node_base4hookEPS0_@@GLIBCXX_3.4
+_ZNSt11char_traitsIwE2eqERKwS2_@GLIBCXX_3.4
+_ZNSbIwSt11char_traitsIwESaIwEE7_M_copyEPwPKwm@GLIBCXX_3.4
+_ZNSbIwSt11char_traitsIwESaIwEE7_M_copyEPwPKwm@@GLIBCXX_3.4.5
+GLIBCXX_3.4.23
+GLIBCXX_3.4.3
+GLIBCXX_3.4.7
+_ZNSi6ignoreEl@@GLIBCXX_3.4.5
+_ZNKSbIwSt11char_traitsIwESaIwEE11_M_disjunctEPKw@@GLIBCXX_3.4.5
+_ZNSt13basic_istreamIwSt11char_traitsIwEE6ignoreEv@GLIBCXX_3.4
+_ZNKSt13basic_fstreamIwSt11char_traitsIwEE7is_openEv@@GLIBCXX_3.4.5
+_ZNSbIwSt11char_traitsIwESaIwEE7_M_moveEPwPKwm@@GLIBCXX_3.4.5
+GLIBCXX_3.4.18
+_ZNSbIwSt11char_traitsIwESaIwEE4_Rep26_M_set_length_and_sharableEm@GLIBCXX_3.4
+GLIBCXX_3.4.30
+_ZNSt13basic_istreamIwSt11char_traitsIwEE6ignoreEl@@GLIBCXX_3.4.5
+_ZSt15future_category@@GLIBCXX_3.4.14
+_ZNSi6ignoreEl@GLIBCXX_3.4
+GLIBCXX_3.4.29
+_ZNSt11char_traitsIcE2eqERKcS2_@GLIBCXX_3.4
+_ZNKSs15_M_check_lengthEmmPKc@GLIBCXX_3.4
+_ZN10__gnu_norm15_List_node_base8transferEPS0_S1_@@GLIBCXX_3.4
+_ZNSbIwSt11char_traitsIwESaIwEE9_M_assignEPwmw@GLIBCXX_3.4
+_ZNVSt9__atomic011atomic_flag5clearESt12memory_order@@GLIBCXX_3.4.11
+_ZNKSt14basic_ofstreamIcSt11char_traitsIcEE7is_openEv@@GLIBCXX_3.4.5
+_ZNKSt14basic_ofstreamIcSt11char_traitsIcEE7is_openEv@GLIBCXX_3.4
+_ZNSs7_M_moveEPcPKcm@GLIBCXX_3.4
+_ZNSt13basic_istreamIwSt11char_traitsIwEE6ignoreEl@GLIBCXX_3.4
+_ZNSbIwSt11char_traitsIwESaIwEE9_M_assignEPwmw@@GLIBCXX_3.4.5
+_ZNKSbIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc@GLIBCXX_3.4
+_ZNKSs11_M_disjunctEPKc@@GLIBCXX_3.4.5
+_ZN10__gnu_norm15_List_node_base6unhookEv@@GLIBCXX_3.4
+GLIBCXX_3.4.22
+_ZNSt19istreambuf_iteratorIwSt11char_traitsIwEEppEv@@GLIBCXX_3.4.5
+_ZNSi6ignoreEv@GLIBCXX_3.4
+_ZNSs7_M_copyEPcPKcm@@GLIBCXX_3.4.5
+GLIBCXX_3.4.8
+GLIBCXX_3.4.13
+_ZSt11try_to_lock@@GLIBCXX_3.4.11
+_ZNKSt14basic_ofstreamIwSt11char_traitsIwEE7is_openEv@@GLIBCXX_3.4.5
+GLIBCXX_3.4.17
+GLIBCXX_3.4.4
+_ZNKSs15_M_check_lengthEmmPKc@@GLIBCXX_3.4.5
+_ZNKSt14basic_ifstreamIwSt11char_traitsIwEE7is_openEv@GLIBCXX_3.4
+_ZNSs4_Rep26_M_set_length_and_sharableEm@@GLIBCXX_3.4.5
+GLIBCXX_3.4.26
+_ZNKSs11_M_disjunctEPKc@GLIBCXX_3.4
+(py39) (base) @UTNAK ➜ /workspaces/kepler16b-using-imce-vocabulary (feat/6-prototype-for-integration-of-orbital-analysis) $ 
+```
+
+
+```{r}
+Sys.setenv(LD_LIBRARY_PATH = "/opt/conda/envs/py39/lib/")
+Sys.setenv(R_LD_LIBRARY_PATH = "/opt/conda/envs/py39/lib/")
+
+library(reticulate)
+
+
+
+```
+
+
+```{r}
+use_condaenv("py39")
+
+R.home()
+Sys.getenv("RETICULATE_PYTHON")
+Sys.getenv("LD_LIBRARY_PATH")
+
+```
+
+```{python}
+import sys
+
+print(sys.executable)
+print(sys.version)
+```
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+from astropy import units as u
+from poliastro.bodies import Earth
+from poliastro.twobody import Orbit
+
+```
+
+
+find / -name "libstdc++.so*"
+
+
+ export LD_LIBRARY_PATH="/opt/conda/lib/:$LD_LIBRARY_PATH"
+
+cd /opt/conda/envs/py39/lib/
+sudo cp libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4
+strings /opt/conda/envs/py39/lib/libstdc++.so.6 | grep GLIBCXX_3.4
+
+
+ ```{r}
+Sys.setenv(LD_LIBRARY_PATH = "/opt/conda/lib/")
+
+library(reticulate)
+use_condaenv("py39")
+
+ ```
+
+ ```{r}
+ Sys.getenv("LD_LIBRARY_PATH")
+
+ ```
+ ```{r}
+Sys.getenv("LD_LIBRARY_PATH")
+Sys.setenv(LD_LIBRARY_PATH = "/opt/conda/lib/")
+
+ ```
+
+
+ ```{r}
+ Sys.getenv("LD_LIBRARY_PATH")
+
+ ```
+
+
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+from astropy import units as u
+from poliastro.bodies import Earth
+from poliastro.twobody import Orbit
+
+```
+
+

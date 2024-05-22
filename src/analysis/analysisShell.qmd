@@ -1,0 +1,692 @@
+---
+title: "Prototype for integration of descriptive and analysis model"
+date: now
+author: "Yuta Nakajima"
+description: "<BR>This shell scripts execute different types of analysis codes."
+title-block-banner: true
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly    
+    fontsize: 1.0em
+    self-contained: true
+    toc: true
+    toc-location: left
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    grid:
+      sidebar-width: 200px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 2.5rem
+execute:
+  warning: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Workflow
+
+```{mermaid}
+  graph LR;
+      M[OML]-->S[SPARQL];
+      S-->API;
+      API-->P[Python];
+      P-->O[Oml2Owl];
+      API-->MATLAB;
+      MATLAB-->O;
+      API-->MODELICA;
+      MODELICA-->O;
+      O-->M;
+```
+
+Below chart shows an actual workflow in this prototype.
+
+```{mermaid}
+flowchart LR
+    id1(Build) --> id2(Query:SPARQL)
+    id2 --> id3[massRollup:R]
+    id3 --> id4[deltaV:Python]
+    id4 --> id5[fuelMass:R]
+    id5 --> id6(owl2oml)
+```
+
+# First Prototype of Process and Data Flow
+
+This prototype uses a Quarto notebook to orchestrate the different Like
+openMBEE, Jupyter or Quarto perform the execution of codes. Quarto has a
+function to execute Python and R together. We can bind the data from
+Python to R using the [reticulate
+package](https://public.deq.virginia.gov/WPS/R/reticulate.pdf).
+
+```{mermaid}
+flowchart LR
+    id01[(OML)] --> id1
+    id1(Build) --> id11[(owl)]
+    id11 --> id2(Query:SPARQL)
+    id2 --> id3[massRollup:R]
+    id3 --> id4[deltaV:Python]
+    id4 --> id5[fuelMass:R]
+    id5 --> id6(owl2oml)
+    id6 --> id01
+    id2 -.-> id7((json))
+    id7 -.-> id3
+    id3 -.-> id8((df_mass))
+    id8 -.-> id5
+    id2 -.-> id9((orbit))
+    id9 -.-> id4
+    id4 -.-> id10((dv))
+    id10 -.-> id5
+```
+
+In this approach, data is exchanged between different analysis tools
+like a rugby pass-and-receive.
+
+## load utility files
+
+```{r}
+#| warning: false
+library(reactable)
+library(stringr)
+
+searchDirectory <- function(iteration, pattern, parent_directory){
+  for(i in 1:iteration){
+      path <- list.files(parent_directory, recursive = TRUE, pattern = pattern, full.names = TRUE)
+      if(length(path)){
+        return(path)
+      }
+      parent_directory <- dirname(parent_directory)
+  }
+  print("file not found")
+  return(path)
+}
+
+source(searchDirectory(4, "osr_common.R", (getwd())))
+source(searchDirectory(4, "massRollupKepler16b.R", (getwd())))
+```
+
+```{r}
+library(reticulate)
+use_condaenv("py39")
+# use_python("/Users/mlab/opt/anaconda3/envs/py393/bin/python")
+```
+
+## Build and Run a Fuseki SPARQL endpoint for oml model query
+<!-- This runs build and load gradle tasks.  Can be run with OML Vision -->
+
+```{r}
+#| warning: false
+library(omlhashiR)
+## oml_repository <- "../open-source-rover/"
+oml_repository <- omlrepo
+ret1 <- omlhashiR::oml_refresh()
+ret2 <- omlhashiR::oml_stop_Daemon(oml_repository)
+ret3 <- omlhashiR::oml_build(oml_repository)
+
+```
+
+## Start Fuseki Server
+```{r}
+ret4 <- omlhashiR::oml_startFuseki(oml_repository)
+```
+
+## Load in OWL ontologies to Fuseki Server
+```{r}
+ret5 <- omlhashiR::oml_owlLoad(oml_repository)
+```
+
+## Get Configuration & Mass Properties
+```{r}
+library(tansakusuR)
+endpoint_url <- "http://localhost:3030/tutorial2/sparql"
+
+configuration_root_iri <- "http://example.com/tutorial2/description/components#orbiter-spacecraft"
+```
+
+### SPARQL CODE
+
+```{r}
+query_string <- '
+PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX project:     <http://imce.jpl.nasa.gov/foundation/project#>
+PREFIX vim4:		<http://bipm.org/jcgm/vim4#>
+
+SELECT DISTINCT ?c1 ?c1_instancename ?c1_id ?c1_name ?c1_mass ?c2 ?c2_instancename ?c2_id ?c2_name ?c2_mass ?c3 ?c3_instancename ?c3_id ?c3_name ?c4
+WHERE {
+
+  VALUES ?c1 { <$configuration_root_iri> }
+
+
+   OPTIONAL{ 
+    ?c1 base:hasIdentifier ?c1_id ;
+      base:hasCanonicalName ?c1_name ;
+  }
+ 	OPTIONAL {
+		?c1_mass_mag vim4:characterizes ?c1 ;
+			vim4:hasDoubleNumber ?c1_mass .
+	} 
+  OPTIONAL{
+    ?c1 base:contains ?c2 ;
+    OPTIONAL{
+      ?c2 base:hasIdentifier ?c2_id ;
+          base:hasCanonicalName ?c2_name .
+    }
+ 	OPTIONAL {
+		?c2_mass_mag vim4:characterizes ?c2 ;
+			vim4:hasDoubleNumber ?c2_mass .
+	}     
+    OPTIONAL{
+      ?c2 project:isSuppliedBy ?c3 ;
+          OPTIONAL{
+            ?c3 base:hasIdentifier ?c3_id ;
+                base:hasCanonicalName ?c3_name;
+                project:isAuthorizedBy ?c4 .
+          }          
+    }    
+  }
+
+
+  BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
+  BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
+  BIND(STRAFTER(STR(?c3), "#") AS ?c3_instancename) .
+ }
+ORDER BY ?c2_id
+
+'
+query_string <- str_replace(query_string, "\\$configuration_root_iri", configuration_root_iri)
+```
+
+### Query
+
+```{r}
+df_query <- send_query(endpoint_url,query_string)
+```
+
+
+
+## Binding Variables: toR Parameter Table
+
+-   OML descriptions shall specify this parameter table using IMCE
+    Analysis Vocabularies.
+-   OML descriptions shall specify mapping of binding variables for each
+    simulation.
+-   Get initial value from oml descriptions by SPARQL Query.
+
+
+### SPARQL CODE
+
+```{r}
+query_param_string <- '
+PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
+PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
+PREFIX analysis:        <http://imce.jpl.nasa.gov/foundation/analysis#>
+PREFIX sa:        <http://example.com/tutorial2/vocabulary/stateanalysis#>
+
+SELECT DISTINCT ?iri ?statevariable ?value
+WHERE {
+
+#  VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v>}
+   VALUES ?analysisTarget {<http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet>}
+  VALUES ?componentType { sa:StateVariable }
+  VALUES ?relationType { sa:isAffectedBy }
+
+  #	Recursive Query to get state variables
+  ?analysisTarget sa:isAffectedBy* ?iri ;
+#  ?iri a ?componentType
+  
+  OPTIONAL{
+    ?iri sa:hasStateValue ?value;
+         }
+
+
+
+  BIND(STRAFTER(STR(?iri), "#") AS ?statevariable) .
+  BIND(STRAFTER(STR(?targetIri), "#") AS ?target) .
+  BIND(STRAFTER(STR(?cpIri), "#") AS ?component) .
+ }
+ORDER BY ?iri
+
+'
+```
+
+### Query
+
+```{r}
+df_query_param <- send_query(endpoint_url,query_param_string)
+```
+
+### Binding to R Dataframe
+
+```{r}
+# mapping to parameters to instance
+# df_parameters <- data.frame(
+#   initOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.initial-orbit"]),
+#   targetOrbit = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.target-orbit"]),
+#   m_wet = 0.0,
+#   m_dry = 0.0,
+#   m_fuel = 0.0,
+#   dv = 0.0,
+#   I_sp = as.double(df_query_param$value[df_query_param$statevariable=="orbiter-spacecraft.isp"])
+# )
+
+mapping <- list(c("dv", "orbiter-spacecraft.delta-v"),
+  c("initOrbit", "orbiter-spacecraft.initial-orbit"),
+  c("I_sp","orbiter-spacecraft.isp"),
+  c("m_dry","orbiter-spacecraft.mass.dry"),     
+  c("m_fuel","orbiter-spacecraft.mass.fuel"),
+  c("m_wet","orbiter-spacecraft.mass.wet"),
+  c("targetOrbit","orbiter-spacecraft.target-orbit")
+)
+
+# Convert to dataframe
+mapping_df <- mapping %>% 
+  map_df(~data.frame(.x[1], .x[2])) 
+colnames(mapping_df) <- c("parameter", "statevariable")
+
+df_parameters_before <- left_join(df_query_param, mapping_df, by=c("statevariable"="statevariable")) 
+
+# parameter database for quarto with R
+df_parameters <- df_parameters_before %>% 
+  mutate(value2 = as.double(replace(value, is.na(value), 0))) %>%
+  select(parameter,value2) %>%
+  pivot_wider(
+#    id_cols = age_cat,
+    names_from = parameter,
+    values_from = value2
+    )
+
+```
+
+```{r}
+
+df_table <- df_parameters %>% 
+  mutate(id=1) %>%
+  pivot_longer(!id, names_to = "parameter", values_to = "value") %>%
+  select(-id)
+
+datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
+
+
+```
+
+## MassRollUp
+
+### Tidy Data
+
+```{r}
+df_query$c1_type <- "component"
+
+df_query <- df_query %>%
+  mutate(c2_label = paste0(c2_id,": ",c2_instancename)) %>%
+  mutate(c1_label = paste0(c1_id,": ",c1_instancename)) 
+
+df_config <- df_query
+
+# just for vis add NA to root
+df_vis <- df_config %>%
+  add_row(c1=NA,
+          c1_instancename=NA,
+          c1_id=NA,
+          c1_name=NA,
+          c1_mass=NA,
+          c2=df_config$c1[1],
+          c2_instancename=df_config$c1_instancename[1],
+          c2_id=df_config$c1_id[1],
+          c2_name=df_config$c1_name[1],
+          c2_mass=df_config$c1_mass[1],
+          c1_type=df_config$c1_type[1],
+          c2_label=NA,
+          c1_label=df_config$c1_label[1],  
+          .before = 1)
+
+plotCollapsibleTreeFromDataframe(df_vis, palette="BluYl", 
+                                 parent="c2_label",
+                                 child="c1_label",
+                                 type="c2_id")
+
+```
+
+### Prepare a Graph Data for mass rollup calculation
+
+```{r}
+library(igraph)
+
+df_g <- df_config %>%
+  mutate(parent = c1_instancename) %>%
+  mutate(child = c2_instancename) %>%
+  mutate(type = c2_instancename) %>%
+  # mutate(parent = paste0(p_id, ": ", p_instancename)) %>%
+  # mutate(child = paste0(c_id, ": ", c_instancename)) %>%  
+  select("parent","child","type")
+
+# df_g <- df_g[-1,]
+
+g <- graph_from_data_frame(df_g, 
+                           directed = TRUE, 
+                           vertices = NULL)
+
+
+```
+
+### RollUp Pattern
+
+```{r}
+
+root <- V(g)[1]
+
+# Depth-first search is an algorithm to traverse a graph. It starts from a root vertex and tries to go quickly as far from as possible.
+order <- dfs(g, V(g)[root], order.out = TRUE)$order
+
+df_mel_before <- igraph::as_data_frame(g, what = "vertices") %>%
+  arrange(factor(name, levels = names(order)))%>%
+  filter(name !="NA")
+
+# ここに、df_mass として massの値を入れたコンフィグを作る必要がある。
+
+df_mass <-  df_config
+
+df_mass <-  df_mass %>%
+  mutate(mass = as.numeric(c2_mass)) %>%
+  select(c2,
+         c2_instancename,
+         c2_id,
+         c2_name,
+         c1_id,
+         mass) %>%  
+  add_row(c2=df_mass$c1[1],
+          c2_instancename=df_mass$c1_instancename[1],
+          c2_id=df_mass$c1_id[1],
+          c2_name=df_mass$c1_name[1],
+          c1_id=NA,
+          mass=as.numeric(df_mass$c1_mass[1]),
+          .before = 1)%>%
+  arrange(c2_id)
+
+
+colnames(df_mass) <- c("c_iri","c_instancename","c_id","c_name", "p_id", "mass")
+
+df_mel_before <- left_join(df_mel_before, df_mass, by = c("name"="c_instancename"))
+
+
+```
+
+```{r}
+namekey="name"
+masskey="mass"
+
+
+df_mass_update <- massRollUp(g, root, df_mel_before, namekey = "name",masskey = "mass") %>%
+  select(name, mass)
+
+
+# リーフ数を取得
+df_deg <- data.frame(
+  name = names(degree(g)),
+  degree = degree(g)-1, # num of components is degree(g)-1
+  distance = distances(g)[V(g)[1],]
+)
+
+# distanceの値で、componentか、workpackageかを切り分けることができる
+
+df_mel_after <- df_mel_before %>% select(-mass)
+df_mel_after <- left_join(df_mel_after, df_mass_update, by=c("name"="name")) 
+df_mel_after <- left_join(df_mel_after, df_deg, by=c("name"="name")) 
+
+df_mel_after$componenttype <- ifelse(df_mel_after$distance == 0, "system", 
+                            ifelse(df_mel_after$distance == 1, "subsystem", 
+                                   ifelse(df_mel_after$distance == 2, "assembly", NA)))
+
+
+
+
+```
+
+```{r}
+
+df_table <- df_mel_after %>%
+  mutate(totalmass=mass) %>%
+  select(c_id, name, totalmass, componenttype) 
+
+df_table$componenttype <- factor(df_table$componenttype)
+
+datatable(df_table, options = list(autoWidth = FALSE, pageLength = -1), filter = list(
+  position = 'top', clear = FALSE
+))
+
+
+```
+
+
+## Binding Variables : toR
+
+```{r}
+df_parameters$m_dry <- df_mel_after$mass[1]
+# df_parameters$m_dry <- 325.47880079
+```
+
+
+## Binding Variables: toPython
+
+```{python}
+orbit_init=r.df_parameters.initOrbit.values.tolist()[0]
+orbit_target=r.df_parameters.targetOrbit.values.tolist()[0]
+m_final=r.df_parameters.m_dry.values.tolist()[0]
+I_sp=r.df_parameters.I_sp.values.tolist()[0]
+# orbit_init=r.initOrbit
+# orbit_target=r.targetOrbit
+# m_init=1000
+# I_sp=r.I_sp
+
+```
+
+
+## deltaV ( Using Python)
+
+```{python}
+import os
+import sys
+
+print('getcwd:      ', os.getcwd())
+sys.path.append(os.getcwd())
+sys.path.append(os.getcwd()+'/src/analysis')
+
+# from src.analysis import analysisOrbit
+import analysisOrbit
+from astropy import units as u
+
+analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=orbit_init, orbit_target=orbit_target)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)
+# analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)
+
+total_delta_v = analysisRocket.calculate_delta_v()
+
+
+print(f"Total delta-v: {total_delta_v}")
+
+```
+
+
+## Binding Variables: toR
+
+```{r}
+df_parameters$dv <- py$total_delta_v /1000.0 # km/s
+```
+
+
+## fuelMass (Using R)
+
+```{r}
+source(searchDirectory(4, "calcWetMass.R", (getwd())))
+
+# I_sp <- 350
+# m_dry <- 325.47880079
+# df_parameters$dv <- sum(df_parameters$dv)
+# Inverse Problem
+df_parameters$m_wet <- calcWetMass(df_parameters$dv, df_parameters$m_dry, df_parameters$I_sp)
+df_parameters$m_fuel <- df_parameters$m_wet - df_parameters$m_dry
+c(df_parameters$m_wet, df_parameters$m_dry, df_parameters$m_fuel)
+```
+
+
+## Finally, Update OML
+
+### parameter table updated
+```{r}
+
+df_table <- df_parameters %>% 
+  mutate(id=1) %>%
+  pivot_longer(!id, names_to = "parameter", values_to = "value") %>%
+  select(-id)
+
+datatable(df_table, options = list(autoWidth = TRUE, pageLength = -1))
+
+```
+
+### parameters before and after
+
+```{r}
+df_parameters_after <-  left_join(df_parameters_before, df_table,
+                                  by = c("parameter"="parameter"),
+                                  suffix=c("_before","_after")) %>%
+  mutate(status = case_when(
+    as.double(value_before) == value_after ~ "unchanged",
+    TRUE ~ "changed"
+  ))
+
+```
+
+
+### sending update query
+
+
+```{r}
+source(searchDirectory(4, "updateSparqlQuery.R", (getwd())))
+
+df_update <- df_parameters_after %>% 
+  filter(status == "changed")
+
+endpoint_url <- "http://localhost:3030/tutorial2-tdb/"
+
+for( i in 1:nrow(df_update) ){
+  df <- df_update[i,]
+  update_value <- as.character(df$value_after)
+  update_iri <- df$iri
+
+  df_ret <- updateSparqlQuery(endpoint_url, update_value, update_iri)
+  
+  ret <- send_update(endpoint_url = endpoint_url, df_ret$query_string_delete_tdb)
+  ret <- send_update(endpoint_url = endpoint_url, df_ret$query_string_insert_tdb)
+  
+}
+
+# cat(df_ret$query_string_delete_tdb)
+# cat(df_ret$query_string_insert_tdb)
+
+
+```
+
+
+## Run Save in OML-Vision
+
+Using OML-Vision GUI, run the save task.
+Then you can see the oml file is updated.
+
+
+## Verify Update
+
+This can be verified when you re-load the load task and send a query of `query_param_string`.
+
+```{r}
+endpoint_url <- "http://localhost:3030/tutorial2/"
+df_query <- send_query(endpoint_url, query_param_string)
+
+
+datatable(df_query, options = list(autoWidth = FALSE, pageLength = -1))
+
+```
+
+# Discussion: Proposed Process and Data Flow
+
+Instead of using the passing and recieving approach, alternative way is
+using the owl fuseki database as a hub to exchange the data. OML
+descriptions specify the process and mapping of data exchanged between
+analyssis containers.
+
+To do this, we need to specify the analysis container with
+
+-   input
+-   output
+-   mapping of input and output with other containers
+
+```{mermaid}
+flowchart LR
+    oml[(OML)] -.-> id1
+    id1(Build) -.-> owl[(owl)]
+    id1 --> id2
+    owl -.-> id2(Query:SPARQL)
+    id2 --> id3[massRollup:R]
+    id3 -.-> owl
+    id3 --> id4[deltaV:Python]
+    id4 -.-> owl
+    id4 --> id5[fuelMass:R]
+    id5 -.-> owl
+    id5 --> id6(owl2oml)
+    owl -.-> id6
+    id6 -.-> oml
+    classDef codpy fill:#ff0000;
+    classDef coder fill:#00ffff;
+    class id3,id5 coder;
+    class id4 codepy;
+
+```
+
+# TODO
+
+`df_parameters` is not good idea to bind the parameters I think this could be
+better.
+
+```{r}
+
+df_parameters2 <- data.frame(
+  parameter = c("initOrbit","targetOrbit","I_sp","m_dry","m_fuel","m_wet","dv"),
+  value = c(400,35786,350,
+          df_parameters$m_dry, 
+          df_parameters$m_fuel, 
+          df_parameters$m_wet,
+          df_parameters$dv),
+  type = c("input","input","input","output","input","output","output")
+)
+
+# how to access data
+df_parameters2$value[df_parameters2$parameter == "m_dry"]
+```
+
+Here is how to access values. when we add the mapping descriptions to
+analysis codes, we might automate the process of data exchange.
+
+```{python}
+df = r.df_parameters2
+df[df['parameter']=='I_sp'].value.values[0]
+
+```
+
+## OPTION: m_fuel ( Using Python codes)
+
+```{python}
+analysisRocket.calculate_init_mass(I_sp, m_final)
+print(f"Total delta-v: {total_delta_v}")
+print(f"Required fuel mass: {analysisRocket.m_fuel}\n final: {analysisRocket.m_final}\n init: {analysisRocket.m_init}")
+
+```
+
+## OPTION: deltaV ( Using R codes)
+
+```{r}
+source(searchDirectory(4, "calcDeltaV.R", (getwd())))
+
+dv <- calcDeltaV(initOrbit=df_parameters$initOrbit, targetOrbit = df_parameters$targetOrbit)
+```

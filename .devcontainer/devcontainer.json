@@ -3,23 +3,32 @@
 {
 	"name": "Kepler16b Using IMCE Vocabulary",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+	// Anaconda's base image is Debian.  Read more here: https://github.com/devcontainers/images/tree/main/src/anaconda
+	"image": "mcr.microsoft.com/devcontainers/anaconda:3",
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
 			"installGradle": true,
 			"version": "17",
-			"jdkDistro": "ms",
+			"jdkDistro": "tem",
 			"gradleVersion": "7.5.1",
 			"mavenVersion": "3.8.6",
 			"antVersion": "1.10.12",
 			"groovyVersion": "latest"
 		},
-		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {}
+		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+			"version": "4.3.0"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+            "version": "prerelease"
+        },
+        "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+            "packages": "libudunits2-dev,libxtst6,libxt6,libmagick++-dev"
+        }
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-
+	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
