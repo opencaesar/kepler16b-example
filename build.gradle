@@ -210,6 +210,22 @@ task save (dependsOn: owlToOml, group: "vision")
  */
 task stop (dependsOn: stopFuseki, group: "vision")
 
+/*
+ * A task for mac to run  kill -9 \$(lsof -t -i:3030) 
+ */
+task stopKillServer(group:"vision") {
+    doLast {
+        def stdout = new ByteArrayOutputStream()
+        exec{
+            // for mac
+            commandLine  "sh", "-c", "kill -9 \$(lsof -t -i:3030)"
+            standardOutput = stdout;
+        }
+        println "Output: $stdout"
+
+    }
+}
+
 
 /*
  * A task to query the OML dataset in Fuseki
