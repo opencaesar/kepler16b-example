@@ -211,17 +211,14 @@ task save (dependsOn: owlToOml, group: "vision")
 task stop (dependsOn: stopFuseki, group: "vision")
 
 /*
- * A task to save a Fuseki dataset endpoint to an OWL catalog
- * @seeAlso https://github.com/opencaesar/owl-tools/blob/master/owl-save/README.md
+ * A task for mac to run  kill -9 \$(lsof -t -i:3030) 
  */
-task killServer(group:"vision") {
+task stopKillServer(group:"vision") {
     doLast {
         def stdout = new ByteArrayOutputStream()
         exec{
             // for mac
-            //commandLine 'kill -9 $(lsof -t -i:3030)'  // this doesn't work
-            commandLine 'whoami'
-           // commandLine 'echo' "JAVA_HOME"
+            commandLine  "sh", "-c", "kill -9 \$(lsof -t -i:3030)"
             standardOutput = stdout;
         }
         println "Output: $stdout"
