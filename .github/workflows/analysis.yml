@@ -41,6 +41,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Check Quarto
+        run: |
+          quarto -V
       - name: Run Analysis
         run: |
           quarto render src/analysis/analysisShell.qmd
