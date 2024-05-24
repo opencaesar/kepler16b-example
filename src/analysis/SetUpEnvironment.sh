@@ -14,9 +14,9 @@ R -e "install.packages('collapsibleTree')"
 R -e "install.packages('colorspace')"
 R -e "install.packages('jsonlite')"
 R -e "install.packages('DT')"
-R -e "install.packages('devtools')"
-R -e "library(devtools); install_github('UTNAK/tansakusuR')"
-R -e "library(devtools); install_github('UTNAK/omlhashiR')"
+R -e "install.packages('pak')"
+R -e "pak::pkg_install('UTNAK/tansakusuR')"
+R -e "pak::pkg_install('UTNAK/omlhashiR')"
 
 # Create and update conda environment
 conda env create --file environment.yml
