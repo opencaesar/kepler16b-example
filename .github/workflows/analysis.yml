@@ -37,6 +37,11 @@ jobs:
         chmod +x src/analysis/SetUpEnvironment.sh 
         ./src/analysis/SetUpEnvironment.sh
 
+    - name: Set up Quarto
+      uses: quarto-dev/quarto-actions/setup@v2
+#      env:
+#        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   analysis:
     needs: build
     runs-on: ubuntu-latest
