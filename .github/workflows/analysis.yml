@@ -51,12 +51,12 @@ jobs:
         with:
           target: gh-pages
           path: ./src/analysis/analysisShell.qmd          
-      - name: Check Quarto
-        run: |
-          quarto -V
-      - name: Run Analysis
-        run: |
-          quarto render src/analysis/analysisShell.qmd
+#      - name: Check Quarto
+#        run: |
+#          quarto -V
+#      - name: Run Analysis
+#        run: |
+#          quarto render src/analysis/analysisShell.qmd
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
