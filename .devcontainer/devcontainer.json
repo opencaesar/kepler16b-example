@@ -15,8 +15,8 @@
 			"antVersion": "1.10.12",
 			"groovyVersion": "latest"
 		},
-		"ghcr.io/rocker-org/devcontainer-features/r-apt:0": {
-		//	"version": "4.3.0"
+		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+			"version": "4.3.0"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
             "version": "prerelease"
