@@ -2,8 +2,9 @@
 
 conda env create --file environment.yml
 
+conda init
+
 # these two commands dont work well
-#conda init
 #conda activate py39
 
 # Install R packages
