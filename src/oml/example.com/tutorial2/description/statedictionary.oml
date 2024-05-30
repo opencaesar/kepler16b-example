@@ -2,73 +2,55 @@ description <http://example.com/tutorial2/description/statedictionary#> as state
 
 	extends <http://example.com/tutorial2/description/components#> as components
 
-	uses <http://bipm.org/jcgm/vim4#> as vim4
+	uses <http://bipm.org/jcgm/vim4#>
 
-    uses <http://imce.jpl.nasa.gov/foundation/analysis#> as analysis
+	uses <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa
 
-    uses <http://example.com/tutorial2/vocabulary/stateanalysis#> as sa
+	uses <http://imce.jpl.nasa.gov/foundation/analysis#> as analysis
 
-//	uses <http://example.com/tutorial2/vocabulary/mechanical#> as mechanical
-//	ref instance components:orbiter-spacecraft : mechanical:MechanicalComponent
+	ref instance components:orbiter-spacecraft : analysis:CharacterizedElement [
+		analysis:isConstrainedBy orbiter-spacecraft.delta-v
+		analysis:isConstrainedBy orbiter-spacecraft.initial-orbit
+		analysis:isConstrainedBy orbiter-spacecraft.isp
+		analysis:isConstrainedBy orbiter-spacecraft.mass.dry
+		analysis:isConstrainedBy orbiter-spacecraft.mass.fuel
+		analysis:isConstrainedBy orbiter-spacecraft.mass.wet
+		analysis:isConstrainedBy orbiter-spacecraft.target-orbit
+	]
 
-// df_parameters <- data.frame(
-//   initOrbit = 400.0,
-//   targetOrbit = 35786.0,
-//   I_sp = 350,
-//   m_wet = 0.0,
-//   m_dry = 325.47880079,
-//   m_fuel = 0.0,
-//   dv = 0.0
-// )
+	instance orbiter-spacecraft.delta-v : sa:StateVariable [
+		sa:affects orbiter-spacecraft.mass.fuel
+		sa:hasStateValue "3.853959363102248"
+	]
 
-
-    // pattern to relate a component and state variables.
-    ref instance components:orbiter-spacecraft : analysis:CharacterizedElement [
-        analysis:isConstrainedBy orbiter-spacecraft.initial-orbit
-        analysis:isConstrainedBy orbiter-spacecraft.target-orbit
-        analysis:isConstrainedBy orbiter-spacecraft.delta-v
-        analysis:isConstrainedBy orbiter-spacecraft.isp
-        analysis:isConstrainedBy orbiter-spacecraft.mass.dry        
-        analysis:isConstrainedBy orbiter-spacecraft.mass.fuel
-        analysis:isConstrainedBy orbiter-spacecraft.mass.wet
-    ]
-
-	instance orbiter-spacecraft.initial-orbit : sa:StateVariable[
-        sa:affects orbiter-spacecraft.delta-v
-        sa:hasStateValue "400"
-    ]
-
-	instance orbiter-spacecraft.target-orbit : sa:StateVariable[
-        sa:affects orbiter-spacecraft.delta-v
-        sa:hasStateValue "35786"
-    ]
-
-	instance orbiter-spacecraft.delta-v : sa:StateVariable[
-        sa:affects orbiter-spacecraft.mass.fuel
-    ]
+	instance orbiter-spacecraft.initial-orbit : sa:StateVariable [
+		sa:affects orbiter-spacecraft.delta-v
+		sa:hasStateValue "400"
+	]
 
 	instance orbiter-spacecraft.isp : sa:StateVariable [
-        sa:affects orbiter-spacecraft.mass.fuel
-        sa:hasStateValue "350"
-    ]
+		sa:affects orbiter-spacecraft.mass.fuel
+		sa:hasStateValue "350"
+	]
 
 	instance orbiter-spacecraft.mass.dry : sa:StateVariable [
-        sa:affects orbiter-spacecraft.mass.fuel
-    ]
+		sa:affects orbiter-spacecraft.mass.fuel
+		sa:hasStateValue "1957.0"
+	]
 
 	instance orbiter-spacecraft.mass.fuel : sa:StateVariable [
-        sa:affects orbiter-spacecraft.mass.wet
-    ]
+		sa:affects orbiter-spacecraft.mass.wet
+		sa:hasStateValue "4055.680381236295"
+	]
 
-	instance orbiter-spacecraft.mass.wet : sa:StateVariable
+	instance orbiter-spacecraft.mass.wet : sa:StateVariable [
+		sa:hasStateValue "6012.680381236295"
+	]
+
+	instance orbiter-spacecraft.target-orbit : sa:StateVariable [
+		sa:affects orbiter-spacecraft.delta-v
+		sa:hasStateValue "35786"
+	]
 
 	instance orbiter-spacecraft.transfertime : sa:StateVariable
-
-
-	// instance orbiter-spacecraft.mass.magnitude : mechanical:MassMagnitude [
-	// 	vim4:characterizes components:orbiter-spacecraft
-	// 	vim4:hasDoubleNumber 0.00E+03
-	// ]
-
-
 }
