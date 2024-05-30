@@ -7,7 +7,8 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
+  pages: write
 
 jobs:
   build:
@@ -39,8 +40,8 @@ jobs:
 
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
-#      env:
-#        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   analysis:
     needs: build
@@ -49,7 +50,7 @@ jobs:
       - name: Pubilsh
         uses: quarto-dev/quarto-actions/render@v2
         with:
-          target: gh-pages
+          to: html
           path: ./src/analysis/analysisShell.qmd          
 #      - name: Check Quarto
 #        run: |
@@ -59,10 +60,12 @@ jobs:
 #          quarto render src/analysis/analysisShell.qmd
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
-          name: analysis-output
+          target: gh-pages
           path: src/analysis/analysisShell.html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
         
   deploy:
     needs: analysis
