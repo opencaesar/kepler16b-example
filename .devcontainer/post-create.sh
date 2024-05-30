@@ -10,7 +10,7 @@ conda env create --file environment.yml
 # Rscript ./.devcontainer/install_rpackage.R 
 
 # Install R packages
-R -e "install.packages('reactable', repos='http://cran.us.r-project.org')"
+R -e "install.packages('reactable')"
 R -e "install.packages('igraph')"
 R -e "install.packages('networkD3')"
 R -e "install.packages('reticulate')"
