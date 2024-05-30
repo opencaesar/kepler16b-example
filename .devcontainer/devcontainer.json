@@ -35,7 +35,7 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
 	//"postCreateCommand": "conda env create --file environment.yml"
-	"postCreateCommand": "sh .devcontainer/post-cretate.sh"
+	"postCreateCommand": "sh .devcontainer/post-create.sh"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
