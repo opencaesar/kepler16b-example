@@ -112,7 +112,6 @@ source(searchDirectory(4, "massRollupKepler16b.R", (getwd())))
 ```{r}
 library(reticulate)
 use_condaenv("py39")
-# use_python("/Users/mlab/opt/anaconda3/envs/py393/bin/python")
 ```
 
 ## Build and Run a Fuseki SPARQL endpoint for oml model query
