@@ -47,6 +47,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Echo
+        run: |
+          pwd
       - name: Build
         run: |
           ./gradlew build
