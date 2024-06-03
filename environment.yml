@@ -10,4 +10,10 @@ dependencies:
   - numpy
   - pandas
   - poliastro
+  - jupyter
+  - ipykernel
+  - pip
+  - pip:
+    - sparqlwrapper
+    - rpy2 
   

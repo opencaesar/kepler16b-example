@@ -24,7 +24,7 @@
         "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
             "packages": "libudunits2-dev,libxtst6,libxt6,libmagick++-dev"
         }
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -34,10 +34,19 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
+	//"postCreateCommand": "conda env create --file environment.yml"
+	"postCreateCommand": "sh .devcontainer/post-create.sh",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-toolsai.jupyter"
+			]
+		}
+	}
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
+
 }
