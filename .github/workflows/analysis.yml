@@ -24,35 +24,35 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
+    - name: Build
+      run: ./gradlew build
+    - name: Load
+      run: ./gradlew owlLoad
 
-    - name: Set up Python 3
-      uses: actions/setup-python@v4
-      with: 
-        python-version: '3.9'
+#    - name: Set up Python 3
+#      uses: actions/setup-python@v4
+#      with: 
+#        python-version: '3.9'
 
-    - name: Set up R
-      uses: eddelbuettel/github-actions/r2u-setup@master
+#    - name: Set up R
+#      uses: eddelbuettel/github-actions/r2u-setup@master
 
-    - name: Install Dependencies
-      run: |
-        chmod +x src/analysis/SetUpEnvironment.sh 
-        ./src/analysis/SetUpEnvironment.sh
+#    - name: Install Dependencies
+#      run: |
+#        chmod +x src/analysis/SetUpEnvironment.sh 
+#        ./src/analysis/SetUpEnvironment.sh
 
-    - name: Set up Quarto
-      uses: quarto-dev/quarto-actions/setup@v2
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: Set up Quarto
+#      uses: quarto-dev/quarto-actions/setup@v2
+#      env:
+#        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   analysis:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-      - name: Build
-        run: ./gradlew build
-      - name: Load
-        run: ./gradlew owlLoad
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
       - name: Render Jupyter
         run: |
           python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
