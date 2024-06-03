@@ -1,6 +1,7 @@
 ---
 title: "Prototype for integration of descriptive and analysis model"
 date: now
+date-format: "MMM D, YYYY, HH:mm:ss"
 author: "Yuta Nakajima"
 description: "<BR>This shell scripts execute different types of analysis codes."
 title-block-banner: true
@@ -118,24 +119,32 @@ use_condaenv("py39")
 <!-- This runs build and load gradle tasks.  Can be run with OML Vision -->
 
 ```{r}
+#| label: gradle-01
 #| warning: false
 library(omlhashiR)
 ## oml_repository <- "../open-source-rover/"
 oml_repository <- omlrepo
 ret1 <- omlhashiR::oml_refresh()
+```
+```{r}
+#| label: gradle-02-stop
 ret2 <- omlhashiR::oml_stop_Daemon(oml_repository)
-ret3 <- omlhashiR::oml_build(oml_repository)
-
+```
+```{r}
+#| label: gradle-03-build
+ret3 <- omlhashiR::oml_callTask(oml_repository, "build")
 ```
 
 ## Start Fuseki Server
 ```{r}
-ret4 <- omlhashiR::oml_startFuseki(oml_repository)
+#| label: gradle-04-start-fuseki
+ret4 <- omlhashiR::oml_callTask(oml_repository, "startFuseki")
 ```
 
 ## Load in OWL ontologies to Fuseki Server
 ```{r}
-ret5 <- omlhashiR::oml_owlLoad(oml_repository)
+#| label: gradle-05-owl-load
+ret5 <- omlhashiR::oml_callTask(oml_repository, "owlLoad")
 ```
 
 ## Get Configuration & Mass Properties
