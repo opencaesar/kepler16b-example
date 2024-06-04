@@ -48,6 +48,12 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Check Quarto
+      shell: bash -l {0}
+      run: |
+        quarto -V
+
+
     - name: Setup Anaconda
       uses: conda-incubator/setup-miniconda@v3
       with:
