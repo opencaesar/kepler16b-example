@@ -70,7 +70,7 @@ jobs:
     - name: Render Jupyter
       shell: bash -l {0}
       run: |
-        python -m nbconvert --output="analysis" --output-dir='./web' --execute --to html src/analysis/analysisShell.ipynb --no-input
+        python -m nbconvert --output="analysisJupyter" --output-dir='./web' --execute --to html src/analysis/analysisShell.ipynb --no-input
 
     - name: Render Quarto
       shell: bash -l {0}
@@ -82,6 +82,16 @@ jobs:
       run: |
         cp ./src/analysis/analysisShell.html ./web  
 
+    - name: Render Index 
+      shell: bash -l {0}
+      run: |
+        quarto render src/quarto/index.qmd
+
+    - name: Copy Index html
+      shell: bash -l {0}
+      run: |
+        cp ./src/quarto/index.html ./web  
+  
     - name: Publish
       uses: actions/upload-pages-artifact@v1
       with:
