@@ -80,7 +80,7 @@ jobs:
     - name: Copy Quarto html
       shell: bash -l {0}
       run: |
-        cp ./src/analysisShell.html ./web  
+        cp ./src/analysis/analysisShell.html ./web  
 
     - name: Publish
       uses: actions/upload-pages-artifact@v1
