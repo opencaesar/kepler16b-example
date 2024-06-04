@@ -65,9 +65,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test conda installation
-        shell: bash -l {0}
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: py39
+      - name: conda info
         run: conda info
-
       - name: Render Jupyter
         shell: bash -l {0}
         run: |
