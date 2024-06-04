@@ -53,7 +53,7 @@ jobs:
         activate-environment: py39
         environment-file: environment.yml
         python-version: 3.9
-        auto-activate-base: false
+        auto-activate-base: true
     - name: Check Conda
       run: |
         conda info
