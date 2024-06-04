@@ -42,6 +42,8 @@ jobs:
       run: |
         conda info
         conda list
+        python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
+
 
 #    - name: Set up R
 #      uses: eddelbuettel/github-actions/r2u-setup@master
