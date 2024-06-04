@@ -42,7 +42,7 @@ jobs:
       run: |
         conda info
         conda list
-        python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
+#        python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
 
 
 #    - name: Set up R
@@ -62,8 +62,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Test conda installation
+        shell: bash -l {0}
+        run: conda info
+
       - name: Render Jupyter
-        shell: bash -el {0}
+        shell: bash -l {0}
         run: |
           python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
 #      - name: Pubilsh
