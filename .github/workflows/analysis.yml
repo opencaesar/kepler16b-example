@@ -56,6 +56,10 @@ jobs:
       run: |
         conda info
         conda list
+    - name: Render Jupyter
+      shell: bash -l {0}
+      run: |
+        python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
 
         
   analysis:
@@ -65,14 +69,8 @@ jobs:
       run:
         shell: bash -el {0}    
     steps:
-      - name: Test conda installation
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          activate-environment: py39
-          environment-file: setup-miniconda-patched-environment.yml
-          python-version: 3.9
-          auto-activate-base: false
       - name: conda info
+        shell: bash -l {0}
         run: conda info
       - name: Render Jupyter
         shell: bash -l {0}
