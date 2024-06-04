@@ -61,6 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Render Jupyter
+        shell: bash -el {0}
         run: |
           python -m nbconvert --output="analysis" --output-dir='.' --execute --to html src/analysis/analysisShell.ipynb --no-input
 #      - name: Pubilsh
