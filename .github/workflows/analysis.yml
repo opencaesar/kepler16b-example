@@ -13,6 +13,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}    
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -28,11 +31,17 @@ jobs:
       run: ./gradlew build
     - name: Load
       run: ./gradlew owlLoad
-
-    - name: Set up Python 3
-      uses: actions/setup-python@v4
-      with: 
-        python-version: '3.9'
+    - name: Setup Anaconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: anaconda-client-env
+        environment-file: environment.yml
+        python-version: 3.9
+        auto-activate-base: false
+    - name: Check Conda
+      run: |
+        conda info
+        conda list
 
 #    - name: Set up R
 #      uses: eddelbuettel/github-actions/r2u-setup@master
