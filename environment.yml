@@ -10,4 +10,13 @@ dependencies:
   - numpy
   - pandas
   - poliastro
+  - jupyter
+  - ipykernel
+  - nbconvert
+  - pip
+  - pip:
+    - sparqlwrapper
+    - rpy2 
+    - nbconvert
+
   

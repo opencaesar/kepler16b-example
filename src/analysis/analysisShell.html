@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yuta Nakajima">
-<meta name="dcterms.date" content="2024-05-16">
 <meta name="description" content="This shell scripts execute different types of analysis codes.">
 
 <title>Prototype for integration of descriptive and analysis model</title>
@@ -6723,7 +6722,7 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 16, 2024</p>
+        <p class="date">Jun 3, 2024, 15:09:31</p>
       </div>
     </div>
     
@@ -6742,37 +6741,38 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
   <ul class="collapse">
   <li><a href="#load-utility-files" id="toc-load-utility-files" class="nav-link" data-scroll-target="#load-utility-files"><span class="header-section-number">2.1</span> load utility files</a></li>
   <li><a href="#build-and-run-a-fuseki-sparql-endpoint-for-oml-model-query" id="toc-build-and-run-a-fuseki-sparql-endpoint-for-oml-model-query" class="nav-link" data-scroll-target="#build-and-run-a-fuseki-sparql-endpoint-for-oml-model-query"><span class="header-section-number">2.2</span> Build and Run a Fuseki SPARQL endpoint for oml model query</a></li>
-  <li><a href="#get-configuration-mass-properties" id="toc-get-configuration-mass-properties" class="nav-link" data-scroll-target="#get-configuration-mass-properties"><span class="header-section-number">2.3</span> Get Configuration &amp; Mass Properties</a>
+  <li><a href="#start-fuseki-server" id="toc-start-fuseki-server" class="nav-link" data-scroll-target="#start-fuseki-server"><span class="header-section-number">2.3</span> Start Fuseki Server</a></li>
+  <li><a href="#load-in-owl-ontologies-to-fuseki-server" id="toc-load-in-owl-ontologies-to-fuseki-server" class="nav-link" data-scroll-target="#load-in-owl-ontologies-to-fuseki-server"><span class="header-section-number">2.4</span> Load in OWL ontologies to Fuseki Server</a></li>
+  <li><a href="#get-configuration-mass-properties" id="toc-get-configuration-mass-properties" class="nav-link" data-scroll-target="#get-configuration-mass-properties"><span class="header-section-number">2.5</span> Get Configuration &amp; Mass Properties</a>
   <ul class="collapse">
-  <li><a href="#sparql-code" id="toc-sparql-code" class="nav-link" data-scroll-target="#sparql-code"><span class="header-section-number">2.3.1</span> SPARQL CODE</a></li>
-  <li><a href="#query" id="toc-query" class="nav-link" data-scroll-target="#query"><span class="header-section-number">2.3.2</span> Query</a></li>
+  <li><a href="#sparql-code" id="toc-sparql-code" class="nav-link" data-scroll-target="#sparql-code"><span class="header-section-number">2.5.1</span> SPARQL CODE</a></li>
+  <li><a href="#query" id="toc-query" class="nav-link" data-scroll-target="#query"><span class="header-section-number">2.5.2</span> Query</a></li>
   </ul></li>
-  <li><a href="#binding-variables-tor-parameter-table" id="toc-binding-variables-tor-parameter-table" class="nav-link" data-scroll-target="#binding-variables-tor-parameter-table"><span class="header-section-number">2.4</span> Binding Variables: toR Parameter Table</a>
+  <li><a href="#binding-variables-tor-parameter-table" id="toc-binding-variables-tor-parameter-table" class="nav-link" data-scroll-target="#binding-variables-tor-parameter-table"><span class="header-section-number">2.6</span> Binding Variables: toR Parameter Table</a>
   <ul class="collapse">
-  <li><a href="#sparql-code-1" id="toc-sparql-code-1" class="nav-link" data-scroll-target="#sparql-code-1"><span class="header-section-number">2.4.1</span> SPARQL CODE</a></li>
-  <li><a href="#query-1" id="toc-query-1" class="nav-link" data-scroll-target="#query-1"><span class="header-section-number">2.4.2</span> Query</a></li>
-  <li><a href="#binding-to-r-dataframe" id="toc-binding-to-r-dataframe" class="nav-link" data-scroll-target="#binding-to-r-dataframe"><span class="header-section-number">2.4.3</span> Binding to R Dataframe</a></li>
+  <li><a href="#sparql-code-1" id="toc-sparql-code-1" class="nav-link" data-scroll-target="#sparql-code-1"><span class="header-section-number">2.6.1</span> SPARQL CODE</a></li>
+  <li><a href="#query-1" id="toc-query-1" class="nav-link" data-scroll-target="#query-1"><span class="header-section-number">2.6.2</span> Query</a></li>
+  <li><a href="#binding-to-r-dataframe" id="toc-binding-to-r-dataframe" class="nav-link" data-scroll-target="#binding-to-r-dataframe"><span class="header-section-number">2.6.3</span> Binding to R Dataframe</a></li>
   </ul></li>
-  <li><a href="#massrollup" id="toc-massrollup" class="nav-link" data-scroll-target="#massrollup"><span class="header-section-number">2.5</span> MassRollUp</a>
+  <li><a href="#massrollup" id="toc-massrollup" class="nav-link" data-scroll-target="#massrollup"><span class="header-section-number">2.7</span> MassRollUp</a>
   <ul class="collapse">
-  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data"><span class="header-section-number">2.5.1</span> Tidy Data</a></li>
-  <li><a href="#prepare-a-graph-data-for-mass-rollup-calculation" id="toc-prepare-a-graph-data-for-mass-rollup-calculation" class="nav-link" data-scroll-target="#prepare-a-graph-data-for-mass-rollup-calculation"><span class="header-section-number">2.5.2</span> Prepare a Graph Data for mass rollup calculation</a></li>
-  <li><a href="#rollup-pattern" id="toc-rollup-pattern" class="nav-link" data-scroll-target="#rollup-pattern"><span class="header-section-number">2.5.3</span> RollUp Pattern</a></li>
+  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data"><span class="header-section-number">2.7.1</span> Tidy Data</a></li>
+  <li><a href="#prepare-a-graph-data-for-mass-rollup-calculation" id="toc-prepare-a-graph-data-for-mass-rollup-calculation" class="nav-link" data-scroll-target="#prepare-a-graph-data-for-mass-rollup-calculation"><span class="header-section-number">2.7.2</span> Prepare a Graph Data for mass rollup calculation</a></li>
+  <li><a href="#rollup-pattern" id="toc-rollup-pattern" class="nav-link" data-scroll-target="#rollup-pattern"><span class="header-section-number">2.7.3</span> RollUp Pattern</a></li>
   </ul></li>
-  <li><a href="#binding-variables-tor" id="toc-binding-variables-tor" class="nav-link" data-scroll-target="#binding-variables-tor"><span class="header-section-number">2.6</span> Binding Variables : toR</a></li>
-  <li><a href="#binding-variables-topython" id="toc-binding-variables-topython" class="nav-link" data-scroll-target="#binding-variables-topython"><span class="header-section-number">2.7</span> Binding Variables: toPython</a></li>
-  <li><a href="#deltav-using-python" id="toc-deltav-using-python" class="nav-link" data-scroll-target="#deltav-using-python"><span class="header-section-number">2.8</span> deltaV ( Using Python)</a></li>
-  <li><a href="#binding-variables-tor-1" id="toc-binding-variables-tor-1" class="nav-link" data-scroll-target="#binding-variables-tor-1"><span class="header-section-number">2.9</span> Binding Variables: toR</a></li>
-  <li><a href="#fuelmass-using-r" id="toc-fuelmass-using-r" class="nav-link" data-scroll-target="#fuelmass-using-r"><span class="header-section-number">2.10</span> fuelMass (Using R)</a></li>
-  <li><a href="#finally-update-oml" id="toc-finally-update-oml" class="nav-link" data-scroll-target="#finally-update-oml"><span class="header-section-number">2.11</span> Finally, Update OML</a>
+  <li><a href="#binding-variables-tor" id="toc-binding-variables-tor" class="nav-link" data-scroll-target="#binding-variables-tor"><span class="header-section-number">2.8</span> Binding Variables : toR</a></li>
+  <li><a href="#binding-variables-topython" id="toc-binding-variables-topython" class="nav-link" data-scroll-target="#binding-variables-topython"><span class="header-section-number">2.9</span> Binding Variables: toPython</a></li>
+  <li><a href="#deltav-using-python" id="toc-deltav-using-python" class="nav-link" data-scroll-target="#deltav-using-python"><span class="header-section-number">2.10</span> deltaV ( Using Python)</a></li>
+  <li><a href="#binding-variables-tor-1" id="toc-binding-variables-tor-1" class="nav-link" data-scroll-target="#binding-variables-tor-1"><span class="header-section-number">2.11</span> Binding Variables: toR</a></li>
+  <li><a href="#fuelmass-using-r" id="toc-fuelmass-using-r" class="nav-link" data-scroll-target="#fuelmass-using-r"><span class="header-section-number">2.12</span> fuelMass (Using R)</a></li>
+  <li><a href="#finally-update-oml" id="toc-finally-update-oml" class="nav-link" data-scroll-target="#finally-update-oml"><span class="header-section-number">2.13</span> Finally, Update OML</a>
   <ul class="collapse">
-  <li><a href="#parameter-table-updated" id="toc-parameter-table-updated" class="nav-link" data-scroll-target="#parameter-table-updated"><span class="header-section-number">2.11.1</span> parameter table updated</a></li>
-  <li><a href="#parameters-before-and-after" id="toc-parameters-before-and-after" class="nav-link" data-scroll-target="#parameters-before-and-after"><span class="header-section-number">2.11.2</span> parameters before and after</a></li>
-  <li><a href="#query-for-updating-parameters" id="toc-query-for-updating-parameters" class="nav-link" data-scroll-target="#query-for-updating-parameters"><span class="header-section-number">2.11.3</span> query for updating parameters</a></li>
-  <li><a href="#get-intended-state-value-using-affects-relationship" id="toc-get-intended-state-value-using-affects-relationship" class="nav-link" data-scroll-target="#get-intended-state-value-using-affects-relationship"><span class="header-section-number">2.11.4</span> Get Intended State Value using affects relationship</a></li>
-  <li><a href="#get-all-state-values" id="toc-get-all-state-values" class="nav-link" data-scroll-target="#get-all-state-values"><span class="header-section-number">2.11.5</span> Get all state values</a></li>
-  <li><a href="#send-query" id="toc-send-query" class="nav-link" data-scroll-target="#send-query"><span class="header-section-number">2.11.6</span> Send Query</a></li>
+  <li><a href="#parameter-table-updated" id="toc-parameter-table-updated" class="nav-link" data-scroll-target="#parameter-table-updated"><span class="header-section-number">2.13.1</span> parameter table updated</a></li>
+  <li><a href="#parameters-before-and-after" id="toc-parameters-before-and-after" class="nav-link" data-scroll-target="#parameters-before-and-after"><span class="header-section-number">2.13.2</span> parameters before and after</a></li>
+  <li><a href="#sending-update-query" id="toc-sending-update-query" class="nav-link" data-scroll-target="#sending-update-query"><span class="header-section-number">2.13.3</span> sending update query</a></li>
   </ul></li>
+  <li><a href="#run-save-in-oml-vision" id="toc-run-save-in-oml-vision" class="nav-link" data-scroll-target="#run-save-in-oml-vision"><span class="header-section-number">2.14</span> Run Save in OML-Vision</a></li>
+  <li><a href="#verify-update" id="toc-verify-update" class="nav-link" data-scroll-target="#verify-update"><span class="header-section-number">2.15</span> Verify Update</a></li>
   </ul></li>
   <li><a href="#discussion-proposed-process-and-data-flow" id="toc-discussion-proposed-process-and-data-flow" class="nav-link" data-scroll-target="#discussion-proposed-process-and-data-flow"><span class="header-section-number">3</span> Discussion: Proposed Process and Data Flow</a></li>
   <li><a href="#todo" id="toc-todo" class="nav-link" data-scroll-target="#todo"><span class="header-section-number">4</span> TODO</a>
@@ -6886,741 +6886,584 @@ b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.setti
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use_condaenv(&quot;py393&quot;)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_python</span>(<span class="st">&quot;/Users/mlab/opt/anaconda3/envs/py393/bin/python&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_condaenv</span>(<span class="st">&quot;py39&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># use_python(&quot;/Users/mlab/opt/anaconda3/envs/py393/bin/python&quot;)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="build-and-run-a-fuseki-sparql-endpoint-for-oml-model-query" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="build-and-run-a-fuseki-sparql-endpoint-for-oml-model-query"><span class="header-section-number">2.2</span> Build and Run a Fuseki SPARQL endpoint for oml model query</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omlhashiR)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## oml_repository &lt;- &quot;../open-source-rover/&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>oml_repository <span class="ot">&lt;-</span> omlrepo</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>ret1 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_refresh</span>()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ret2 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_stop_Daemon</span>(oml_repository)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ret3 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_build</span>(oml_repository)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ret4 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_startFuseki</span>(oml_repository)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>ret5 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_owlLoad</span>(oml_repository)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="get-configuration-mass-properties" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="get-configuration-mass-properties"><span class="header-section-number">2.3</span> Get Configuration &amp; Mass Properties</h2>
+<!-- This runs build and load gradle tasks.  Can be run with OML Vision -->
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tansakusuR)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>endpoint_url <span class="ot">&lt;-</span> <span class="st">&quot;http://localhost:3030/tutorial2/sparql&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>configuration_root_iri <span class="ot">&lt;-</span> <span class="st">&quot;http://example.com/tutorial2/description/components#orbiter-spacecraft&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omlhashiR)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## oml_repository &lt;- &quot;../open-source-rover/&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>oml_repository <span class="ot">&lt;-</span> omlrepo</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ret1 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_refresh</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="sparql-code" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="sparql-code"><span class="header-section-number">2.3.1</span> SPARQL CODE</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>query_string <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX mission:     &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX project:     &lt;http://imce.jpl.nasa.gov/foundation/project#&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX vim4:        &lt;http://bipm.org/jcgm/vim4#&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT DISTINCT ?c1 ?c1_instancename ?c1_id ?c1_name ?c1_mass ?c2 ?c2_instancename ?c2_id ?c2_name ?c2_mass ?c3 ?c3_instancename ?c3_id ?c3_name ?c4</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE {</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">  VALUES ?c1 { &lt;$configuration_root_iri&gt; }</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">   OPTIONAL{ </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">    ?c1 base:hasIdentifier ?c1_id ;</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">      base:hasCanonicalName ?c1_name ;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL {</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="st">        ?c1_mass_mag vim4:characterizes ?c1 ;</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="st">            vim4:hasDoubleNumber ?c1_mass .</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="st">    } </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="st">  OPTIONAL{</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="st">    ?c1 base:contains ?c2 ;</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL{</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="st">      ?c2 base:hasIdentifier ?c2_id ;</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="st">          base:hasCanonicalName ?c2_name .</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL {</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="st">        ?c2_mass_mag vim4:characterizes ?c2 ;</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="st">            vim4:hasDoubleNumber ?c2_mass .</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="st">    }     </span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL{</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="st">      ?c2 project:isSuppliedBy ?c3 ;</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="st">          OPTIONAL{</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="st">            ?c3 base:hasIdentifier ?c3_id ;</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="st">                base:hasCanonicalName ?c3_name;</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="st">                project:isAuthorizedBy ?c4 .</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="st">          }          </span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="st">    }    </span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?c1), &quot;#&quot;) AS ?c1_instancename) .</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?c2), &quot;#&quot;) AS ?c2_instancename) .</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?c3), &quot;#&quot;) AS ?c3_instancename) .</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="st"> }</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY ?c2_id</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>query_string <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$configuration_root_iri&quot;</span>, configuration_root_iri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ret2 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_stop_Daemon</span>(oml_repository)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="query" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="query"><span class="header-section-number">2.3.2</span> Query</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_query <span class="ot">&lt;-</span> <span class="fu">send_query</span>(endpoint_url,query_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ret3 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_callTask</span>(oml_repository, <span class="st">&quot;build&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="start-fuseki-server" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="start-fuseki-server"><span class="header-section-number">2.3</span> Start Fuseki Server</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ret4 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_callTask</span>(oml_repository, <span class="st">&quot;startFuseki&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="load-in-owl-ontologies-to-fuseki-server" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="load-in-owl-ontologies-to-fuseki-server"><span class="header-section-number">2.4</span> Load in OWL ontologies to Fuseki Server</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ret5 <span class="ot">&lt;-</span> omlhashiR<span class="sc">::</span><span class="fu">oml_callTask</span>(oml_repository, <span class="st">&quot;owlLoad&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="get-configuration-mass-properties" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="get-configuration-mass-properties"><span class="header-section-number">2.5</span> Get Configuration &amp; Mass Properties</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tansakusuR)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>endpoint_url <span class="ot">&lt;-</span> <span class="st">&quot;http://localhost:3030/tutorial2/sparql&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>configuration_root_iri <span class="ot">&lt;-</span> <span class="st">&quot;http://example.com/tutorial2/description/components#orbiter-spacecraft&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="sparql-code" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="sparql-code"><span class="header-section-number">2.5.1</span> SPARQL CODE</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>query_string <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX mission:     &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX project:     &lt;http://imce.jpl.nasa.gov/foundation/project#&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX vim4:        &lt;http://bipm.org/jcgm/vim4#&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT DISTINCT ?c1 ?c1_instancename ?c1_id ?c1_name ?c1_mass ?c2 ?c2_instancename ?c2_id ?c2_name ?c2_mass ?c3 ?c3_instancename ?c3_id ?c3_name ?c4</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE {</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="st">  VALUES ?c1 { &lt;$configuration_root_iri&gt; }</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="st">   OPTIONAL{ </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="st">    ?c1 base:hasIdentifier ?c1_id ;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="st">      base:hasCanonicalName ?c1_name ;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL {</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="st">        ?c1_mass_mag vim4:characterizes ?c1 ;</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="st">            vim4:hasDoubleNumber ?c1_mass .</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="st">    } </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="st">  OPTIONAL{</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="st">    ?c1 base:contains ?c2 ;</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL{</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="st">      ?c2 base:hasIdentifier ?c2_id ;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="st">          base:hasCanonicalName ?c2_name .</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL {</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="st">        ?c2_mass_mag vim4:characterizes ?c2 ;</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="st">            vim4:hasDoubleNumber ?c2_mass .</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="st">    }     </span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="st">    OPTIONAL{</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="st">      ?c2 project:isSuppliedBy ?c3 ;</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="st">          OPTIONAL{</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="st">            ?c3 base:hasIdentifier ?c3_id ;</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="st">                base:hasCanonicalName ?c3_name;</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="st">                project:isAuthorizedBy ?c4 .</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="st">          }          </span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="st">    }    </span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?c1), &quot;#&quot;) AS ?c1_instancename) .</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?c2), &quot;#&quot;) AS ?c2_instancename) .</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?c3), &quot;#&quot;) AS ?c3_instancename) .</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="st"> }</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY ?c2_id</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>query_string <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$configuration_root_iri&quot;</span>, configuration_root_iri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="query" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="query"><span class="header-section-number">2.5.2</span> Query</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_query <span class="ot">&lt;-</span> <span class="fu">send_query</span>(endpoint_url,query_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 </section>
-<section id="binding-variables-tor-parameter-table" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="binding-variables-tor-parameter-table"><span class="header-section-number">2.4</span> Binding Variables: toR Parameter Table</h2>
+<section id="binding-variables-tor-parameter-table" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="binding-variables-tor-parameter-table"><span class="header-section-number">2.6</span> Binding Variables: toR Parameter Table</h2>
 <ul>
 <li>OML descriptions shall specify this parameter table using IMCE Analysis Vocabularies.</li>
 <li>OML descriptions shall specify mapping of binding variables for each simulation.</li>
 <li>Get initial value from oml descriptions by SPARQL Query.</li>
 </ul>
-<section id="sparql-code-1" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="sparql-code-1"><span class="header-section-number">2.4.1</span> SPARQL CODE</h3>
+<section id="sparql-code-1" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="sparql-code-1"><span class="header-section-number">2.6.1</span> SPARQL CODE</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>query_param_string <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT DISTINCT ?iri ?statevariable ?value</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE {</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">#  VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v&gt;}</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">   VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet&gt;}</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">  VALUES ?componentType { sa:StateVariable }</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">  VALUES ?relationType { sa:isAffectedBy }</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">  # Recursive Query to get state variables</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">  ?analysisTarget sa:isAffectedBy* ?iri ;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">#  ?iri a ?componentType</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">  OPTIONAL{</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">    ?iri sa:hasStateValue ?value;</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">         }</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?iri), &quot;#&quot;) AS ?statevariable) .</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?targetIri), &quot;#&quot;) AS ?target) .</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?cpIri), &quot;#&quot;) AS ?component) .</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="st"> }</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY ?iri</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>query_param_string <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT DISTINCT ?iri ?statevariable ?value</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE {</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">#  VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v&gt;}</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="st">   VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet&gt;}</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="st">  VALUES ?componentType { sa:StateVariable }</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="st">  VALUES ?relationType { sa:isAffectedBy }</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="st">  # Recursive Query to get state variables</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="st">  ?analysisTarget sa:isAffectedBy* ?iri ;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="st">#  ?iri a ?componentType</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="st">  OPTIONAL{</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="st">    ?iri sa:hasStateValue ?value;</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="st">         }</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?iri), &quot;#&quot;) AS ?statevariable) .</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?targetIri), &quot;#&quot;) AS ?target) .</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="st">  BIND(STRAFTER(STR(?cpIri), &quot;#&quot;) AS ?component) .</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="st"> }</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY ?iri</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="query-1" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="query-1"><span class="header-section-number">2.4.2</span> Query</h3>
+<section id="query-1" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="query-1"><span class="header-section-number">2.6.2</span> Query</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_query_param <span class="ot">&lt;-</span> <span class="fu">send_query</span>(endpoint_url,query_param_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_query_param <span class="ot">&lt;-</span> <span class="fu">send_query</span>(endpoint_url,query_param_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="binding-to-r-dataframe" class="level3" data-number="2.4.3">
-<h3 data-number="2.4.3" class="anchored" data-anchor-id="binding-to-r-dataframe"><span class="header-section-number">2.4.3</span> Binding to R Dataframe</h3>
+<section id="binding-to-r-dataframe" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3" class="anchored" data-anchor-id="binding-to-r-dataframe"><span class="header-section-number">2.6.3</span> Binding to R Dataframe</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapping to parameters to instance</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters &lt;- data.frame(</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   initOrbit = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.initial-orbit&quot;]),</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   targetOrbit = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.target-orbit&quot;]),</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_wet = 0.0,</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_dry = 0.0,</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_fuel = 0.0,</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   dv = 0.0,</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   I_sp = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.isp&quot;])</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>mapping <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;dv&quot;</span>, <span class="st">&quot;orbiter-spacecraft.delta-v&quot;</span>),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>, <span class="st">&quot;orbiter-spacecraft.initial-orbit&quot;</span>),</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;orbiter-spacecraft.isp&quot;</span>),</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.dry&quot;</span>),     </span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.fuel&quot;</span>),</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.wet&quot;</span>),</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;orbiter-spacecraft.target-orbit&quot;</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to dataframe</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>mapping_df <span class="ot">&lt;-</span> mapping <span class="sc">%&gt;%</span> </span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span><span class="fu">data.frame</span>(.x[<span class="dv">1</span>], .x[<span class="dv">2</span>])) </span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mapping_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;statevariable&quot;</span>)</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>df_parameters_before <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_query_param, mapping_df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;statevariable&quot;</span><span class="ot">=</span><span class="st">&quot;statevariable&quot;</span>)) </span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># parameter database for quarto with R</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>df_parameters <span class="ot">&lt;-</span> df_parameters_before <span class="sc">%&gt;%</span> </span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value2 =</span> <span class="fu">as.double</span>(<span class="fu">replace</span>(value, <span class="fu">is.na</span>(value), <span class="dv">0</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(parameter,value2) <span class="sc">%&gt;%</span></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">#    id_cols = age_cat,</span></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> parameter,</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value2</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapping to parameters to instance</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters &lt;- data.frame(</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   initOrbit = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.initial-orbit&quot;]),</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   targetOrbit = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.target-orbit&quot;]),</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_wet = 0.0,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_dry = 0.0,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   m_fuel = 0.0,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   dv = 0.0,</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   I_sp = as.double(df_query_param$value[df_query_param$statevariable==&quot;orbiter-spacecraft.isp&quot;])</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>mapping <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;dv&quot;</span>, <span class="st">&quot;orbiter-spacecraft.delta-v&quot;</span>),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>, <span class="st">&quot;orbiter-spacecraft.initial-orbit&quot;</span>),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;orbiter-spacecraft.isp&quot;</span>),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.dry&quot;</span>),     </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.fuel&quot;</span>),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;orbiter-spacecraft.mass.wet&quot;</span>),</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;orbiter-spacecraft.target-orbit&quot;</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to dataframe</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>mapping_df <span class="ot">&lt;-</span> mapping <span class="sc">%&gt;%</span> </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span><span class="fu">data.frame</span>(.x[<span class="dv">1</span>], .x[<span class="dv">2</span>])) </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mapping_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;statevariable&quot;</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>df_parameters_before <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_query_param, mapping_df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;statevariable&quot;</span><span class="ot">=</span><span class="st">&quot;statevariable&quot;</span>)) </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co"># parameter database for quarto with R</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>df_parameters <span class="ot">&lt;-</span> df_parameters_before <span class="sc">%&gt;%</span> </span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value2 =</span> <span class="fu">as.double</span>(<span class="fu">replace</span>(value, <span class="fu">is.na</span>(value), <span class="dv">0</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(parameter,value2) <span class="sc">%&gt;%</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">#    id_cols = age_cat,</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> parameter,</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value2</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_table <span class="ot">&lt;-</span> df_parameters <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>id, <span class="at">names_to =</span> <span class="st">&quot;parameter&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_table, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">TRUE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-13dd2aff69e6d545a917" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-13dd2aff69e6d545a917">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["dv","initOrbit","I_sp","m_dry","m_fuel","m_wet","targetOrbit"],[0,400,350,0,0,0,35786]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## These are test paramters</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$m_dry &lt;- 325.47880079</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$initOrbit &lt;- 400</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$targetOrbit &lt;- 35786</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$I_sp &lt;- 350</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-</section>
-<section id="massrollup" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="massrollup"><span class="header-section-number">2.5</span> MassRollUp</h2>
-<section id="tidy-data" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="tidy-data"><span class="header-section-number">2.5.1</span> Tidy Data</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_query<span class="sc">$</span>c1_type <span class="ot">&lt;-</span> <span class="st">&quot;component&quot;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_query <span class="ot">&lt;-</span> df_query <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">c2_label =</span> <span class="fu">paste0</span>(c2_id,<span class="st">&quot;: &quot;</span>,c2_instancename)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">c1_label =</span> <span class="fu">paste0</span>(c1_id,<span class="st">&quot;: &quot;</span>,c1_instancename)) </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>df_config <span class="ot">&lt;-</span> df_query</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># just for vis add NA to root</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df_vis <span class="ot">&lt;-</span> df_config <span class="sc">%&gt;%</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">c1=</span><span class="cn">NA</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_instancename=</span><span class="cn">NA</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_id=</span><span class="cn">NA</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_name=</span><span class="cn">NA</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_mass=</span><span class="cn">NA</span>,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2=</span>df_config<span class="sc">$</span>c1[<span class="dv">1</span>],</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_instancename=</span>df_config<span class="sc">$</span>c1_instancename[<span class="dv">1</span>],</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_id=</span>df_config<span class="sc">$</span>c1_id[<span class="dv">1</span>],</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_name=</span>df_config<span class="sc">$</span>c1_name[<span class="dv">1</span>],</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_mass=</span>df_config<span class="sc">$</span>c1_mass[<span class="dv">1</span>],</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_type=</span>df_config<span class="sc">$</span>c1_type[<span class="dv">1</span>],</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_label=</span><span class="cn">NA</span>,</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_label=</span>df_config<span class="sc">$</span>c1_label[<span class="dv">1</span>],  </span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">.before =</span> <span class="dv">1</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCollapsibleTreeFromDataframe</span>(df_vis, <span class="at">palette=</span><span class="st">&quot;BluYl&quot;</span>, </span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">parent=</span><span class="st">&quot;c2_label&quot;</span>,</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">child=</span><span class="st">&quot;c1_label&quot;</span>,</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type=</span><span class="st">&quot;c2_id&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="collapsibleTree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-17e03ca8c03d8b00b163" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-17e03ca8c03d8b00b163">{"x":{"data":{"name":"C.02: orbiter-spacecraft","fill":"#F9FFAF","WeightOfNode":9,"children":[{"name":"C.02.09: orbiter-propulsion-subsystem","fill":"#2E4F79","WeightOfNode":1},{"name":"C.02.08: orbiter-spacraft-flight-software","fill":"#1C6685","WeightOfNode":1},{"name":"C.02.07: orbiter-mechanical-subsystem","fill":"#057C8E","WeightOfNode":1},{"name":"C.02.06: orbiter-guidance-navigation-control-subsystem","fill":"#109195","WeightOfNode":1},{"name":"C.02.05: orbiter-telecom-subsystem","fill":"#33A69A","WeightOfNode":1},{"name":"C.02.04: orbiter-command-and-data-handling-subsystem","fill":"#58BA9D","WeightOfNode":1},{"name":"C.02.03: orbiter-thermal-subsystem","fill":"#7FCD9F","WeightOfNode":1},{"name":"C.02.02: orbiter-harness","fill":"#A6DEA2","WeightOfNode":1},{"name":"C.02.01: orbiter-power-subsystem","fill":"#CFEFA8","WeightOfNode":1}]},"options":{"hierarchy":[1,2],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":10,"tooltip":true,"collapsed":false,"zoomable":true,"margin":{"top":20,"bottom":20,"left":145,"right":295}}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</section>
-<section id="prepare-a-graph-data-for-mass-rollup-calculation" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="prepare-a-graph-data-for-mass-rollup-calculation"><span class="header-section-number">2.5.2</span> Prepare a Graph Data for mass rollup calculation</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df_g <span class="ot">&lt;-</span> df_config <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parent =</span> c1_instancename) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">child =</span> c2_instancename) <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> c2_instancename) <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mutate(parent = paste0(p_id, &quot;: &quot;, p_instancename)) %&gt;%</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mutate(child = paste0(c_id, &quot;: &quot;, c_instancename)) %&gt;%  </span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;parent&quot;</span>,<span class="st">&quot;child&quot;</span>,<span class="st">&quot;type&quot;</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># df_g &lt;- df_g[-1,]</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(df_g, </span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">directed =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">vertices =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="rollup-pattern" class="level3" data-number="2.5.3">
-<h3 data-number="2.5.3" class="anchored" data-anchor-id="rollup-pattern"><span class="header-section-number">2.5.3</span> RollUp Pattern</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="fu">V</span>(g)[<span class="dv">1</span>]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Depth-first search is an algorithm to traverse a graph. It starts from a root vertex and tries to go quickly as far from as possible.</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">dfs</span>(g, <span class="fu">V</span>(g)[root], <span class="at">order.out =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>order</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_table <span class="ot">&lt;-</span> df_parameters <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>id, <span class="at">names_to =</span> <span class="st">&quot;parameter&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df_mel_before <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_data_frame</span>(g, <span class="at">what =</span> <span class="st">&quot;vertices&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">factor</span>(name, <span class="at">levels =</span> <span class="fu">names</span>(order)))<span class="sc">%&gt;%</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">!=</span><span class="st">&quot;NA&quot;</span>)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ここに、df_mass として massの値を入れたコンフィグを作る必要がある。</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>df_mass <span class="ot">&lt;-</span>  df_config</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>df_mass <span class="ot">&lt;-</span>  df_mass <span class="sc">%&gt;%</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mass =</span> <span class="fu">as.numeric</span>(c2_mass)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(c2,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>         c2_instancename,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>         c2_id,</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>         c2_name,</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>         c1_id,</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>         mass) <span class="sc">%&gt;%</span>  </span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">c2=</span>df_mass<span class="sc">$</span>c1[<span class="dv">1</span>],</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_instancename=</span>df_mass<span class="sc">$</span>c1_instancename[<span class="dv">1</span>],</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_id=</span>df_mass<span class="sc">$</span>c1_id[<span class="dv">1</span>],</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_name=</span>df_mass<span class="sc">$</span>c1_name[<span class="dv">1</span>],</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_id=</span><span class="cn">NA</span>,</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>          <span class="at">mass=</span><span class="fu">as.numeric</span>(df_mass<span class="sc">$</span>c1_mass[<span class="dv">1</span>]),</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">.before =</span> <span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(c2_id)</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_mass) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;c_iri&quot;</span>,<span class="st">&quot;c_instancename&quot;</span>,<span class="st">&quot;c_id&quot;</span>,<span class="st">&quot;c_name&quot;</span>, <span class="st">&quot;p_id&quot;</span>, <span class="st">&quot;mass&quot;</span>)</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>df_mel_before <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_mel_before, df_mass, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;c_instancename&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>namekey<span class="ot">=</span><span class="st">&quot;name&quot;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>masskey<span class="ot">=</span><span class="st">&quot;mass&quot;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>df_mass_update <span class="ot">&lt;-</span> <span class="fu">massRollUp</span>(g, root, df_mel_before, <span class="at">namekey =</span> <span class="st">&quot;name&quot;</span>,<span class="at">masskey =</span> <span class="st">&quot;mass&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, mass)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># リーフ数を取得</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>df_deg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">names</span>(<span class="fu">degree</span>(g)),</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">degree =</span> <span class="fu">degree</span>(g)<span class="sc">-</span><span class="dv">1</span>, <span class="co"># num of components is degree(g)-1</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">distance =</span> <span class="fu">distances</span>(g)[<span class="fu">V</span>(g)[<span class="dv">1</span>],]</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># distanceの値で、componentか、workpackageかを切り分けることができる</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>df_mel_after <span class="ot">&lt;-</span> df_mel_before <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>mass)</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>df_mel_after <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_mel_after, df_mass_update, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;name&quot;</span>)) </span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>df_mel_after <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_mel_after, df_deg, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;name&quot;</span>)) </span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>df_mel_after<span class="sc">$</span>componenttype <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df_mel_after<span class="sc">$</span>distance <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;system&quot;</span>, </span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(df_mel_after<span class="sc">$</span>distance <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;subsystem&quot;</span>, </span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">ifelse</span>(df_mel_after<span class="sc">$</span>distance <span class="sc">==</span> <span class="dv">2</span>, <span class="st">&quot;assembly&quot;</span>, <span class="cn">NA</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_table <span class="ot">&lt;-</span> df_mel_after <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">totalmass=</span>mass) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(c_id, name, totalmass, componenttype) </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df_table<span class="sc">$</span>componenttype <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_table<span class="sc">$</span>componenttype)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_table, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">FALSE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">filter =</span> <span class="fu">list</span>(</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">position =</span> <span class="st">&#39;top&#39;</span>, <span class="at">clear =</span> <span class="cn">FALSE</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_table, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">TRUE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-09c1775aad6211f6d832" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-09c1775aad6211f6d832">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"106\" data-max=\"1957\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;subsystem&quot;,&quot;system&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10"],["C.02","C.02.01","C.02.02","C.02.03","C.02.04","C.02.05","C.02.06","C.02.07","C.02.08","C.02.09"],["orbiter-spacecraft","orbiter-power-subsystem","orbiter-harness","orbiter-thermal-subsystem","orbiter-command-and-data-handling-subsystem","orbiter-telecom-subsystem","orbiter-guidance-navigation-control-subsystem","orbiter-mechanical-subsystem","orbiter-spacraft-flight-software","orbiter-propulsion-subsystem"],[1957,297,138,307,147,316,156,325,165,106],["system","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>c_id<\/th>\n      <th>name<\/th>\n      <th>totalmass<\/th>\n      <th>componenttype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":false,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e6382577d2d7b6afc991" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e6382577d2d7b6afc991">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["dv","initOrbit","I_sp","m_dry","m_fuel","m_wet","targetOrbit"],[0,400,350,0,0,0,35786]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
 </section>
-<section id="binding-variables-tor" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="binding-variables-tor"><span class="header-section-number">2.6</span> Binding Variables : toR</h2>
+<section id="massrollup" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="massrollup"><span class="header-section-number">2.7</span> MassRollUp</h2>
+<section id="tidy-data" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="tidy-data"><span class="header-section-number">2.7.1</span> Tidy Data</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>m_dry <span class="ot">&lt;-</span> df_mel_after<span class="sc">$</span>mass[<span class="dv">1</span>]</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$m_dry &lt;- 325.47880079</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_query<span class="sc">$</span>c1_type <span class="ot">&lt;-</span> <span class="st">&quot;component&quot;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_query <span class="ot">&lt;-</span> df_query <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">c2_label =</span> <span class="fu">paste0</span>(c2_id,<span class="st">&quot;: &quot;</span>,c2_instancename)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">c1_label =</span> <span class="fu">paste0</span>(c1_id,<span class="st">&quot;: &quot;</span>,c1_instancename)) </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>df_config <span class="ot">&lt;-</span> df_query</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># just for vis add NA to root</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>df_vis <span class="ot">&lt;-</span> df_config <span class="sc">%&gt;%</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">c1=</span><span class="cn">NA</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_instancename=</span><span class="cn">NA</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_id=</span><span class="cn">NA</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_name=</span><span class="cn">NA</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_mass=</span><span class="cn">NA</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2=</span>df_config<span class="sc">$</span>c1[<span class="dv">1</span>],</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_instancename=</span>df_config<span class="sc">$</span>c1_instancename[<span class="dv">1</span>],</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_id=</span>df_config<span class="sc">$</span>c1_id[<span class="dv">1</span>],</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_name=</span>df_config<span class="sc">$</span>c1_name[<span class="dv">1</span>],</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_mass=</span>df_config<span class="sc">$</span>c1_mass[<span class="dv">1</span>],</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_type=</span>df_config<span class="sc">$</span>c1_type[<span class="dv">1</span>],</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_label=</span><span class="cn">NA</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_label=</span>df_config<span class="sc">$</span>c1_label[<span class="dv">1</span>],  </span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">.before =</span> <span class="dv">1</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCollapsibleTreeFromDataframe</span>(df_vis, <span class="at">palette=</span><span class="st">&quot;BluYl&quot;</span>, </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">parent=</span><span class="st">&quot;c2_label&quot;</span>,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">child=</span><span class="st">&quot;c1_label&quot;</span>,</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type=</span><span class="st">&quot;c2_id&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="collapsibleTree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2672ed950efc2d600837" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-2672ed950efc2d600837">{"x":{"data":{"name":"C.02: orbiter-spacecraft","fill":"#F9FFAF","WeightOfNode":9,"children":[{"name":"C.02.09: orbiter-propulsion-subsystem","fill":"#2E4F79","WeightOfNode":1},{"name":"C.02.08: orbiter-spacraft-flight-software","fill":"#1C6685","WeightOfNode":1},{"name":"C.02.07: orbiter-mechanical-subsystem","fill":"#057C8E","WeightOfNode":1},{"name":"C.02.06: orbiter-guidance-navigation-control-subsystem","fill":"#109195","WeightOfNode":1},{"name":"C.02.05: orbiter-telecom-subsystem","fill":"#33A69A","WeightOfNode":1},{"name":"C.02.04: orbiter-command-and-data-handling-subsystem","fill":"#58BA9D","WeightOfNode":1},{"name":"C.02.03: orbiter-thermal-subsystem","fill":"#7FCD9F","WeightOfNode":1},{"name":"C.02.02: orbiter-harness","fill":"#A6DEA2","WeightOfNode":1},{"name":"C.02.01: orbiter-power-subsystem","fill":"#CFEFA8","WeightOfNode":1}]},"options":{"hierarchy":[1,2],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":10,"tooltip":true,"collapsed":false,"zoomable":true,"margin":{"top":20,"bottom":20,"left":145,"right":295}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="prepare-a-graph-data-for-mass-rollup-calculation" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="prepare-a-graph-data-for-mass-rollup-calculation"><span class="header-section-number">2.7.2</span> Prepare a Graph Data for mass rollup calculation</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df_g <span class="ot">&lt;-</span> df_config <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parent =</span> c1_instancename) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">child =</span> c2_instancename) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> c2_instancename) <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mutate(parent = paste0(p_id, &quot;: &quot;, p_instancename)) %&gt;%</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mutate(child = paste0(c_id, &quot;: &quot;, c_instancename)) %&gt;%  </span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;parent&quot;</span>,<span class="st">&quot;child&quot;</span>,<span class="st">&quot;type&quot;</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># df_g &lt;- df_g[-1,]</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(df_g, </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">directed =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">vertices =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="binding-variables-topython" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="binding-variables-topython"><span class="header-section-number">2.7</span> Binding Variables: toPython</h2>
+<section id="rollup-pattern" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="rollup-pattern"><span class="header-section-number">2.7.3</span> RollUp Pattern</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>orbit_init<span class="op">=</span>r.df_parameters.initOrbit.values.tolist()[<span class="dv">0</span>]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>orbit_target<span class="op">=</span>r.df_parameters.targetOrbit.values.tolist()[<span class="dv">0</span>]</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>m_final<span class="op">=</span>r.df_parameters.m_dry.values.tolist()[<span class="dv">0</span>]</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>I_sp<span class="op">=</span>r.df_parameters.I_sp.values.tolist()[<span class="dv">0</span>]</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># orbit_init=r.initOrbit</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># orbit_target=r.targetOrbit</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># m_init=1000</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I_sp=r.I_sp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="fu">V</span>(g)[<span class="dv">1</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Depth-first search is an algorithm to traverse a graph. It starts from a root vertex and tries to go quickly as far from as possible.</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">dfs</span>(g, <span class="fu">V</span>(g)[root], <span class="at">order.out =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>order</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df_mel_before <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_data_frame</span>(g, <span class="at">what =</span> <span class="st">&quot;vertices&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">factor</span>(name, <span class="at">levels =</span> <span class="fu">names</span>(order)))<span class="sc">%&gt;%</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">!=</span><span class="st">&quot;NA&quot;</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ここに、df_mass として massの値を入れたコンフィグを作る必要がある。</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>df_mass <span class="ot">&lt;-</span>  df_config</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>df_mass <span class="ot">&lt;-</span>  df_mass <span class="sc">%&gt;%</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mass =</span> <span class="fu">as.numeric</span>(c2_mass)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(c2,</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>         c2_instancename,</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>         c2_id,</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>         c2_name,</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>         c1_id,</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>         mass) <span class="sc">%&gt;%</span>  </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">c2=</span>df_mass<span class="sc">$</span>c1[<span class="dv">1</span>],</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_instancename=</span>df_mass<span class="sc">$</span>c1_instancename[<span class="dv">1</span>],</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_id=</span>df_mass<span class="sc">$</span>c1_id[<span class="dv">1</span>],</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">c2_name=</span>df_mass<span class="sc">$</span>c1_name[<span class="dv">1</span>],</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>          <span class="at">c1_id=</span><span class="cn">NA</span>,</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>          <span class="at">mass=</span><span class="fu">as.numeric</span>(df_mass<span class="sc">$</span>c1_mass[<span class="dv">1</span>]),</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">.before =</span> <span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(c2_id)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_mass) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;c_iri&quot;</span>,<span class="st">&quot;c_instancename&quot;</span>,<span class="st">&quot;c_id&quot;</span>,<span class="st">&quot;c_name&quot;</span>, <span class="st">&quot;p_id&quot;</span>, <span class="st">&quot;mass&quot;</span>)</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>df_mel_before <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_mel_before, df_mass, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;c_instancename&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>namekey<span class="ot">=</span><span class="st">&quot;name&quot;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>masskey<span class="ot">=</span><span class="st">&quot;mass&quot;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>df_mass_update <span class="ot">&lt;-</span> <span class="fu">massRollUp</span>(g, root, df_mel_before, <span class="at">namekey =</span> <span class="st">&quot;name&quot;</span>,<span class="at">masskey =</span> <span class="st">&quot;mass&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, mass)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># リーフ数を取得</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df_deg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">names</span>(<span class="fu">degree</span>(g)),</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">degree =</span> <span class="fu">degree</span>(g)<span class="sc">-</span><span class="dv">1</span>, <span class="co"># num of components is degree(g)-1</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">distance =</span> <span class="fu">distances</span>(g)[<span class="fu">V</span>(g)[<span class="dv">1</span>],]</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># distanceの値で、componentか、workpackageかを切り分けることができる</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>df_mel_after <span class="ot">&lt;-</span> df_mel_before <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>mass)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>df_mel_after <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_mel_after, df_mass_update, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;name&quot;</span>)) </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>df_mel_after <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_mel_after, df_deg, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;name&quot;</span>)) </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>df_mel_after<span class="sc">$</span>componenttype <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df_mel_after<span class="sc">$</span>distance <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;system&quot;</span>, </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(df_mel_after<span class="sc">$</span>distance <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;subsystem&quot;</span>, </span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">ifelse</span>(df_mel_after<span class="sc">$</span>distance <span class="sc">==</span> <span class="dv">2</span>, <span class="st">&quot;assembly&quot;</span>, <span class="cn">NA</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_table <span class="ot">&lt;-</span> df_mel_after <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">totalmass=</span>mass) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(c_id, name, totalmass, componenttype) </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>df_table<span class="sc">$</span>componenttype <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_table<span class="sc">$</span>componenttype)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_table, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">FALSE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">filter =</span> <span class="fu">list</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">position =</span> <span class="st">&#39;top&#39;</span>, <span class="at">clear =</span> <span class="cn">FALSE</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a22b4ed4e4e906a8ef6f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a22b4ed4e4e906a8ef6f">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"106\" data-max=\"1957\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;subsystem&quot;,&quot;system&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10"],["C.02","C.02.01","C.02.02","C.02.03","C.02.04","C.02.05","C.02.06","C.02.07","C.02.08","C.02.09"],["orbiter-spacecraft","orbiter-power-subsystem","orbiter-harness","orbiter-thermal-subsystem","orbiter-command-and-data-handling-subsystem","orbiter-telecom-subsystem","orbiter-guidance-navigation-control-subsystem","orbiter-mechanical-subsystem","orbiter-spacraft-flight-software","orbiter-propulsion-subsystem"],[1957,297,138,307,147,316,156,325,165,106],["system","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem","subsystem"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>c_id<\/th>\n      <th>name<\/th>\n      <th>totalmass<\/th>\n      <th>componenttype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":false,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="binding-variables-tor" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="binding-variables-tor"><span class="header-section-number">2.8</span> Binding Variables : toR</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>m_dry <span class="ot">&lt;-</span> df_mel_after<span class="sc">$</span>mass[<span class="dv">1</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$m_dry &lt;- 325.47880079</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="deltav-using-python" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="deltav-using-python"><span class="header-section-number">2.8</span> deltaV ( Using Python)</h2>
+<section id="binding-variables-topython" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="binding-variables-topython"><span class="header-section-number">2.9</span> Binding Variables: toPython</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;getcwd:      &#39;</span>, os.getcwd())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>orbit_init<span class="op">=</span>r.df_parameters.initOrbit.values.tolist()[<span class="dv">0</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>orbit_target<span class="op">=</span>r.df_parameters.targetOrbit.values.tolist()[<span class="dv">0</span>]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>m_final<span class="op">=</span>r.df_parameters.m_dry.values.tolist()[<span class="dv">0</span>]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>I_sp<span class="op">=</span>r.df_parameters.I_sp.values.tolist()[<span class="dv">0</span>]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># orbit_init=r.initOrbit</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># orbit_target=r.targetOrbit</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># m_init=1000</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I_sp=r.I_sp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="deltav-using-python" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="deltav-using-python"><span class="header-section-number">2.10</span> deltaV ( Using Python)</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;getcwd:      &#39;</span>, os.getcwd())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>getcwd:       /Users/mlab/Workspaces/github/kepler16b-using-imce-vocabulary/src/analysis</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sys.path.append(os.getcwd())</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(os.getcwd()<span class="op">+</span><span class="st">&#39;/src/analysis&#39;</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># from src.analysis import analysisOrbit</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> analysisOrbit</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy <span class="im">import</span> units <span class="im">as</span> u</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>analysisRocket <span class="op">=</span> analysisOrbit.hohmanTransfer(orbit_init<span class="op">=</span>orbit_init, orbit_target<span class="op">=</span>orbit_target)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>total_delta_v <span class="op">=</span> analysisRocket.calculate_delta_v()</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sys.path.append(os.getcwd())</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(os.getcwd()<span class="op">+</span><span class="st">&#39;/src/analysis&#39;</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># from src.analysis import analysisOrbit</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> analysisOrbit</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy <span class="im">import</span> units <span class="im">as</span> u</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>analysisRocket <span class="op">=</span> analysisOrbit.hohmanTransfer(orbit_init<span class="op">=</span>orbit_init, orbit_target<span class="op">=</span>orbit_target)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=r.initOrbit, orbit_target=r.targetOrbit, m_init=r.m_dry, I_sp=r.I_sp)</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># analysisRocket = analysisOrbit.hohmanTransfer(orbit_init=400, orbit_target=35786, m_init=5000, I_sp=300)</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>total_delta_v <span class="op">=</span> analysisRocket.calculate_delta_v()</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total delta-v: 3853.959363102248 m / s</code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Required fuel mass: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_fuel<span class="sc">}</span><span class="ch">\n</span><span class="ss"> final: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_final<span class="sc">}</span><span class="ch">\n</span><span class="ss"> init: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_init<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Required fuel mass: 0.0
- final: 0.0
- init: 1000.0</code></pre>
-</div>
 </div>
 </section>
-<section id="binding-variables-tor-1" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="binding-variables-tor-1"><span class="header-section-number">2.9</span> Binding Variables: toR</h2>
+<section id="binding-variables-tor-1" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="binding-variables-tor-1"><span class="header-section-number">2.11</span> Binding Variables: toR</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>dv <span class="ot">&lt;-</span> py<span class="sc">$</span>total_delta_v <span class="sc">/</span><span class="fl">1000.0</span> <span class="co"># km/s</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>dv <span class="ot">&lt;-</span> py<span class="sc">$</span>total_delta_v <span class="sc">/</span><span class="fl">1000.0</span> <span class="co"># km/s</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="fuelmass-using-r" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="fuelmass-using-r"><span class="header-section-number">2.10</span> fuelMass (Using R)</h2>
+<section id="fuelmass-using-r" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="fuelmass-using-r"><span class="header-section-number">2.12</span> fuelMass (Using R)</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;calcWetMass.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># I_sp &lt;- 350</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># m_dry &lt;- 325.47880079</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$dv &lt;- sum(df_parameters$dv)</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse Problem</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>m_wet <span class="ot">&lt;-</span> <span class="fu">calcWetMass</span>(df_parameters<span class="sc">$</span>dv, df_parameters<span class="sc">$</span>m_dry, df_parameters<span class="sc">$</span>I_sp)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>m_fuel <span class="ot">&lt;-</span> df_parameters<span class="sc">$</span>m_wet <span class="sc">-</span> df_parameters<span class="sc">$</span>m_dry</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(df_parameters<span class="sc">$</span>m_wet, df_parameters<span class="sc">$</span>m_dry, df_parameters<span class="sc">$</span>m_fuel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;calcWetMass.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># I_sp &lt;- 350</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># m_dry &lt;- 325.47880079</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># df_parameters$dv &lt;- sum(df_parameters$dv)</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse Problem</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>m_wet <span class="ot">&lt;-</span> <span class="fu">calcWetMass</span>(df_parameters<span class="sc">$</span>dv, df_parameters<span class="sc">$</span>m_dry, df_parameters<span class="sc">$</span>I_sp)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>df_parameters<span class="sc">$</span>m_fuel <span class="ot">&lt;-</span> df_parameters<span class="sc">$</span>m_wet <span class="sc">-</span> df_parameters<span class="sc">$</span>m_dry</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(df_parameters<span class="sc">$</span>m_wet, df_parameters<span class="sc">$</span>m_dry, df_parameters<span class="sc">$</span>m_fuel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6012.68 1957.00 4055.68</code></pre>
 </div>
 </div>
 </section>
-<section id="finally-update-oml" class="level2" data-number="2.11">
-<h2 data-number="2.11" class="anchored" data-anchor-id="finally-update-oml"><span class="header-section-number">2.11</span> Finally, Update OML</h2>
-<section id="parameter-table-updated" class="level3" data-number="2.11.1">
-<h3 data-number="2.11.1" class="anchored" data-anchor-id="parameter-table-updated"><span class="header-section-number">2.11.1</span> parameter table updated</h3>
+<section id="finally-update-oml" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="finally-update-oml"><span class="header-section-number">2.13</span> Finally, Update OML</h2>
+<section id="parameter-table-updated" class="level3" data-number="2.13.1">
+<h3 data-number="2.13.1" class="anchored" data-anchor-id="parameter-table-updated"><span class="header-section-number">2.13.1</span> parameter table updated</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_table <span class="ot">&lt;-</span> df_parameters <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>id, <span class="at">names_to =</span> <span class="st">&quot;parameter&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_table, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">TRUE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_table <span class="ot">&lt;-</span> df_parameters <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>id, <span class="at">names_to =</span> <span class="st">&quot;parameter&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_table, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">TRUE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-49e02e5d0452cf79cab6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-49e02e5d0452cf79cab6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["dv","initOrbit","I_sp","m_dry","m_fuel","m_wet","targetOrbit"],[3.853959363102248,400,350,1957,4055.680381236295,6012.680381236295,35786]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d06b33b3116db312bd80" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d06b33b3116db312bd80">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["dv","initOrbit","I_sp","m_dry","m_fuel","m_wet","targetOrbit"],[3.853959363102248,400,350,1957,4055.680381236295,6012.680381236295,35786]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parameter<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":-1,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="parameters-before-and-after" class="level3" data-number="2.11.2">
-<h3 data-number="2.11.2" class="anchored" data-anchor-id="parameters-before-and-after"><span class="header-section-number">2.11.2</span> parameters before and after</h3>
+<section id="parameters-before-and-after" class="level3" data-number="2.13.2">
+<h3 data-number="2.13.2" class="anchored" data-anchor-id="parameters-before-and-after"><span class="header-section-number">2.13.2</span> parameters before and after</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_parameters_after <span class="ot">&lt;-</span>  <span class="fu">left_join</span>(df_parameters_before, df_table,</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;parameter&quot;</span><span class="ot">=</span><span class="st">&quot;parameter&quot;</span>),</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">suffix=</span><span class="fu">c</span>(<span class="st">&quot;_before&quot;</span>,<span class="st">&quot;_after&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">status =</span> <span class="fu">case_when</span>(</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.double</span>(value_before) <span class="sc">==</span> value_after <span class="sc">~</span> <span class="st">&quot;unchanged&quot;</span>,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;changed&quot;</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df_parameters_after <span class="ot">&lt;-</span>  <span class="fu">left_join</span>(df_parameters_before, df_table,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;parameter&quot;</span><span class="ot">=</span><span class="st">&quot;parameter&quot;</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">suffix=</span><span class="fu">c</span>(<span class="st">&quot;_before&quot;</span>,<span class="st">&quot;_after&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">status =</span> <span class="fu">case_when</span>(</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.double</span>(value_before) <span class="sc">==</span> value_after <span class="sc">~</span> <span class="st">&quot;unchanged&quot;</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;changed&quot;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="query-for-updating-parameters" class="level3" data-number="2.11.3">
-<h3 data-number="2.11.3" class="anchored" data-anchor-id="query-for-updating-parameters"><span class="header-section-number">2.11.3</span> query for updating parameters</h3>
+<section id="sending-update-query" class="level3" data-number="2.13.3">
+<h3 data-number="2.13.3" class="anchored" data-anchor-id="sending-update-query"><span class="header-section-number">2.13.3</span> sending update query</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>update_value <span class="ot">&lt;-</span> <span class="st">&quot;quarto&quot;</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>update_iri <span class="ot">&lt;-</span> <span class="st">&quot;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp&quot;</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>graph_iri <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(update_iri, <span class="st">&quot;^[^#]*&quot;</span>) <span class="co"># extract strings before &quot;#&quot;</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>query_string_update <span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="st">delete {</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="st">    ?analysisTarget a owl:NamedIndividual ;</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="st">                sa:hasStateValue ?beforeValue .</span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="st">insert { </span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="st">    ?analysisTarget a owl:NamedIndividual ;</span></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="st">                sa:hasStateValue ?afterValue .</span></span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a><span class="st">where{</span></span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="st">    BIND(&lt;$UPDATEIRI&gt; AS ?analysisTarget)</span></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a><span class="st">    BIND(&quot;$UPDATEVALUE&quot; AS ?afterValue) </span></span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="st">        ?analysisTarget a owl:NamedIndividual ;</span></span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a><span class="st">                sa:hasStateValue ?beforeValue .</span></span>
-<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>query_string_update <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$UPDATEVALUE&quot;</span>, update_value)</span>
-<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a>query_string_update <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$UPDATEIRI&quot;</span>, update_iri)</span>
-<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>query_string_update <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$GRAPHIRI&quot;</span>, graph_iri)</span>
-<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(query_string_update)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;updateSparqlQuery.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>df_update <span class="ot">&lt;-</span> df_parameters_after <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">&quot;changed&quot;</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>endpoint_url <span class="ot">&lt;-</span> <span class="st">&quot;http://localhost:3030/tutorial2-tdb/&quot;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_update) ){</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df_update[i,]</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  update_value <span class="ot">&lt;-</span> <span class="fu">as.character</span>(df<span class="sc">$</span>value_after)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  update_iri <span class="ot">&lt;-</span> df<span class="sc">$</span>iri</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  df_ret <span class="ot">&lt;-</span> <span class="fu">updateSparqlQuery</span>(endpoint_url, update_value, update_iri)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> <span class="fu">send_update</span>(<span class="at">endpoint_url =</span> endpoint_url, df_ret<span class="sc">$</span>query_string_delete_tdb)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> <span class="fu">send_update</span>(<span class="at">endpoint_url =</span> endpoint_url, df_ret<span class="sc">$</span>query_string_insert_tdb)</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="co"># cat(df_ret$query_string_delete_tdb)</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a><span class="co"># cat(df_ret$query_string_insert_tdb)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;
-PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;
-PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;
-PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;
-
-delete {
-    ?analysisTarget a owl:NamedIndividual ;
-                sa:hasStateValue ?beforeValue .
-}
-
-insert { 
-    ?analysisTarget a owl:NamedIndividual ;
-                sa:hasStateValue ?afterValue .
-}
-
-
-where{
-    BIND(&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp&gt; AS ?analysisTarget)
-    BIND(&quot;quarto&quot; AS ?afterValue) 
-  
-        ?analysisTarget a owl:NamedIndividual ;
-                sa:hasStateValue ?beforeValue .
-}</code></pre>
 </div>
-</div>
+</section>
+</section>
+<section id="run-save-in-oml-vision" class="level2" data-number="2.14">
+<h2 data-number="2.14" class="anchored" data-anchor-id="run-save-in-oml-vision"><span class="header-section-number">2.14</span> Run Save in OML-Vision</h2>
+<p>Using OML-Vision GUI, run the save task. Then you can see the oml file is updated.</p>
+</section>
+<section id="verify-update" class="level2" data-number="2.15">
+<h2 data-number="2.15" class="anchored" data-anchor-id="verify-update"><span class="header-section-number">2.15</span> Verify Update</h2>
+<p>This can be verified when you re-load the load task and send a query of <code>query_param_string</code>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>query_string_update_tbd <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="st">delete {</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="st">  graph &lt;$GRAPHIRI&gt; {</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="st">    ?analysisTarget a owl:NamedIndividual ;</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="st">                sa:hasStateValue ?beforeValue .</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="st">insert { </span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="st">  graph &lt;$GRAPHIRI&gt; {</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="st">    ?analysisTarget a owl:NamedIndividual ;</span></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="st">                sa:hasStateValue ?afterValue .</span></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="st">where{</span></span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="st">    BIND(&lt;$UPDATEIRI&gt; AS ?analysisTarget)</span></span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a><span class="st">    BIND(&quot;$UPDATEVALUE&quot; AS ?afterValue) </span></span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a><span class="st">        ?analysisTarget a owl:NamedIndividual ;</span></span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a><span class="st">                sa:hasStateValue ?beforeValue .</span></span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>query_string_update_tbd <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update_tbd, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$UPDATEVALUE&quot;</span>, update_value)</span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>query_string_update_tbd <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update_tbd, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$UPDATEIRI&quot;</span>, update_iri)</span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>query_string_update_tbd <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update_tbd, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$GRAPHIRI&quot;</span>, graph_iri)</span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>query_string_update_tbd <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(query_string_update_tbd, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$GRAPHIRI&quot;</span>, graph_iri)</span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(query_string_update_tbd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>endpoint_url <span class="ot">&lt;-</span> <span class="st">&quot;http://localhost:3030/tutorial2/&quot;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df_query <span class="ot">&lt;-</span> <span class="fu">send_query</span>(endpoint_url, query_param_string)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(df_query, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoWidth =</span> <span class="cn">FALSE</span>, <span class="at">pageLength =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;
-PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;
-PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;
-PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;
+<div class="cell-output-display">
 
-delete {
-  graph &lt;http://example.com/tutorial2/description/statedictionary&gt; {
-    ?analysisTarget a owl:NamedIndividual ;
-                sa:hasStateValue ?beforeValue .
-        }
-}
-
-insert { 
-  graph &lt;http://example.com/tutorial2/description/statedictionary&gt; {
-    ?analysisTarget a owl:NamedIndividual ;
-                sa:hasStateValue ?afterValue .
-        }
-}
-
-
-where{
-    BIND(&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp&gt; AS ?analysisTarget)
-    BIND(&quot;quarto&quot; AS ?afterValue) 
-  
-        ?analysisTarget a owl:NamedIndividual ;
-                sa:hasStateValue ?beforeValue .
-}</code></pre>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1689f560286f3af0e229" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1689f560286f3af0e229">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v","http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.initial-orbit","http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp","http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.dry","http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.fuel","http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet","http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.target-orbit"],["orbiter-spacecraft.delta-v","orbiter-spacecraft.initial-orbit","orbiter-spacecraft.isp","orbiter-spacecraft.mass.dry","orbiter-spacecraft.mass.fuel","orbiter-spacecraft.mass.wet","orbiter-spacecraft.target-orbit"],[null,"400","350",null,null,null,"35786"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iri<\/th>\n      <th>statevariable<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":false,"pageLength":-1,"columnDefs":[{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[-1,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</section>
-<section id="get-intended-state-value-using-affects-relationship" class="level3" data-number="2.11.4">
-<h3 data-number="2.11.4" class="anchored" data-anchor-id="get-intended-state-value-using-affects-relationship"><span class="header-section-number">2.11.4</span> Get Intended State Value using affects relationship</h3>
-<pre><code>PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;
-PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;
-PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;
-PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;
-
-SELECT ?iri ?statevariable ?value
-WHERE {
-
-#  VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v&gt;}
-   VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet&gt;}
-  VALUES ?componentType { sa:StateVariable }
-  VALUES ?relationType { sa:isAffectedBy }
-
-  # Recursive Query to get state variables
-  ?analysisTarget sa:isAffectedBy* ?iri ;
-#  ?iri a ?componentType
-  
-  OPTIONAL{
-    ?iri sa:hasStateValue ?value;
-         }
-
-
-
-  BIND(STRAFTER(STR(?iri), &quot;#&quot;) AS ?statevariable) .
-  BIND(STRAFTER(STR(?targetIri), &quot;#&quot;) AS ?target) .
-  BIND(STRAFTER(STR(?cpIri), &quot;#&quot;) AS ?component) .
- }
-ORDER BY ?iri</code></pre>
-</section>
-<section id="get-all-state-values" class="level3" data-number="2.11.5">
-<h3 data-number="2.11.5" class="anchored" data-anchor-id="get-all-state-values"><span class="header-section-number">2.11.5</span> Get all state values</h3>
-<pre><code>PREFIX base:        &lt;http://imce.jpl.nasa.gov/foundation/base#&gt;
-PREFIX mission:        &lt;http://imce.jpl.nasa.gov/foundation/mission#&gt;
-PREFIX analysis:        &lt;http://imce.jpl.nasa.gov/foundation/analysis#&gt;
-PREFIX sa:        &lt;http://example.com/tutorial2/vocabulary/stateanalysis#&gt;
-
-SELECT DISTINCT ?iri ?statevariable ?value
-WHERE {
-
-#  VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v&gt;}
-   VALUES ?analysisTarget {&lt;http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet&gt;}
-  VALUES ?componentType { sa:StateVariable }
-  VALUES ?relationType { sa:isAffectedBy }
-
-  # Recursive Query to get state variables
-#  ?analysisTarget sa:isAffectedBy* ?iri ;
-  ?iri a ?componentType; 
-  
-  OPTIONAL{
-    ?iri sa:hasStateValue ?value;
-         }
-
-
-
-  BIND(STRAFTER(STR(?iri), &quot;#&quot;) AS ?statevariable) .
-  BIND(STRAFTER(STR(?targetIri), &quot;#&quot;) AS ?target) .
-  BIND(STRAFTER(STR(?cpIri), &quot;#&quot;) AS ?component) .
- }
-ORDER BY ?iri</code></pre>
-</section>
-<section id="send-query" class="level3" data-number="2.11.6">
-<h3 data-number="2.11.6" class="anchored" data-anchor-id="send-query"><span class="header-section-number">2.11.6</span> Send Query</h3>
-<p>This doesn’t work. Needs to be fixed at <a href="https://github.com/UTNAK/kepler16b-using-imce-vocabulary/issues/11">issue #11</a> . duplicated data. delete doesn’t work well. lets make separated. query_string_update_tbd</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>endpoint_url <span class="ot">&lt;-</span> <span class="st">&quot;http://localhost:3030/tutorial2/update&quot;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_query &lt;- send_query(endpoint_url, query_string_update)</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># httpResponse &lt;- httr::POST(url = endpoint_url, query = list(query = query_string_update))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
 </section>
 </section>
 <section id="discussion-proposed-process-and-data-flow" class="level1" data-number="3">
@@ -7667,18 +7510,18 @@ ORDER BY ?iri</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df_parameters2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter =</span> <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>,<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;dv&quot;</span>),</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">400</span>,<span class="dv">35786</span>,<span class="dv">350</span>,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_dry, </span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_fuel, </span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_wet,</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>dv),</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;output&quot;</span>)</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how to access data</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>df_parameters2<span class="sc">$</span>value[df_parameters2<span class="sc">$</span>parameter <span class="sc">==</span> <span class="st">&quot;m_dry&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_parameters2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter =</span> <span class="fu">c</span>(<span class="st">&quot;initOrbit&quot;</span>,<span class="st">&quot;targetOrbit&quot;</span>,<span class="st">&quot;I_sp&quot;</span>,<span class="st">&quot;m_dry&quot;</span>,<span class="st">&quot;m_fuel&quot;</span>,<span class="st">&quot;m_wet&quot;</span>,<span class="st">&quot;dv&quot;</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">400</span>,<span class="dv">35786</span>,<span class="dv">350</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_dry, </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_fuel, </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>m_wet,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>          df_parameters<span class="sc">$</span>dv),</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;input&quot;</span>,<span class="st">&quot;output&quot;</span>,<span class="st">&quot;output&quot;</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how to access data</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>df_parameters2<span class="sc">$</span>value[df_parameters2<span class="sc">$</span>parameter <span class="sc">==</span> <span class="st">&quot;m_dry&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1957</code></pre>
@@ -7688,8 +7531,8 @@ ORDER BY ?iri</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> r.df_parameters2</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">&#39;parameter&#39;</span>]<span class="op">==</span><span class="st">&#39;I_sp&#39;</span>].value.values[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> r.df_parameters2</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">&#39;parameter&#39;</span>]<span class="op">==</span><span class="st">&#39;I_sp&#39;</span>].value.values[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>350.0</code></pre>
@@ -7700,15 +7543,15 @@ ORDER BY ?iri</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>analysisRocket.calculate_init_mass(I_sp, m_final)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>analysisRocket.calculate_init_mass(I_sp, m_final)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total delta-v: </span><span class="sc">{</span>total_delta_v<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total delta-v: 3853.959363102248 m / s</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Required fuel mass: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_fuel<span class="sc">}</span><span class="ch">\n</span><span class="ss"> final: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_final<span class="sc">}</span><span class="ch">\n</span><span class="ss"> init: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_init<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Required fuel mass: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_fuel<span class="sc">}</span><span class="ch">\n</span><span class="ss"> final: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_final<span class="sc">}</span><span class="ch">\n</span><span class="ss"> init: </span><span class="sc">{</span>analysisRocket<span class="sc">.</span>m_init<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Required fuel mass: 4055.680381236295
@@ -7722,9 +7565,9 @@ ORDER BY ?iri</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;calcDeltaV.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> <span class="fu">calcDeltaV</span>(<span class="at">initOrbit=</span>df_parameters<span class="sc">$</span>initOrbit, <span class="at">targetOrbit =</span> df_parameters<span class="sc">$</span>targetOrbit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">searchDirectory</span>(<span class="dv">4</span>, <span class="st">&quot;calcDeltaV.R&quot;</span>, (<span class="fu">getwd</span>())))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> <span class="fu">calcDeltaV</span>(<span class="at">initOrbit=</span>df_parameters<span class="sc">$</span>initOrbit, <span class="at">targetOrbit =</span> df_parameters<span class="sc">$</span>targetOrbit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.397473 1.456487</code></pre>

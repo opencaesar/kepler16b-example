@@ -5,7 +5,7 @@
 # 2. ./src/analysis/SetUpEnvironment.sh
 
 # Install R packages
-R -e "install.packages('reactable', repos='http://cran.us.r-project.org')"
+R -e "install.packages('reactable')"
 R -e "install.packages('igraph')"
 R -e "install.packages('networkD3')"
 R -e "install.packages('reticulate')"
@@ -14,9 +14,9 @@ R -e "install.packages('collapsibleTree')"
 R -e "install.packages('colorspace')"
 R -e "install.packages('jsonlite')"
 R -e "install.packages('DT')"
-R -e "install.packages('devtools')"
-R -e "library(devtools); install_github('UTNAK/tansakusuR')"
-R -e "library(devtools); install_github('UTNAK/omlhashiR')"
+R -e "install.packages('pak')"
+R -e "pak::pkg_install('UTNAK/tansakusuR')"
+R -e "pak::pkg_install('UTNAK/omlhashiR')"
 
 # Create and update conda environment
 conda env create --file environment.yml
@@ -28,5 +28,6 @@ sudo apt-get update
 sudo apt-get install -y libglpk40
 
 # Fix libstdc++.so.6 for Quarto + Reticulate
-cd /opt/conda/envs/py39/lib/
-sudo cp libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+## comment out for debugging
+##cd /opt/conda/envs/py39/lib/
+##sudo cp libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
