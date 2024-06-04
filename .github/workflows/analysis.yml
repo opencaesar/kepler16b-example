@@ -54,23 +54,23 @@ jobs:
         quarto -V
 
 
-    # - name: Setup Anaconda
-    #   uses: conda-incubator/setup-miniconda@v3
-    #   with:
-    #     activate-environment: py39
-    #     environment-file: environment.yml
-    #     python-version: 3.9
-    #     auto-activate-base: false
+    - name: Setup Anaconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: py39
+        environment-file: environment.yml
+        python-version: 3.9
+        auto-activate-base: false
 
-    # - name: Check Conda
-    #   run: |
-    #     conda info
-    #     conda list
+    - name: Check Conda
+      run: |
+        conda info
+        conda list
 
-    # - name: Render Jupyter
-    #   shell: bash -l {0}
-    #   run: |
-    #     python -m nbconvert --output="analysis" --output-dir='./web' --execute --to html src/analysis/analysisShell.ipynb --no-input
+    - name: Render Jupyter
+      shell: bash -l {0}
+      run: |
+        python -m nbconvert --output="analysis" --output-dir='./web' --execute --to html src/analysis/analysisShell.ipynb --no-input
 
     - name: Render Quarto
       shell: bash -l {0}
