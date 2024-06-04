@@ -26,22 +26,22 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # - name: Setup Gradle
-    #   uses: gradle/gradle-build-action@v2
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
 
-    # - name: Build
-    #   run: ./gradlew build
+    - name: Build
+      run: ./gradlew build
 
-    # - name: Load
-    #   run: ./gradlew owlLoad
+    - name: Load
+      run: ./gradlew owlLoad
 
-    # - name: Set up R
-    #   uses: eddelbuettel/github-actions/r2u-setup@master
+    - name: Set up R
+      uses: eddelbuettel/github-actions/r2u-setup@master
 
-    # - name: Install Dependencies
-    #   run: |
-    #     chmod +x src/analysis/SetUpEnvironment.sh 
-    #     ./src/analysis/SetUpEnvironment.sh
+    - name: Install Dependencies
+      run: |
+        chmod +x src/analysis/SetUpEnvironment.sh 
+        ./src/analysis/SetUpEnvironment.sh
 
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
@@ -75,12 +75,12 @@ jobs:
     - name: Render Quarto
       shell: bash -l {0}
       run: |
-        quarto render src/analysis/test_analysisShell.qmd
+        quarto render src/analysis/analysisShell.qmd
   
     - name: Copy Quarto html
       shell: bash -l {0}
       run: |
-        cp ./src/analysis/test_analysisShell.html ./web  
+        cp ./src/analysis/analysisShell.html ./web  
 
     - name: Publish
       uses: actions/upload-pages-artifact@v1
