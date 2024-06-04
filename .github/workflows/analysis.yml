@@ -68,6 +68,9 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3
         with:
           activate-environment: py39
+          environment-file: environment.yml
+          python-version: 3.9
+          auto-activate-base: false
       - name: conda info
         run: conda info
       - name: Render Jupyter
