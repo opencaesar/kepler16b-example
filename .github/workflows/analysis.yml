@@ -34,7 +34,7 @@ jobs:
     - name: Setup Anaconda
       uses: conda-incubator/setup-miniconda@v3
       with:
-        activate-environment: anaconda-client-env
+        activate-environment: py39
         environment-file: environment.yml
         python-version: 3.9
         auto-activate-base: false
