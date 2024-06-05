@@ -98,7 +98,7 @@ jobs:
         path: web/
 
     - name: Save OML
-      run: ./gradlew owlSave
+      run: ./gradlew owlToOml
 
     - name: Commit updated files
       uses: maxgfr/github-commit-push-file@main
