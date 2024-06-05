@@ -96,8 +96,15 @@ jobs:
       uses: actions/upload-pages-artifact@v1
       with:
         path: web/
-        
-                
+
+    - name: Save OML
+      run: ./gradlew owlToOml
+
+    - name: Commit updated files
+      uses: maxgfr/github-commit-push-file@main
+      with: 
+        commit_name: 'commited by CICD with github actions'
+
   # Deploy job
   deploy:
     # Add a dependency to the build job
