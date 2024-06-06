@@ -7602,12 +7602,12 @@ a.anchor-link {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.delta-v'}}
+<pre>{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.delta-v'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.delta-v'}, 'value': {'type': 'literal', 'value': '3.85395936310225'}}
 {'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.initial-orbit'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.initial-orbit'}, 'value': {'type': 'literal', 'value': '400'}}
 {'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.isp'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.isp'}, 'value': {'type': 'literal', 'value': '350'}}
-{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.dry'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.mass.dry'}}
-{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.fuel'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.mass.fuel'}}
-{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.mass.wet'}}
+{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.dry'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.mass.dry'}, 'value': {'type': 'literal', 'value': '1957'}}
+{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.fuel'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.mass.fuel'}, 'value': {'type': 'literal', 'value': '4055.6803812363'}}
+{'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.mass.wet'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.mass.wet'}, 'value': {'type': 'literal', 'value': '6012.6803812363'}}
 {'iri': {'type': 'uri', 'value': 'http://example.com/tutorial2/description/statedictionary#orbiter-spacecraft.target-orbit'}, 'statevariable': {'type': 'literal', 'value': 'orbiter-spacecraft.target-orbit'}, 'value': {'type': 'literal', 'value': '35786'}}
 </pre>
 </div>
@@ -7631,7 +7631,7 @@ a.anchor-link {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_15239/3073877374.py:17: SettingWithCopyWarning: 
+<pre>/tmp/ipykernel_14919/3073877374.py:17: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -7679,7 +7679,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <th>0</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.delta-v</td>
-<td>NaN</td>
+<td>3.85395936310225</td>
 <td>dv</td>
 <td>0</td>
 </tr>
@@ -7703,7 +7703,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <th>3</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.dry</td>
-<td>NaN</td>
+<td>1957</td>
 <td>m_dry</td>
 <td>0</td>
 </tr>
@@ -7711,7 +7711,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <th>4</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.fuel</td>
-<td>NaN</td>
+<td>4055.6803812363</td>
 <td>m_fuel</td>
 <td>0</td>
 </tr>
@@ -7719,7 +7719,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <th>5</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.wet</td>
-<td>NaN</td>
+<td>6012.6803812363</td>
 <td>m_wet</td>
 <td>0</td>
 </tr>
@@ -7777,11 +7777,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <tr>
 <th>0</th>
 <td>350</td>
-<td>NaN</td>
+<td>3.85395936310225</td>
 <td>400</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>1957</td>
+<td>4055.6803812363</td>
+<td>6012.6803812363</td>
 <td>35786</td>
 </tr>
 </tbody>
@@ -8807,7 +8807,7 @@ Warning: program returned non-zero exit code #256
 /usr/bin/xdg-open: 882: links: not found
 /usr/bin/xdg-open: 882: lynx: not found
 /usr/bin/xdg-open: 882: w3m: not found
-xdg-open: no method available for opening '/tmp/RtmptOYMz8/viewhtml3b871d1c252a/index.html'
+xdg-open: no method available for opening '/tmp/RtmpEPju7z/viewhtml3a4765a39798/index.html'
 </pre>
 </div>
 </div>
@@ -8861,12 +8861,6 @@ xdg-open: no method available for opening '/tmp/RtmptOYMz8/viewhtml3b871d1c252a/
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>getcwd:       /home/runner/work/kepler16b-using-imce-vocabulary/kepler16b-using-imce-vocabulary/src/analysis
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>Couldn't find a suitable web browser!
 
@@ -8879,7 +8873,13 @@ Warning: program returned non-zero exit code #256
 /usr/bin/xdg-open: 882: links: not found
 /usr/bin/xdg-open: 882: lynx: not found
 /usr/bin/xdg-open: 882: w3m: not found
-xdg-open: no method available for opening '/tmp/RtmptOYMz8/viewhtml3b873f8f9622/index.html'
+xdg-open: no method available for opening '/tmp/RtmpEPju7z/viewhtml3a473818a0b3/index.html'
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>getcwd:       /home/runner/work/kepler16b-using-imce-vocabulary/kepler16b-using-imce-vocabulary/src/analysis
 </pre>
 </div>
 </div>
@@ -8929,22 +8929,7 @@ xdg-open: no method available for opening '/tmp/RtmptOYMz8/viewhtml3b873f8f9622/
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/usr/share/miniconda/envs/py39/lib/python3.9/site-packages/rpy2/robjects/pandas2ri.py:65: UserWarning: Error while trying to convert the column "m_fuel". Fall back to string conversion. The error is: &lt;class 'float'&gt;
-  warnings.warn('Error while trying to convert '
-/usr/share/miniconda/envs/py39/lib/python3.9/site-packages/rpy2/robjects/pandas2ri.py:65: UserWarning: Error while trying to convert the column "m_wet". Fall back to string conversion. The error is: &lt;class 'float'&gt;
-  warnings.warn('Error while trying to convert '
-</pre>
-</div>
-</div>
-</div>
-</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput">
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
@@ -9198,7 +9183,7 @@ parameter targetOrbit
 <th>0</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.delta-v</td>
-<td>NaN</td>
+<td>3.85395936310225</td>
 <td>dv</td>
 <td>0</td>
 </tr>
@@ -9222,7 +9207,7 @@ parameter targetOrbit
 <th>3</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.dry</td>
-<td>NaN</td>
+<td>1957</td>
 <td>m_dry</td>
 <td>0</td>
 </tr>
@@ -9230,7 +9215,7 @@ parameter targetOrbit
 <th>4</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.fuel</td>
-<td>NaN</td>
+<td>4055.6803812363</td>
 <td>m_fuel</td>
 <td>0</td>
 </tr>
@@ -9238,7 +9223,7 @@ parameter targetOrbit
 <th>5</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.wet</td>
-<td>NaN</td>
+<td>6012.6803812363</td>
 <td>m_wet</td>
 <td>0</td>
 </tr>
@@ -9297,7 +9282,7 @@ parameter targetOrbit
 <th>0</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.delta-v</td>
-<td>NaN</td>
+<td>3.85395936310225</td>
 <td>dv</td>
 <td>0</td>
 <td>3.853959</td>
@@ -9327,7 +9312,7 @@ parameter targetOrbit
 <th>3</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.dry</td>
-<td>NaN</td>
+<td>1957</td>
 <td>m_dry</td>
 <td>0</td>
 <td>1957.0</td>
@@ -9337,7 +9322,7 @@ parameter targetOrbit
 <th>4</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.fuel</td>
-<td>NaN</td>
+<td>4055.6803812363</td>
 <td>m_fuel</td>
 <td>0</td>
 <td>4055.680381</td>
@@ -9347,7 +9332,7 @@ parameter targetOrbit
 <th>5</th>
 <td>http://example.com/tutorial2/description/state...</td>
 <td>orbiter-spacecraft.mass.wet</td>
-<td>NaN</td>
+<td>6012.6803812363</td>
 <td>m_wet</td>
 <td>0</td>
 <td>6012.680381</td>
@@ -9387,9 +9372,7 @@ parameter targetOrbit
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/usr/share/miniconda/envs/py39/lib/python3.9/site-packages/rpy2/robjects/pandas2ri.py:65: UserWarning: Error while trying to convert the column "value_before". Fall back to string conversion. The error is: Series can only be of one type, or None (and here we have &lt;class 'float'&gt; and &lt;class 'str'&gt;). If happening with a pandas DataFrame the method infer_objects() will normalize data types before conversion.
-  warnings.warn('Error while trying to convert '
-/usr/share/miniconda/envs/py39/lib/python3.9/site-packages/rpy2/robjects/pandas2ri.py:65: UserWarning: Error while trying to convert the column "value_after". Fall back to string conversion. The error is: Series can only be of one type, or None (and here we have &lt;class 'float'&gt; and &lt;class 'str'&gt;). If happening with a pandas DataFrame the method infer_objects() will normalize data types before conversion.
+<pre>/usr/share/miniconda/envs/py39/lib/python3.9/site-packages/rpy2/robjects/pandas2ri.py:65: UserWarning: Error while trying to convert the column "value_after". Fall back to string conversion. The error is: Series can only be of one type, or None (and here we have &lt;class 'float'&gt; and &lt;class 'str'&gt;). If happening with a pandas DataFrame the method infer_objects() will normalize data types before conversion.
   warnings.warn('Error while trying to convert '
 </pre>
 </div>
