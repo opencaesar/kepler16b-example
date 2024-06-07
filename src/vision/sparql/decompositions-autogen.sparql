@@ -1,6 +1,5 @@
 PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
 PREFIX mission:     <http://imce.jpl.nasa.gov/foundation/mission#>
-PREFIX structure:   <http://opencaesar.io/open-source-rover/vocabulary/structure#>
 PREFIX vim4:        <http://bipm.org/jcgm/vim4#>
 PREFIX base:        <http://imce.jpl.nasa.gov/foundation/base#>
 

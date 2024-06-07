@@ -2,8 +2,8 @@
     "decompositions-autogen": {
         "name": "decompositions-autogen",
         "queries": {
-          "node": "auto_components.sparql",
-          "edge": "auto_components.sparql"
+          "node": "decompositions-autogen.sparql",
+          "edge": "decompositions-autogen.sparql"
         },
         "rowMapping": {
           "id": "node",

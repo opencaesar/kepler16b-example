@@ -4,7 +4,7 @@ PREFIX mission:        <http://imce.jpl.nasa.gov/foundation/mission#>
 SELECT DISTINCT ?c1 ?c1_instancename ?c1_id ?c1_name ?c2 ?c2_instancename ?c2_id ?c2_name 
 WHERE {
 
-  VALUES ?componentType { mission:Component }
+  VALUES ?componentType { mission:Component mission:Mission }
 
   ?c1 a ?componentType ;
     base:hasIdentifier ?c1_id ;
@@ -17,7 +17,14 @@ WHERE {
           base:hasCanonicalName ?c2_name .
     }
   }
-
+ 
+  OPTIONAL{
+  ?c1 mission:isDeployedBy ?c2 ;
+  OPTIONAL{
+    ?c2 base:hasIdentifier ?c2_id ;
+        base:hasCanonicalName ?c2_name .
+  }
+}  
 
   BIND(STRAFTER(STR(?c1), "#") AS ?c1_instancename) .
   BIND(STRAFTER(STR(?c2), "#") AS ?c2_instancename) .
