@@ -5,7 +5,7 @@
           "system": "layered_system.sparql",
           "subsystem": "layered_subsystem.sparql",
           "assembly": "layered_assembly.sparql",
-          "edge": "junction.sparql"
+          "edge": "ibd-junction.sparql"
         },
         "rowMapping": {
           "id": "system",

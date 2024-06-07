@@ -2,8 +2,8 @@
     "ibd": {
         "name": "IBD",
         "queries": {
-          "subsystem": "subsystem.sparql",
-          "assembly": "assembly.sparql",
+          "subsystem": "ibd-subsystem.sparql",
+          "assembly": "ibd-assembly.sparql",
           "edge": "junction.sparql"
         },
         "rowMapping": {
