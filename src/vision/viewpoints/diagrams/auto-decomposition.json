@@ -11,7 +11,7 @@
     "labelFormat": "{c1_instancename}",
     "nodeColor": "#006994",
     "nodeTextColor": "white",
-    "nodeType": "NA",
+    "nodeType": "{edge_type}",
     "edgeMatchKey": "c1_instancename"
   },
   "edges": [
@@ -19,8 +19,8 @@
       "id": "edge",
       "name": "Edge",
       "animated": true,
-      "labelFormat": "base:isContainedIn",
-      "legendItems": "c2_instancename",
+      "labelFormat": "{edge_type}",
+      "legendItems": "{edge_type}",
       "sourceKey": "c1_instancename",
       "targetKey": "c2_instancename"
     }
