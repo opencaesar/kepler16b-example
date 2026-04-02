@@ -45,7 +45,7 @@ jobs:
     - name: Convert Notebook to HTML
       run: python -m nbconvert --to html --no-input build/web/index.ipynb
     - name: Publish
-      uses: actions/upload-pages-artifact@v1
+      uses: actions/upload-pages-artifact@v4
       with:
         path: build/web
         
@@ -61,4 +61,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
